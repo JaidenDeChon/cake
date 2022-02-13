@@ -4,7 +4,7 @@
 
 <script lang="ts">
 
-    import { Options, Vue } from 'vue-class-component';
+import { Options, Vue } from 'vue-class-component';
 
     @Options({
         props: {
@@ -12,9 +12,9 @@
         }
     })
 
-    export default class TopBar extends Vue {
+export default class TopBar extends Vue {
         header!: string
-    }
+}
 
 </script>
 

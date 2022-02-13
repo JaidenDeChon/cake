@@ -9,9 +9,9 @@ import { Options, Vue } from 'vue-class-component';
 import TopBar from '@/components/TopBar.vue';
 
 @Options({
-  components: {
-    TopBar
-  },
+    components: {
+        TopBar
+    },
 })
 export default class Home extends Vue {}
 </script>
