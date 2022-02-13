@@ -1,12 +1,13 @@
 <template>
-    <div>{{ header }}</div>
+    <div class="top-bar">
+        <h1 class="top-bar__header">Sweet Peach Cakery</h1>
+    </div>
 </template>
 
 <script lang="ts">
 
-import { Options, Vue } from 'vue-class-component';
+import { Vue } from 'vue-class-component';
 
-@Options({ props: { header: String } })
 export default class TopBar extends Vue {
         header!: string
 }
@@ -14,5 +15,22 @@ export default class TopBar extends Vue {
 </script>
 
 <style lang="scss" scoped>
+
+    .top-bar {
+
+        padding: 1.8rem;
+
+        background-color: white;
+    }
+
+    .top-bar__header {
+
+        font-family: 'Dancing Script', cursive;
+        letter-spacing: .06rem;
+        color: dodgerblue;
+
+        margin: 0;
+        padding: 0;
+    }
 
 </style>
