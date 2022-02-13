@@ -5,15 +5,19 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: Home,
+        // TODO - Remove this line when other routes are added
+        redirect: () => { return { name: 'Contact Us' } }
     },
     {
         path: '/about',
         name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+        component: () => import('../views/About.vue')
+    },
+    {
+        path: '/contact-us',
+        name: 'Contact Us',
+        component: () => import('../views/ContactUs.vue')
     }
 ]
 
