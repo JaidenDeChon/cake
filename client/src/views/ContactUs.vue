@@ -117,8 +117,15 @@ export default class ContactUs extends Vue {}
 
         color: white;
 
-        background-color: dodgerblue;
+        cursor: pointer;
+        background-color: salmon;
         border: none;
+        transition: background-color 0.1s;
+
+        &:hover,
+        &:focus {
+            background-color: darksalmon;
+        }
     }
 
     input[type=text],
@@ -126,7 +133,7 @@ export default class ContactUs extends Vue {}
     input[type=tel],
     textarea {
         padding: 0.5rem;
-        border: 2px solid dodgerblue;
+        border: 2px solid salmon;
     }
 
     input[type=text],
@@ -134,7 +141,14 @@ export default class ContactUs extends Vue {}
     input[type=tel],
     input[type=submit],
     textarea {
+
         border-radius: 0.2rem;
+        transition: background-color 0.1s;
+
+        &:focus {
+            outline: none;
+            border-color: darksalmon;
+        }
     }
 
     input[type=checkbox] {

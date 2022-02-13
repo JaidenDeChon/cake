@@ -27,7 +27,7 @@ export default class TopBar extends Vue {
 
         font-family: 'Dancing Script', cursive;
         letter-spacing: .06rem;
-        color: dodgerblue;
+        color: salmon;
 
         margin: 0;
         padding: 0;
