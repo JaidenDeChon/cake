@@ -6,12 +6,7 @@
 
 import { Options, Vue } from 'vue-class-component';
 
-    @Options({
-        props: {
-            header: String
-        }
-    })
-
+@Options({ props: { header: String } })
 export default class TopBar extends Vue {
         header!: string
 }
