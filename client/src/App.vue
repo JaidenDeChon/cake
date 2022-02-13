@@ -1,10 +1,21 @@
 <template>
-    <router-view/>
+    <top-bar />
+    <router-view />
 </template>
+
+<script lang="ts">
+
+import { Vue, Options } from 'vue-class-component';
+import TopBar from '@/components/TopBar.vue';
+
+@Options({ components: { TopBar } })
+export default class App extends Vue {}
+
+</script>
 
 <style lang="scss">
 
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins&display=swap');
 
     body {
 
