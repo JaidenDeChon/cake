@@ -1,17 +1,17 @@
 <template>
     <div class="contact-us">
-        <form class="contact-us__form">
+        <form class="contact-us__form" @submit.prevent="postNewMessage">
 
             <!-- Name Input -->
             <div class="contact-us__label-input-combo">
                 <label for="contact-us__input--name">Name</label>
-                <input type="text" id="contact-us__input--name" required>
+                <input v-model="newMessage.name" type="text" id="contact-us__input--name" required>
             </div>
 
             <!-- Email input -->
             <div class="contact-us__label-input-combo">
                 <label for="contact-us__input--email">Email</label>
-                <input type="email" id="contact-us__input--email" required>
+                <input v-model="newMessage.email" type="email" id="contact-us__input--email" required>
             </div>
 
             <!-- Phone Number Input -->
@@ -19,20 +19,20 @@
 
                 <!-- Phone number field -->
                 <label for="contact-us__input--phone">Phone Number</label>
-                <input type="tel" id="contact-us__input--phone" required>
+                <input v-model="newMessage.phone" type="tel" id="contact-us__input--phone" required>
 
                 <div class="contact-us__inline-inputs">
 
                     <!-- Checkbox: OK to text me -->
                     <div class="contact-us__label-input-combo contact-us__label-input-combo--reverse-order">
                         <label for="contact-us__input--ok-to-text">It's OK to text me.</label>
-                        <input type="checkbox" id="contact-us__input--ok-to-text">
+                        <input v-model="newMessage.okToText" type="checkbox" id="contact-us__input--ok-to-text">
                     </div>
 
                     <!-- Checkbox: OK to call me  -->
                     <div class="contact-us__label-input-combo contact-us__label-input-combo--reverse-order">
                         <label for="contact-us__input--ok-to-call">It's OK to call me.</label>
-                        <input type="checkbox" id="contact-us__input--ok-to-call">
+                        <input v-model="newMessage.okToCall" type="checkbox" id="contact-us__input--ok-to-call">
                     </div>
 
                 </div>
@@ -42,7 +42,7 @@
             <!-- Message Input -->
             <div class="contact-us__label-input-combo">
                 <label for="contact-us__input--message">What are you looking for?</label>
-                <textarea name="message" id="contact-us__input--message" rows="6"  required/>
+                <textarea v-model="newMessage.message" name="message" id="contact-us__input--message" rows="6"  required/>
             </div>
 
             <!-- Submit button -->
@@ -51,11 +51,58 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 
-import { Vue } from 'vue-class-component';
+import { Vue, Options } from 'vue-class-component';
 
-export default class ContactUs extends Vue {}
+const API_URL = 'http://localhost:4000/messages';
+
+@Options({
+    data() {
+        return {
+            error: '',
+            newMessage: {
+                name: '',
+                email: '',
+                phone: '',
+                message: '',
+                okToText: false,
+                okToCall: false,
+            },
+        };
+    },
+})
+export default class ContactUs extends Vue {
+    // Any error will be set to this variable.
+    error!: string;
+
+    // For storing the posted API data.
+    newMessage!: Record<string, unknown>;
+
+    public postNewMessage(): void {
+        const postObject = {
+            method: 'POST',
+            body: JSON.stringify(this.newMessage),
+            headers: {
+                'content-type': 'application/json',
+            }
+        };
+
+        fetch(API_URL, postObject)
+            .then(response => response.json()
+                .then(result => {
+                // log error if there was one, otherwise clear
+                    result.details
+                        ? this.error = result.details.map((detail: any) => detail.message)
+                        : this.error = '';
+                    // if (result.details) {
+                    // this.error = result.details.map((detail: any) => detail.message)
+                    // } else {
+                    // this.error = '';
+                    // }
+                }));
+    }
+}
 
 </script>
 
