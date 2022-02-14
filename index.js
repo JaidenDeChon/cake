@@ -15,7 +15,7 @@ const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const pathToIndex = path.join(__dirname, 'views', 'index.html');
+const pathToIndex = path.join(__dirname, 'client', 'build');
 
 console.log(pathToIndex);
 
@@ -26,7 +26,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
-    response.sendFile(pathToIndex);
+    response.sendFile('index.html');
 });
 
 // TODO - Db stuff for site admin
