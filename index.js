@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import postNotification from './courier/postNotification.js';
+import helmet from 'helmet';
 
 // TODO - Db stuff for site admin
 // const messages = require('./db/messages');
@@ -10,14 +11,17 @@ import postNotification from './courier/postNotification.js';
 // Application processes
 const app = express();
 
+const path = process.cwd()+ '\\app\\views';
+console.log(path);
+
+app.use(express.static(path));
+app.use(helmet());
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
-    response.json({
-        message: 'Testing testing'
-    });
+    response.sendFile(path + '/index.html');
 });
 
 // TODO - Db stuff for site admin
