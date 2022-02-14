@@ -94,13 +94,13 @@ export default class ContactUs extends Vue {
         };
 
         fetch(API_URL, postObject)
-            .then(response => response.json()
-                .then(result => {
-                // log error if there was one, otherwise clear
-                    result.details
-                        ? this.error = result.details.map((detail: any) => detail.message)
-                        : this.error = '';
-                }));
+            .then(response => response.json())
+            .then(result => {
+            // log error if there was one, otherwise clear
+                result.details
+                    ? this.error = result.details.map((detail: any) => detail.message)
+                    : this.error = '';
+            });
     }
 
 
