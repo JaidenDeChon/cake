@@ -84,7 +84,7 @@ export default class ContactUs extends Vue {
     // For storing the posted API data.
     newMessage!: Record<string, unknown>;
 
-    public postNewMessage = function (this: any) {
+    public postNewMessage(): void {
         const postObject = {
             method: 'POST',
             body: JSON.stringify(this.newMessage),
