@@ -41,7 +41,7 @@ app.post('/messages', (request, response) => {
 
     console.log(`\n \n \n should be posting ${JSON.stringify(newDbObject)} \n \n \n`);
 
-    postNotification(newDbObject).then(response.status(200).send());
+    postNotification(newDbObject);
 
     // TODO - Db stuff for site admin
     // messages.create(request.body).then((message) => {
