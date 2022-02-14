@@ -11,7 +11,7 @@ import helmet from 'helmet';
 // Application processes
 const app = express();
 
-const path = process.cwd()+ '\\app\\views';
+const path = process.cwd()+ '/app/views';
 console.log(path);
 
 app.use(express.static(path));
@@ -36,8 +36,6 @@ app.post('/messages', (request, response) => {
 
     postNotification(newDbObject);
 
-    console.log(newDbObject.name);
-    response.status(200).send();
     // TODO - Db stuff for site admin
     // messages.create(request.body).then((message) => {
     //     response.json(message);
@@ -45,6 +43,8 @@ app.post('/messages', (request, response) => {
     //     response.status(500);
     //     response.json(error);
     // });
+
+    response.status(200).send();
 });
 
 const port = process.env.PORT || 4000;
