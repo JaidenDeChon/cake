@@ -15,7 +15,7 @@ const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const pathToIndex = path.join(__dirname, 'app', 'views', 'index.html');
+const pathToIndex = path.join(__dirname, 'views', 'index.html');
 
 console.log(pathToIndex);
 
