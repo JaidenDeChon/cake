@@ -5,13 +5,23 @@
             <!-- Name Input -->
             <div class="contact-us__label-input-combo">
                 <label for="contact-us__input--name">Name</label>
-                <input v-model="newMessage.name" type="text" id="contact-us__input--name" required>
+                <input
+                    v-model="newMessage.name"
+                    @compositionupdate="onCompositionUpdate($event, 'name')"
+                    type="text"
+                    id="contact-us__input--name"
+                    required>
             </div>
 
             <!-- Email input -->
             <div class="contact-us__label-input-combo">
                 <label for="contact-us__input--email">Email</label>
-                <input v-model="newMessage.email" type="email" id="contact-us__input--email" required>
+                <input
+                    v-model="newMessage.email"
+                    @compositionupdate="onCompositionUpdate($event, 'email')"
+                    type="email"
+                    id="contact-us__input--email"
+                    required>
             </div>
 
             <!-- Phone Number Input -->
@@ -19,20 +29,33 @@
 
                 <!-- Phone number field -->
                 <label for="contact-us__input--phone">Phone Number</label>
-                <input v-model="newMessage.phone" type="tel" id="contact-us__input--phone" required>
+                <input
+                    v-model="newMessage.phone"
+                    @compositionupdate="onCompositionUpdate($event, 'phone')"
+                    type="tel"
+                    id="contact-us__input--phone"
+                    required>
 
                 <div class="contact-us__inline-inputs">
 
                     <!-- Checkbox: OK to text me -->
                     <div class="contact-us__label-input-combo contact-us__label-input-combo--reverse-order">
                         <label for="contact-us__input--ok-to-text">It's OK to text me.</label>
-                        <input v-model="newMessage.okToText" type="checkbox" id="contact-us__input--ok-to-text">
+                        <input
+                            v-model="newMessage.okToText"
+                            @compositionupdate="onCompositionUpdate($event, 'okToText')"
+                            type="checkbox"
+                            id="contact-us__input--ok-to-text">
                     </div>
 
                     <!-- Checkbox: OK to call me  -->
                     <div class="contact-us__label-input-combo contact-us__label-input-combo--reverse-order">
                         <label for="contact-us__input--ok-to-call">It's OK to call me.</label>
-                        <input v-model="newMessage.okToCall" type="checkbox" id="contact-us__input--ok-to-call">
+                        <input
+                            v-model="newMessage.okToCall"
+                            @compositionupdate="onCompositionUpdate($event, 'okToCall')"
+                            type="checkbox"
+                            id="contact-us__input--ok-to-call">
                     </div>
 
                 </div>
@@ -42,7 +65,13 @@
             <!-- Message Input -->
             <div class="contact-us__label-input-combo">
                 <label for="contact-us__input--message">What are you looking for?</label>
-                <textarea v-model="newMessage.message" name="message" id="contact-us__input--message" rows="6"  required/>
+                <textarea
+                    v-model="newMessage.message"
+                    @compositionupdate="onCompositionUpdate($event, 'message')"
+                    name="message"
+                    id="contact-us__input--message"
+                    rows="6"
+                    required/>
             </div>
 
             <!-- Submit button -->
@@ -84,7 +113,14 @@ export default class ContactUs extends Vue {
     // For storing the posted API data.
     newMessage!: Record<string, unknown>;
 
+    public onCompositionUpdate(event: any, property: string) {
+        this.newMessage[property] = event.data;
+    }
+
     public postNewMessage(): void {
+
+        alert(JSON.stringify(this.newMessage));
+
         const postObject = {
             method: 'POST',
             body: JSON.stringify(this.newMessage),
