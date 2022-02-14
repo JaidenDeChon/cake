@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import postNotification from './courier/postNotification.js';
 import helmet from 'helmet';
+import path from 'path';
 
 // TODO - Db stuff for site admin
 // const messages = require('./db/messages');
@@ -11,16 +12,16 @@ import helmet from 'helmet';
 // Application processes
 const app = express();
 
-const pathToClient = '/views/index.html';
+const pathToIndex = path.join(__dirname, 'app', 'views', 'index.html');
 
-app.use(express.static(pathToClient));
+app.use(express.static(pathToIndex));
 app.use(helmet());
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
-    response.sendFile(pathToClient);
+    response.sendFile(pathToIndex);
 });
 
 // TODO - Db stuff for site admin
