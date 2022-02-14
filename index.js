@@ -13,6 +13,10 @@ import { fileURLToPath } from 'url';
 // Application processes
 const app = express();
 
+// Set up port and ENV variable for it
+if (!process.env.PORT) process.env.PORT = '4000';
+const port = process.env.PORT;
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const pathToIndex = path.join(__dirname, 'client', 'build');
@@ -27,6 +31,10 @@ app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
     response.sendFile('index.html');
+});
+
+app.get('/port', (request, response) => {
+    response.send(port);
 });
 
 // TODO - Db stuff for site admin
@@ -53,8 +61,6 @@ app.post('/messages', (request, response) => {
 
     response.status(200).send();
 });
-
-const port = process.env.PORT || 4000;
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}.`)
