@@ -53,7 +53,7 @@
 
 <script lang="ts">
 
-import { Vue, Options, Watch } from 'vue-class-component';
+import { Vue, Options } from 'vue-class-component';
 
 const API_URL = 'http://localhost:4000/messages';
 
@@ -70,6 +70,11 @@ const API_URL = 'http://localhost:4000/messages';
                 okToCall: false,
             },
         };
+    },
+    watch: {
+        error (newValue): void {
+            console.log(newValue);
+        }
     }
 })
 export default class ContactUs extends Vue {
@@ -78,11 +83,6 @@ export default class ContactUs extends Vue {
 
     // For storing the posted API data.
     newMessage!: Record<string, unknown>;
-
-    @Watch('error')
-    onPropertyChanged(value: string) {
-        console.log(this.error);
-    }
 
     public postNewMessage(): void {
         const postObject = {
