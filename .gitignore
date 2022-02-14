@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
-/dist
+
+# Client stuff
+client/dist
+client/node_modules
 
 
 # local env files
