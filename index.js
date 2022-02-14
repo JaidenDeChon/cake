@@ -39,7 +39,7 @@ app.get('/', (request, response) => {
 app.post('/messages', (request, response) => {
     const newDbObject = request.body;
 
-    console.log(`should be posting ${JSON.stringify(newDbObject)}`);
+    console.log(`\n \n \n should be posting ${JSON.stringify(newDbObject)} \n \n \n`);
 
     postNotification(newDbObject).then(response.status(200).send());
 
