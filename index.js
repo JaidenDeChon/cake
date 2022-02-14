@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import postNotification from './courier/postNotification.js';
 import helmet from 'helmet';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 // TODO - Db stuff for site admin
 // const messages = require('./db/messages');
@@ -12,7 +13,11 @@ import path from 'path';
 // Application processes
 const app = express();
 
-const pathToIndex = path.join(__dirname, 'app', 'views', 'index.html');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const pathToIndex = path.join(__dirname, '/app', '/views', 'index.html');
+
+console.log(pathToIndex);
 
 app.use(express.static(pathToIndex));
 app.use(helmet());
