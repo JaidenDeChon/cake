@@ -83,6 +83,7 @@
 <script lang="ts">
 
 import { Vue, Options } from 'vue-class-component';
+import RequestInit from '../../../models/RequestInit';
 
 const API_URL = 'http://localhost:4000/messages';
 
@@ -113,7 +114,7 @@ export default class ContactUs extends Vue {
     // For storing the posted API data.
     newMessage!: Record<string, unknown>;
 
-    public onCompositionUpdate(event: any, property: string) {
+    public onCompositionUpdate(event: any, property: string): void {
         this.newMessage[property] = event.data;
     }
 
@@ -126,19 +127,11 @@ export default class ContactUs extends Vue {
             body: JSON.stringify(this.newMessage),
             headers: {
                 'content-type': 'application/json'
-            }
-        };
+            },
+            mode: 'no-cors'
+        } as RequestInit;
 
-        fetch(API_URL, postObject)
-            .then((response) => {
-                response.json()
-            })
-            .then((result: any) => {
-            // log error if there was one, otherwise clear
-                result.details
-                    ? this.error = result.details.map((detail: any) => detail.message )
-                    : this.error = '';
-            });
+        fetch(API_URL, postObject);
     }
 
 
