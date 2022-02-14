@@ -83,7 +83,6 @@
 <script lang="ts">
 
 import { Vue, Options } from 'vue-class-component';
-import RequestInit from '../../../models/RequestInit';
 
 const API_URL = 'http://localhost:4000/messages';
 
@@ -127,9 +126,8 @@ export default class ContactUs extends Vue {
             body: JSON.stringify(this.newMessage),
             headers: {
                 'content-type': 'application/json'
-            },
-            mode: 'no-cors'
-        } as RequestInit;
+            }
+        };
 
         fetch(API_URL, postObject);
     }
