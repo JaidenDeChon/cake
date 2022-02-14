@@ -84,7 +84,7 @@
 
 import { Vue, Options } from 'vue-class-component';
 
-const API_URL = 'http://localhost:4000/messages';
+const API_URL = '/messages';
 
 @Options({
     data() {
