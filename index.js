@@ -11,7 +11,7 @@ import helmet from 'helmet';
 // Application processes
 const app = express();
 
-const path = process.cwd()+ '\\app\\views';
+const path = process.cwd()+ '\\views';
 
 app.use(express.static(path));
 app.use(helmet());
