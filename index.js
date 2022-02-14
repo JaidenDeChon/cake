@@ -33,10 +33,6 @@ app.get('/', (request, response) => {
     response.sendFile('index.html');
 });
 
-app.get('/port', (request, response) => {
-    response.send(port);
-});
-
 // TODO - Db stuff for site admin
 // app.get('/messages', (request, response) => {
 //     messages.getAll().then((messages) => {
