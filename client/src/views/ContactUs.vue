@@ -1,6 +1,6 @@
 <template>
     <div class="contact-us">
-        <form class="contact-us__form" @submit.prevent="postNewMessage">
+        <form class="contact-us__form" @submit="postNewMessage">
 
             <!-- Name Input -->
             <div class="contact-us__label-input-combo">
@@ -119,8 +119,6 @@ export default class ContactUs extends Vue {
 
     public postNewMessage(): void {
 
-        alert(JSON.stringify(this.newMessage));
-
         const postObject = {
             method: 'POST',
             body: JSON.stringify(this.newMessage),
@@ -131,8 +129,6 @@ export default class ContactUs extends Vue {
 
         fetch(API_URL, postObject);
     }
-
-
 }
 
 </script>
