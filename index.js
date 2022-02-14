@@ -11,16 +11,17 @@ import helmet from 'helmet';
 // Application processes
 const app = express();
 
-const path = process.cwd()+ '\\views';
+const pathToClient = process.cwd()+ '\\app\\views\\index.html';
+console.log(pathToClient);
 
-app.use(express.static(path));
+app.use(express.static(pathToClient));
 app.use(helmet());
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
-    response.sendFile(path + '/index.html');
+    response.sendFile(pathToClient);
 });
 
 // TODO - Db stuff for site admin

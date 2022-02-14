@@ -1,6 +1,0 @@
-#!/usr/bin/bash
-cd client && npm run serve &
-frontendprocess=$!
-node index.js &
-backendprocess=$!
-wait $frontendprocess $backendprocess
