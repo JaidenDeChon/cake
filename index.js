@@ -1,11 +1,13 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import postNotification from './courier/postNotification.js';
 
-// TODO - Db stuff
+// TODO - Db stuff for site admin
 // const messages = require('./db/messages');
 
+// Application processes
 const app = express();
 
 app.use(morgan('tiny'));
@@ -18,7 +20,7 @@ app.get('/', (request, response) => {
     });
 });
 
-// TODO - Db stuff
+// TODO - Db stuff for site admin
 // app.get('/messages', (request, response) => {
 //     messages.getAll().then((messages) => {
 //         response.json(messages);
@@ -27,9 +29,12 @@ app.get('/', (request, response) => {
 
 app.post('/messages', (request, response) => {
     const newDbObject = request.body;
+
+    postNotification(newDbObject);
+
     console.log(newDbObject.name);
     response.status(200).send();
-    // TODO - Db stuff
+    // TODO - Db stuff for site admin
     // messages.create(request.body).then((message) => {
     //     response.json(message);
     // }).catch((error) => {
