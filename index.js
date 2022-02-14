@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import postNotification from './courier/postNotification.js';
 import helmet from 'helmet';
+import cwd from 'process';
 
 // TODO - Db stuff for site admin
 // const messages = require('./db/messages');
@@ -11,7 +12,7 @@ import helmet from 'helmet';
 // Application processes
 const app = express();
 
-const pathToClient = process.cwd()+ '/views/index.html';
+const pathToClient = cwd()+ '/views/index.html';
 console.log(pathToClient);
 
 app.use(express.static(pathToClient));
