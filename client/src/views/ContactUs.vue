@@ -1,6 +1,6 @@
 <template>
     <div class="contact-us">
-        <form class="contact-us__form" @submit.prevent="postNewMessage">
+        <form class="contact-us__form" @submit="postNewMessage">
 
             <!-- Name Input -->
             <div class="contact-us__label-input-combo">
@@ -89,16 +89,18 @@ export default class ContactUs extends Vue {
             method: 'POST',
             body: JSON.stringify(this.newMessage),
             headers: {
-                'content-type': 'application/json',
+                'content-type': 'application/json'
             }
         };
 
         fetch(API_URL, postObject)
-            .then(response => response.json())
-            .then(result => {
+            .then(function (response) {
+                response.json()
+            })
+            .then(function (this: any, result: any) {
             // log error if there was one, otherwise clear
                 result.details
-                    ? this.error = result.details.map((detail: any) => detail.message)
+                    ? this.error = result.details.map(function (detail: any) { return detail.message })
                     : this.error = '';
             });
     }
