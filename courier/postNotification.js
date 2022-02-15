@@ -1,14 +1,14 @@
 import pkg from '@trycourier/courier';
 
 const { CourierClient } = pkg;
-const courier = CourierClient({ authorizationToken: "pk_prod_5PATKZVX9AMKP5MDJ3SNN2BACHAQ" });
+const courier = CourierClient({ authorizationToken: "pk_prod_SMC9QRNYT3MPZNMGXHX07J6JNDGG" });
 
 export default async function sendNotification (data) {
     const profile = { email: 'jdechon1995@gmail.com'};
     const { messageId } = await courier.send({
-        brand: "RX7QMXSPECMBR2GHANCK1TVBA1CN",
-        eventId: "HW0F5J8ZPZ413PQG7QPHN5T6S9YV",
-        recipientId: "594e1eee-54f7-4fc7-985d-20d0094e02c1",
+        brand: "BAT1B0YFP2MBFWJ8FTH1SBQBM5AV",
+        eventId: "BY1PVVKZ2Q4TD2QPR2VRMWRP2C92",
+        recipientId: "a82e8c7e-5dab-4b0e-9346-ef29eef24253",
         profile,
         data
     });
