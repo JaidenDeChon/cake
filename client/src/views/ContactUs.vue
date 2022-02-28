@@ -187,7 +187,7 @@ export default class ContactUs extends Vue {
         align-items: center;
         justify-content: center;
 
-        padding: 0.5rem;
+        height: 2.5rem;
 
         color: white;
 
