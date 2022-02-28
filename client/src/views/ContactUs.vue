@@ -113,7 +113,7 @@ export default class ContactUs extends Vue {
     // For storing the posted API data.
     newMessage!: Record<string, unknown>;
 
-    public onCompositionUpdate(event: any, property: string): void {
+    public onCompositionUpdate(event: CompositionEvent, property: string): void {
         this.newMessage[property] = event.data;
     }
 
