@@ -16,11 +16,14 @@ export default class App extends Vue {}
 <style lang="scss">
 
     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins&display=swap');
+    @import '~normalize.css';
 
     body {
 
         padding: 0;
         margin: 0;
+
+        overflow-x: hidden;
 
         background: rgb(234,228,233);
         background: linear-gradient(
