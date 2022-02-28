@@ -20,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../views/ContactUs.vue')
             }
         ]
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: () => import('../views/Admin.vue')
     }
 ]
 
