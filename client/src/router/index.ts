@@ -7,17 +7,19 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Home',
         component: Home,
         // TODO - Remove this line when other routes are added
-        redirect: () => { return { name: 'Contact Us' } }
-    },
-    {
-        path: '/about',
-        name: 'About',
-        component: () => import('../views/About.vue')
-    },
-    {
-        path: '/contact-us',
-        name: 'Contact Us',
-        component: () => import('../views/ContactUs.vue')
+        redirect: () => { return { name: 'Contact Us' } },
+        children: [
+            {
+                path: 'about',
+                name: 'About',
+                component: () => import('../views/About.vue')
+            },
+            {
+                path: 'contact-us',
+                name: 'Contact Us',
+                component: () => import('../views/ContactUs.vue')
+            }
+        ]
     }
 ]
 
