@@ -1,28 +1,41 @@
 <script setup lang="ts">
 
-import { routeNames } from '@/router';
-import IconClose from '../components/icons/icon-close.vue';
+    import { routeNames } from '@/router';
+    import IconClose from '../components/icons/icon-close.vue';
 
-const msg = "a link to nowhere"
+    const emit = defineEmits(['close-main-menu']);
+
+    const homeText = "Home"
+
+    function closeMainMenu(): void {
+        emit('close-main-menu');
+    }
 
 </script>
 
 <template>
-    <div class="main-menu">
+    <nav class="main-menu">
         <!-- Close Main Menu -->
-        <div class="main-menu__menu-item"><IconClose /></div>
-        <!-- Home -->
-        <router-link class="main-menu__menu-item" :to="{ name: routeNames.HOME }">{{ msg }}</router-link>
-    </div>
+        <button
+            @click="closeMainMenu"
+            class="main-menu__menu-item main-menu__menu-item--skinny main-menu__menu-item--align-right"
+        >
+            <IconClose />
+        </button>
+        <ul>
+            <li>
+                <!-- Home -->
+                <router-link class="main-menu__menu-item" :to="{ name: routeNames.HOME }">{{ homeText }}</router-link>
+            </li>
+        </ul>
+    </nav>
 </template>
 
 <style lang="scss" scoped>
 
     .main-menu {
-        border: 1px solid white;
 
-        height: 100vh;
-        width: 100vw;
+        // width: 100%;
 
         display: flex;
         align-items: center;
@@ -35,18 +48,73 @@ const msg = "a link to nowhere"
         left: 0;
         right: 0;
 
-        svg {
-            fill: #fff;
+        &,
+        & * {
+            background: var(--color-background);
+        }
+
+        // Unordered list for nav links.
+        ul {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+
+            li {
+                list-style-type: none;
+                display: block;
+                width: 100%;
+            }
         }
 
         &__menu-item {
-            border: 1px solid white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 2rem;
 
             width: 100%;
-            height: 6rem;
+            height: 4rem;
+
+            outline: none;
+            background-color: transparent;
+            border: none;
+            border-bottom: 0.02rem solid var(--color-border);
+            cursor: pointer;
 
             svg {
                 height: 1.8rem;
+                fill: var(--color-text);
+                background-color: transparent;
+            }
+
+            &--skinny {
+                height: 2.5rem;
+            }
+
+            &--align-right {
+                justify-content: flex-end;
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: hsla(160, 100%, 37%, 0.2);
+            transition: 0.4s;
+
+            &.router-link-exact-active {
+                color: var(--color-text);
+            }
+        }
+
+        @media (hover: hover) {
+            .main-menu__menu-item:hover {
+                background-color: var(--color-background-mute);
+            }
+
+            a:hover {
+                background-color: hsla(160, 100%, 37%, 0.2);
             }
         }
     }
