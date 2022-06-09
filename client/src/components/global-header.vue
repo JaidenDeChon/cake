@@ -40,9 +40,10 @@
             <IconCart />
         </button>
 
-        <transition name="slide">
-            <MainMenu class="header__main-menu" v-if="mainMenuIsOpen" @close-main-menu="closeMainMenu"/>
-        </transition>
+        <MainMenu
+            :class="['header__main-menu', { 'header__main-menu--open': mainMenuIsOpen }]"
+            @close-main-menu="closeMainMenu"
+        />
     </header>
 </template>
 
@@ -93,8 +94,17 @@
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 0;
+            left: -22rem;
             right: 0;
+            width: 100vw;
+            height: 100vh;
+            max-width: 22rem;
+            transition: left 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+            &--open {
+                box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+                left: 0;
+            }
         }
     }
 
