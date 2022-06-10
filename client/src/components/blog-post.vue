@@ -31,7 +31,6 @@
         justify-content: center;
         flex-direction: column;
 
-        &__img,
         &__title,
         &__date,
         &__content {
@@ -42,7 +41,11 @@
             width: 100%;
             max-height: 30rem;
 
+            margin-bottom: 2.2rem;
+
             object-fit: cover;
+
+            border-radius: 0.5rem;
         }
     }
 
