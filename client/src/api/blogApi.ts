@@ -23,6 +23,6 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
             'volutpat sapien sollicitudin ac. Nulla lacus ante, venenatis eu lorem eu, tincidunt aliquet ' +
             'nisi. Nunc tempus neque quis nibh venenatis, at commodo dolor sollicitudin.',
         date: 'June 9, 2022',
-        img: 'https://images.unsplash.com/photo-1654704089641-abee50d23b7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
+        img: 'https://picsum.photos/500/500'
     }]);
 }
