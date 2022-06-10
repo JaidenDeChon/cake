@@ -51,8 +51,8 @@
 
     .header {
         position: relative;
+        z-index: 100;
 
-        width: 100vw;
         height: 5rem;
 
         padding: var(--global-padding);
