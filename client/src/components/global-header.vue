@@ -55,7 +55,7 @@
         width: 100vw;
         height: 5rem;
 
-        padding: 2rem;
+        padding: var(--global-padding);
 
         display: flex;
         align-items: center;
