@@ -72,7 +72,7 @@
             align-items: center;
             justify-content: center;
 
-            padding: 2rem;
+            padding: var(--global-padding);
 
             width: 100%;
             height: 4rem;

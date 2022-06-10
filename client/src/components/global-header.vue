@@ -51,18 +51,18 @@
 
     .header {
         position: relative;
+        z-index: 100;
 
-        width: 100vw;
         height: 5rem;
 
-        padding: 2rem;
+        padding: var(--global-padding);
 
         display: flex;
         align-items: center;
         justify-content: space-between;
 
         background-color: var(--color-background);
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0rem 0.4375rem 1.8125rem 0;
 
         &__main-menu-button {
             height: 2.2rem;
@@ -102,7 +102,7 @@
             transition: left 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
             &--open {
-                box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+                box-shadow: rgba(100, 100, 111, 0.2) 0rem 0.4375rem 1.8125rem 0;
                 left: 0;
             }
         }
