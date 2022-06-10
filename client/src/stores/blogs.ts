@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { fetchBlogPosts } from '@/blogApi';
+import { fetchBlogPosts } from '@/api/blogApi';
 import type BlogPost from '../../../models/BlogPost';
 
 export const useBlogsStore = defineStore({
