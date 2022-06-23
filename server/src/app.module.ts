@@ -7,7 +7,7 @@ import { BlogPostModule } from './content/BlogPosts/BlogPost.module';
 // import { BlogPostController } from './content/BlogPosts/BlogPost.controller';
 // import { BlogPostService } from './content/BlogPosts/BlogPost.service';
 
-const mongoDbConnectionString = 'mongodb+srv://admin:admin@cluster0.uwwvphx.mongodb.net/jaid-test-0?retryWrites=true&w=majority;'
+const mongoDbConnectionString = 'mongodb+srv://admin:admin@cluster0.uwwvphx.mongodb.net/jaid-test-0?retryWrites=true'
 
 @Module({
   imports: [
