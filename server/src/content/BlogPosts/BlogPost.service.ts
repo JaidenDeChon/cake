@@ -34,10 +34,10 @@ export class BlogPostService {
 
         const title = blogPost.title;
         const content = blogPost.content;
-        const data = blogPost.date;
+        const date = blogPost.date;
         const img = blogPost.img;
 
-        const newBlogPost = new this.blogPostModel({ title, content, data, img });
+        const newBlogPost = new this.blogPostModel({ title, content, date, img });
         const result = await newBlogPost.save();
         console.log(result);
         return 'this is a fake result';
