@@ -1,17 +1,38 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import * as dotenv from 'dotenv';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BlogPostModule } from './content/BlogPosts/BlogPost.module';
 
-const mongoDbConnectionString =
-    'mongodb+srv://admin:admin@jaid-test-0.oyn3w.mongodb.net/?retryWrites=true&w=majority';
+
+// Set up environmental variables.
+dotenv.config();
+
+// Username to MongoDB deployment.
+const mongoUser = process.env.MONGO_USER;
+
+// Password to MongoDB deployment.
+const mongoPw = process.env.MONGO_PW;
+
+// Name of MongoDB deployment.
+const mongoDbName = process.env.MONGO_DB_NAME;
+
+// Beginning of connection string.
+const connectionStringPrepend = 'mongodb+srv://';
+
+// End of connection string.
+const connectionStringAppend = '.oyn3w.mongodb.net/?retryWrites=true&w=majority';
+
+// Assembled connection string.
+const connectionString =
+    `${ connectionStringPrepend }${ mongoUser }:${ mongoPw }@${ mongoDbName }${ connectionStringAppend }`;
 
 @Module({
     imports: [
         // Expose Mongoose to the app.
-        MongooseModule.forRoot(mongoDbConnectionString),
+        MongooseModule.forRoot(connectionString),
         // Exposes 'BlogPost' module to the app.
         BlogPostModule
     ],
