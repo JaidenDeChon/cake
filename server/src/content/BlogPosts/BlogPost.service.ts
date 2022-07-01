@@ -30,7 +30,7 @@ export class BlogPostService {
      * Inserts a BlogPost into the database.
      * @param   { BlogPost }   blogPost   The BlogPost object to insert into the database.
      */
-    async createBlogPost(blogPost: BlogPostSchema) {
+    async createBlogPost (blogPost: BlogPostSchema) {
 
         const title = blogPost.title;
         const content = blogPost.content;
@@ -38,9 +38,9 @@ export class BlogPostService {
         const img = blogPost.img;
 
         const newBlogPost = new this.blogPostModel({ title, content, date, img });
+
         const result = await newBlogPost.save();
-        console.log(result);
-        return 'this is a fake result';
+        return result.id as string;
     }
 
 
