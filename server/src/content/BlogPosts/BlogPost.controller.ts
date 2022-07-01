@@ -22,4 +22,25 @@ export class BlogPostController {
         const id = await this._blogPostService.createBlogPost(newBlogPost);
         return { id };
     }
+
+    /**
+     * Gets all of the Blog Posts.
+     * @returns   All of the blog posts.
+     */
+    @Get('get-all-blog-posts')
+    async getAllBlogPosts (): Promise<BlogPost[]> {
+        const blogPosts = await this._blogPostService.getAllBlogPosts();
+        return blogPosts;
+    }
+
+    /**
+     * Gets a single Blog Post.
+     * @param     { string }   blogPostId   The ID of the Blog Post to find.
+     * @returns   The Blog Post with the given ID.
+     */
+    @Get('get-blog-post/:id')
+    async getBlogPost (@Param('id') blogPostId: string): Promise<BlogPost> {
+        const blogPost = await this._blogPostService.getBlogPost(blogPostId);
+        return blogPost;
+    }
 }
