@@ -5,6 +5,7 @@ import * as mongoose from 'mongoose';
  * @TODO - Find a way to utilize this property in the object given to mongoose.Schema constructor below.
  */
 export interface BlogPostSchema {
+    id?: string;
     title: string;
     content: string;
     date: string;
