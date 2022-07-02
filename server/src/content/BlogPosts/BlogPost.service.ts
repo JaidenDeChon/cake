@@ -2,9 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose';
 
-import { BlogPost } from "src/models";
+import { BlogPost } from './BlogPost.model';
 import { JaidModuleNames } from "src/constants";
-import { BlogPostSchema } from "./BlogPost.model";
 
 /**
  * Injects server dependency BlogPostService.
@@ -26,7 +25,7 @@ export class BlogPostService {
      * Inserts a BlogPost into the database.
      * @param   { BlogPost }   blogPost   The BlogPost object to insert into the database.
      */
-    async createBlogPost (blogPost: BlogPostSchema) {
+    async createBlogPost (blogPost: BlogPost) {
 
         const title = blogPost.title;
         const content = blogPost.content;
@@ -61,7 +60,7 @@ export class BlogPostService {
      * Maps BlogPostSchema interface objects (or just one of them) to an array of BlogPost interface objects.
      * @param   { BlogPostSchema | BlogPostSchema[] }   toBeMapped   The object or array of objects to be mapped.
      */
-    private mapToBlogPostModel (toBeMapped: BlogPostSchema | BlogPostSchema[]): BlogPost[] {
+    private mapToBlogPostModel (toBeMapped: BlogPost | BlogPost[]): BlogPost[] {
 
         const candidate = Array.isArray(toBeMapped)
             ? [...toBeMapped]

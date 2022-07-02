@@ -1,11 +1,11 @@
 import * as mongoose from 'mongoose';
 
 /**
- * Interface representing the Mongoose schema for blog posts.
- * @TODO - Find a way to utilize this property in the object given to mongoose.Schema constructor below.
+ * The shape of a Blog Post throughout the app.
+ * @TODO - Move this to a place availabale globally (client and server)
  */
-export interface BlogPostSchema {
-    id?: string;
+ export interface BlogPost extends mongoose.Document {
+    id: string;
     title: string;
     content: string;
     date: string;
