@@ -52,8 +52,30 @@ export class BlogPostService {
      */
     async getBlogPost (id: string): Promise<BlogPost> {
         const blogPost = await this.blogPostModel.findById(id);
+        console.log(blogPost);
         if (!blogPost) throw new NotFoundException('Could not find BlogPost.');
         return this.mapToBlogPostModel(blogPost)[0];
+    }
+
+    /**
+     * Updates a Blog Post.
+     * @param   { id }        id        The ID of the Blog Post to update.
+     * @param   { title }     title     The new title of the Blog Post.
+     * @param   { content }   content   The new content of the Blog Post.
+     * @param   { date }      date      The new date of the Blog Post.
+     * @param   { img }       img       The new img of the Blog Post.
+     */
+    async updateBlogPost (id: string, title: string, content: string, date: string, img: string): Promise<void> {
+
+        const blogPostToUpdate: BlogPost = await this.getBlogPost(id);
+        console.log(blogPostToUpdate);
+
+        if (title) blogPostToUpdate.title = title;
+        if (content) blogPostToUpdate.content = content;
+        if (date) blogPostToUpdate.date = date;
+        if (img) blogPostToUpdate.img = img;
+
+        blogPostToUpdate.save();
     }
 
     /**

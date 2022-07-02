@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Patch } from '@nestjs/common';
 
 import { BlogPostService } from './BlogPost.service';
 import { BlogPost } from './BlogPost.model';
@@ -41,5 +41,17 @@ export class BlogPostController {
     async getBlogPost (@Param('id') blogPostId: string): Promise<BlogPost> {
         const blogPost = await this._blogPostService.getBlogPost(blogPostId);
         return blogPost;
+    }
+
+    @Patch('update-blog-post/:id')
+    async updateBlogPost (
+        @Param('id') id: string,
+        @Param('title') title: string,
+        @Param('content') content: string,
+        @Param('date') date: string,
+        @Param('img') img: string
+    ): Promise<void> {
+        console.log('attempting to update blog post');
+        await this._blogPostService.updateBlogPost(id, title, content, date, img);
     }
 }
