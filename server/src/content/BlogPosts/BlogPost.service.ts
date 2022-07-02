@@ -12,15 +12,11 @@ import { BlogPostSchema } from "./BlogPost.model";
 @Injectable()
 export class BlogPostService {
 
-    // Private variable for holding full list of BlogPosts.
-    private _allBlogPosts: BlogPost[] = [];
-
     /**
      * Constructor.
      * @param   { Model<BlogPost> }   blogPostModel   The shape of a Blog Post throughout the app.
      */
     constructor(
-
         // Injects the BlogPost Mongoose model for use in this service.
         @InjectModel(JaidModuleNames.BLOG_POST)
         private readonly blogPostModel: Model<BlogPost>
