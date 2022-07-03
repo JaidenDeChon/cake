@@ -78,6 +78,14 @@ export class BlogPostService {
     }
 
     /**
+     * Deletes a blog post.
+     * @param   { string }   _id   The ID of the Blog Post to update.
+     */
+    async deleteBlogPost (_id: string): Promise<void> {
+        await this.blogPostModel.deleteOne({ _id }).exec();
+    }
+
+    /**
      * Maps BlogPostSchema interface objects (or just one of them) to an array of BlogPost interface objects.
      * @param   { BlogPostSchema | BlogPostSchema[] }   toBeMapped   The object or array of objects to be mapped.
      */

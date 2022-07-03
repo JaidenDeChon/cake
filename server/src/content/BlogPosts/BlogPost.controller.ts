@@ -61,4 +61,13 @@ export class BlogPostController {
     ): Promise<void> {
         await this._blogPostService.updateBlogPost(id, title, content, date, img);
     }
+
+    /**
+     * Deletes a blog post.
+     * @param   { string }   id   The ID of the Blog Post to update.
+     */
+    @Delete('delete-blog-post/:id')
+    async deleteBlogPost (@Param('id') id: string): Promise<void> {
+        await this._blogPostService.deleteBlogPost(id);
+    }
 }
