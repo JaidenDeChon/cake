@@ -59,11 +59,11 @@ export class BlogPostService {
 
     /**
      * Updates a Blog Post.
-     * @param   { id }        id           The ID of the Blog Post to update.
-     * @param   { title }     newTitle     The new title of the Blog Post.
-     * @param   { content }   newContent   The new content of the Blog Post.
-     * @param   { date }      newDate      The new date of the Blog Post.
-     * @param   { img }       newImg       The new img of the Blog Post.
+     * @param   { id }        _id       The ID of the Blog Post to update.
+     * @param   { title }     title     The new title of the Blog Post.
+     * @param   { content }   content   The new content of the Blog Post.
+     * @param   { date }      date      The new date of the Blog Post.
+     * @param   { img }       img       The new img of the Blog Post.
      */
     async updateBlogPost (
         _id: string,
@@ -72,7 +72,7 @@ export class BlogPostService {
         date: string,
         img: string
     ): Promise<IBlogPost> {
-        const post = await this.blogPostModel.findByIdAndUpdate({ _id }, { title, content, date });
+        const post = await this.blogPostModel.findByIdAndUpdate({ _id }, { title, content, date, img }).exec();
         if (!post) throw new NotFoundException('Could not find BlogPost to update.');
         return post;
     }
