@@ -43,15 +43,22 @@ export class BlogPostController {
         return blogPost;
     }
 
+    /**
+     * Updates a Blog Post.
+     * @param   { id }        id        The ID of the Blog Post to update.
+     * @param   { title }     title     The new title of the Blog Post.
+     * @param   { content }   content   The new content of the Blog Post.
+     * @param   { date }      date      The new date of the Blog Post.
+     * @param   { img }       img       The new img of the Blog Post.
+     */
     @Patch('update-blog-post/:id')
     async updateBlogPost (
         @Param('id') id: string,
-        @Param('title') title: string,
-        @Param('content') content: string,
-        @Param('date') date: string,
-        @Param('img') img: string
+        @Body('title') title: string,
+        @Body('content') content: string,
+        @Body('date') date: string,
+        @Body('img') img: string
     ): Promise<void> {
-        console.log('attempting to update blog post');
         await this._blogPostService.updateBlogPost(id, title, content, date, img);
     }
 }
