@@ -2,7 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose';
 
-import { IBlogPost } from './BlogPost.model';
+import { IBlogPost } from '../../../../models';
+
 import { JaidModuleNames } from "src/constants";
 
 /**

@@ -1,16 +1,5 @@
 import * as mongoose from 'mongoose';
-
-/**
- * The shape of a Blog Post throughout the app.
- * @TODO - Move this to a place availabale globally (client and server)
- */
- export interface IBlogPost {
-    id: string;
-    title: string;
-    content: string;
-    date: string;
-    img?: string;
-}
+import { IBlogPost } from '../../../../models';
 
 /**
  * Mongoose Schema object representing a BlogPost.
