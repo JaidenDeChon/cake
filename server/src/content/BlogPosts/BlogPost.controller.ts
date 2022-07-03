@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Get, Param, Patch } from '@nestjs/common';
 
 import { BlogPostService } from './BlogPost.service';
-import { BlogPost } from './BlogPost.model';
+import { IBlogPost } from './BlogPost.model';
 
 /**
  * Controller for Blog Posts.
@@ -17,7 +17,7 @@ export class BlogPostController {
      * @returns    An object containing the ID of the new Blog Post.
      */
     @Post('create-blog-post')
-    async createBlogPost (@Body() newBlogPost: BlogPost): Promise<{ id: string }> {
+    async createBlogPost (@Body() newBlogPost: IBlogPost): Promise<{ id: string }> {
         const id = await this._blogPostService.createBlogPost(newBlogPost);
         return { id };
     }
@@ -27,7 +27,7 @@ export class BlogPostController {
      * @returns   All of the blog posts.
      */
     @Get('get-all-blog-posts')
-    async getAllBlogPosts (): Promise<BlogPost[]> {
+    async getAllBlogPosts (): Promise<IBlogPost[]> {
         const blogPosts = await this._blogPostService.getAllBlogPosts();
         return blogPosts;
     }
@@ -38,7 +38,7 @@ export class BlogPostController {
      * @returns   The Blog Post with the given ID.
      */
     @Get('get-blog-post/:id')
-    async getBlogPost (@Param('id') blogPostId: string): Promise<BlogPost> {
+    async getBlogPost (@Param('id') blogPostId: string): Promise<IBlogPost> {
         const blogPost = await this._blogPostService.getBlogPost(blogPostId);
         return blogPost;
     }

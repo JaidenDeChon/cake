@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose';
 
-import { BlogPost } from './BlogPost.model';
+import { IBlogPost } from './BlogPost.model';
 import { JaidModuleNames } from "src/constants";
 
 /**
@@ -18,14 +18,14 @@ export class BlogPostService {
     constructor(
         // Injects the BlogPost Mongoose model for use in this service.
         @InjectModel(JaidModuleNames.BLOG_POST)
-        private readonly blogPostModel: Model<BlogPost>
+        private readonly blogPostModel: Model<IBlogPost>
     ) {}
 
     /**
      * Inserts a BlogPost into the database.
      * @param   { BlogPost }   blogPost   The BlogPost object to insert into the database.
      */
-    async createBlogPost (blogPost: BlogPost) {
+    async createBlogPost (blogPost: IBlogPost) {
 
         const title = blogPost.title;
         const content = blogPost.content;
@@ -41,7 +41,7 @@ export class BlogPostService {
     /**
      * Gets all blogposts from the database.
      */
-    async getAllBlogPosts (): Promise<BlogPost[]> {
+    async getAllBlogPosts (): Promise<IBlogPost[]> {
         const blogPosts = await this.blogPostModel.find().exec();
         return this.mapToBlogPostModel(blogPosts);
     }
@@ -50,7 +50,7 @@ export class BlogPostService {
      * Gets a single BlogPost by its ID.
      * @param   { string }   id   The ID of the BlogPost to get.
      */
-    async getBlogPost (id: string): Promise<BlogPost> {
+    async getBlogPost (id: string): Promise<IBlogPost> {
         const blogPost = await this.blogPostModel.findById(id);
         console.log(blogPost);
         if (!blogPost) throw new NotFoundException('Could not find BlogPost.');
@@ -82,7 +82,7 @@ export class BlogPostService {
      * Maps BlogPostSchema interface objects (or just one of them) to an array of BlogPost interface objects.
      * @param   { BlogPostSchema | BlogPostSchema[] }   toBeMapped   The object or array of objects to be mapped.
      */
-    private mapToBlogPostModel (toBeMapped: BlogPost | BlogPost[]): BlogPost[] {
+    private mapToBlogPostModel (toBeMapped: IBlogPost | IBlogPost[]): IBlogPost[] {
 
         const candidate = Array.isArray(toBeMapped)
             ? [...toBeMapped]
@@ -94,6 +94,6 @@ export class BlogPostService {
             content: blogPost.content,
             date: blogPost.date,
             img: blogPost.img
-        })) as BlogPost[];
+        })) as IBlogPost[];
     }
 }
