@@ -1,12 +1,13 @@
-import { Body, Controller, Post, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Patch, Delete } from '@nestjs/common';
 
+import { ControllerNames } from 'src/constants/ControllerNames';
 import { BlogPostService } from './BlogPost.service';
 import { IBlogPost } from './BlogPost.model';
 
 /**
  * Controller for Blog Posts.
  */
-@Controller('blog-posts')
+@Controller(ControllerNames.BLOG_POSTS.toString())
 export class BlogPostController {
 
     constructor (private readonly _blogPostService: BlogPostService) {}
