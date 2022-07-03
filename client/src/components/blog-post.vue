@@ -11,10 +11,11 @@
 
     import type { PropType } from 'vue';
     import { ref } from 'vue';
-    import type BlogPost from '../../../models/BlogPost';
+
+    import type { IBlogPost } from '@models/';
 
     const props = defineProps({
-        blogPost: { type: Object as PropType<BlogPost>, required: true }
+        blogPost: { type: Object as PropType<IBlogPost>, required: true }
     });
 
     const blogPost = ref(props.blogPost);

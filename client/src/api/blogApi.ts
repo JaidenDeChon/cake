@@ -1,6 +1,6 @@
-import type BlogPost from '../../../models/BlogPost';
+import type { IBlogPost } from '@models/';
 
-export async function fetchBlogPosts(): Promise<BlogPost[]> {
+export async function fetchBlogPosts(): Promise<IBlogPost[]> {
     return Promise.resolve([{
         title: 'Lorem Ipsum Dolor Sit Amet',
         content:

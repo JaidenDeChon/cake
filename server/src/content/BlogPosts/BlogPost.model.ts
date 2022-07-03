@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
-import { IBlogPost } from '../../../../models';
+
+import { IBlogPost } from '../../models';
 
 /**
  * Mongoose Schema object representing a BlogPost.

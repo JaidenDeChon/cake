@@ -1,8 +1,7 @@
 import { Body, Controller, Post, Get, Param, Patch, Delete } from '@nestjs/common';
 
-import { IBlogPost } from '../../../../models';
-
-import { ControllerNames } from 'src/constants/ControllerNames';
+import { IBlogPost } from '../../models';
+import { ControllerNames } from '../../constants';
 import { BlogPostService } from './BlogPost.service';
 
 /**

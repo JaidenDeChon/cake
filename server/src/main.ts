@@ -14,6 +14,9 @@ async function bootstrap() {
     const portNumber = 3000;
     const app = await NestFactory.create(AppModule);
 
+    // Set up global prefix so that client is accessible from root path.
+    app.setGlobalPrefix('api');
+
     // Set up Swagger.
     const swaggerConfig = new DocumentBuilder()
         .setTitle('BlogPosts')
@@ -22,7 +25,7 @@ async function bootstrap() {
         .addTag('blog-posts')
         .build();
     const document = SwaggerModule.createDocument(app, swaggerConfig);
-    SwaggerModule.setup('api', app, document);
+    SwaggerModule.setup('api/swagger', app, document);
 
     // Mount the app.
     console.log(`${ CliMessagePreface.INFO } App running on port ${ portNumber }.`);

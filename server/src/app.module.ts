@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import * as dotenv from 'dotenv';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { BlogPostModule } from './content/BlogPosts/BlogPost.module';
 
 
@@ -31,12 +31,12 @@ const connectionString =
 
 @Module({
     imports: [
+        // Serve the built front-end.
+        ServeStaticModule.forRoot({ rootPath: join(__dirname, '..', '..', 'client/dist') }),
         // Expose Mongoose to the app.
         MongooseModule.forRoot(connectionString),
         // Exposes 'BlogPost' module to the app.
         BlogPostModule
     ],
-    controllers: [AppController],
-    providers: [AppService]
 })
 export class AppModule {}

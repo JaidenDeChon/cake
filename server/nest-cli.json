@@ -4,7 +4,9 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "assets": [
-      { "include": "**/*.(t|j)s", "watchAssets": true }
+      { "include": "**/*.(t|j)s", "watchAssets": true },
+      { "include": "../server/src/models", "watchAssets": true }
     ]
-  }
+  },
+  "entryFile": "main"
 }
