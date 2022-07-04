@@ -14,6 +14,9 @@ async function bootstrap() {
     const portNumber = 3000;
     const app = await NestFactory.create(AppModule);
 
+    // Enable CORS when in dev environment.
+    if (process.env.NODE_ENV === 'production') app.enableCors();
+
     // Set up global prefix so that client is accessible from root path.
     app.setGlobalPrefix('api');
 

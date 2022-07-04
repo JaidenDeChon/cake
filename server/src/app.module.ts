@@ -37,6 +37,6 @@ const connectionString =
         MongooseModule.forRoot(connectionString),
         // Exposes 'BlogPost' module to the app.
         BlogPostModule
-    ],
+    ]
 })
 export class AppModule {}
