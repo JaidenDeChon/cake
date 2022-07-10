@@ -5,6 +5,7 @@ import { join } from 'path';
 import * as dotenv from 'dotenv';
 
 import { BlogPostModule } from './content/BlogPosts/BlogPost.module';
+import { HeroModule } from './content/Hero/Hero.module';
 
 
 // Set up environmental variables.
@@ -36,7 +37,9 @@ const connectionString =
         // Expose Mongoose to the app.
         MongooseModule.forRoot(connectionString),
         // Exposes 'BlogPost' module to the app.
-        BlogPostModule
+        BlogPostModule,
+        // Exposes 'Hero' module to the app.
+        HeroModule
     ]
 })
 export class AppModule {}
