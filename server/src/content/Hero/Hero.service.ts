@@ -31,7 +31,7 @@ export class HeroService {
      }
 
      /**
-      * Creates or updates the hero.
+      * Creates or updates the hero. Only one hero configuration can exist at a time.
       * @param   { string }           _id                     The `id` property of the Hero object to update.
       * @param   { string }           primaryText             The `primaryText` property of the Hero object to update.
       * @param   { string }           secondaryText           The `secondaryText` property of the Hero object to update.
