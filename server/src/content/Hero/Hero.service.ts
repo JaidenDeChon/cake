@@ -25,7 +25,7 @@ export class HeroService {
      * Gets the hero.
      */
     async getHero (): Promise<IHero> {
-        const hero = await this.heroModel.find().exec()[0];
+        const hero = await this.heroModel.findOne().exec();
         if (!hero) throw new NotFoundException('Could not find hero.');
         return hero;
      }
