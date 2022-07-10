@@ -14,7 +14,7 @@ export class BlogPostController {
 
     /**
      * Creates a Blog Post.
-     * @param      { BlogPost }   newBlogPost   The data for the new Blog Post.
+     * @param      { IBlogPost }   newBlogPost   The data for the new Blog Post.
      * @returns    An object containing the ID of the new Blog Post.
      */
     @Post('create-blog-post')
