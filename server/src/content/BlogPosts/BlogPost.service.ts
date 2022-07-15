@@ -13,7 +13,7 @@ export class BlogPostService {
 
     /**
      * Constructor.
-     * @param   { Model<BlogPost> }   blogPostModel   The shape of a Blog Post throughout the app.
+     * @param   { Model<IBlogPost> }   blogPostModel   The shape of a Blog Post throughout the app.
      */
     constructor(
         // Injects the BlogPost Mongoose model for use in this service.
@@ -23,7 +23,7 @@ export class BlogPostService {
 
     /**
      * Inserts a BlogPost into the database.
-     * @param   { BlogPost }   blogPost   The BlogPost object to insert into the database.
+     * @param   { IBlogPost }   blogPost   The BlogPost object to insert into the database.
      */
     async createBlogPost (blogPost: IBlogPost) {
 
@@ -52,7 +52,6 @@ export class BlogPostService {
      */
     async getBlogPost (id: string): Promise<IBlogPost> {
         const blogPost = await this.blogPostModel.findById(id);
-        console.log(blogPost);
         if (!blogPost) throw new NotFoundException('Could not find BlogPost.');
         return this.mapToBlogPostModel(blogPost)[0];
     }

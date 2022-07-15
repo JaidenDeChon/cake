@@ -1,3 +1,4 @@
 export enum ControllerNames {
-    BLOG_POSTS = 'blog-posts'
+    BLOG_POSTS = 'blog-posts',
+    HERO = 'hero'
 }
