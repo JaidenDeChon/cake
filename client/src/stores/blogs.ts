@@ -1,17 +1,18 @@
 import { defineStore } from 'pinia';
+
 import { fetchBlogPosts } from '@/api/blogApi';
-import type BlogPost from '../../../models/BlogPost';
+import type { IBlogPost } from '@models/';
 
 export const useBlogsStore = defineStore({
 
     id: 'blog',
 
     state: () => ({
-        posts: [] as BlogPost[]
+        posts: [] as IBlogPost[]
     }),
 
     actions: {
-        async fetchBlogPosts() {
+        async fetchBlogPosts(): Promise<void> {
             const posts = await fetchBlogPosts();
             this.$patch({ posts });
         }
