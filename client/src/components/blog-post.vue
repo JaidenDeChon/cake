@@ -48,7 +48,7 @@
 
             object-fit: cover;
 
-            border-radius: 0.5rem;
+            border-radius: var(--content-block-border-radius);
             box-shadow: rgba(100, 100, 111, 0.2) 0rem 0.4375rem 1.8125rem 0;
         }
 

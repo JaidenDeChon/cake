@@ -53,7 +53,7 @@
         position: relative;
         z-index: 100;
 
-        height: 5rem;
+        height: var(--global-header-height);
 
         padding: var(--global-padding);
 

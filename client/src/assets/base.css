@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap');
+
+/* semantic measurement variables for this project */
+:root {
+  --global-padding: 2rem;
+  --global-header-height: 5rem;
+  --content-block-border-radius: 0.5rem;
+}
+
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
@@ -21,7 +30,7 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
-/* semantic color and measurement variables for this project */
+/* semantic color variables for this project */
 :root {
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
@@ -33,7 +42,15 @@
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
 
-  --global-padding: 2rem;
+  --color-background--inverted: var(--vt-c-black);
+  --color-background-soft--inverted: var(--vt-c-black-soft);
+  --color-background-mute--inverted: var(--vt-c-black-mute);
+
+  --color-border--inverted: var(--vt-c-divider-dark-2);
+  --color-border-hover--inverted: var(--vt-c-divider-dark-1);
+
+  --color-heading--inverted: var(--vt-c-text-dark-1);
+  --color-text--inverted: var(--vt-c-text-dark-1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,6 +64,16 @@
 
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
+
+    --color-background--inverted: var(--vt-c-white);
+    --color-background-soft--inverted: var(--vt-c-white-soft);
+    --color-background-mute--inverted: var(--vt-c-white-mute);
+
+    --color-border--inverted: var(--vt-c-divider-light-2);
+    --color-border-hover--inverted: var(--vt-c-divider-light-1);
+
+    --color-heading--inverted: var(--vt-c-text-light-1);
+    --color-text--inverted: var(--vt-c-text-light-1);
   }
 }
 
@@ -65,7 +92,7 @@ body {
   background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+  font-family: 'Fredoka', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
