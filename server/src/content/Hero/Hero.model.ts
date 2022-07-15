@@ -18,13 +18,5 @@ export const HeroSchema = new mongoose.Schema<IHero>(
             ],
             required: false
         }
-    },
-    {
-        capped: {
-            autoIndexId: true,
-            max: 1,
-            // Arbitrary number that will never be reached (1MB)
-            size: 1024
-        }
     }
 );
