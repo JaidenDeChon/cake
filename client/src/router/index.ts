@@ -3,23 +3,32 @@ import ClientHome from '@/views/home-view.vue';
 
 export enum routeNames {
   HOME = 'home',
-  ABOUT = 'about'
+  ABOUT = 'about',
+  ADMIN = 'admin'
+}
+
+export enum routeRoutes {
+  HOME = '/',
+  ABOUT = '/about',
+  ADMIN = '/admin'
 }
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: routeRoutes.HOME,
+      name: routeNames.HOME,
       component: ClientHome
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      path: routeRoutes.ABOUT,
+      name: routeNames.ABOUT,
+      component: () => import('@/views/about-view.vue')
+    },
+    {
+      path: routeRoutes.ADMIN,
+      name: routeNames.ADMIN,
       component: () => import('@/views/about-view.vue')
     }
   ]

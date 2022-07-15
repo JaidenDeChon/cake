@@ -8,6 +8,9 @@
     import IconMainMenu from '@/components/icons/icon-menu.vue';
     import IconCart from '@/components/icons/icon-cart.vue';
 
+    // Declare what emits this component uses.
+    const emitToParent = defineEmits(['menu-is-open', 'menu-is-closed']);
+
     // App title.
     const appTitle = ref('Lorem Ipsum');
 
@@ -17,11 +20,13 @@
     // Opens the main menu.
     function openMainMenu (): void {
         mainMenuIsOpen.value = true;
+        emitToParent('menu-is-open');
     }
 
     // Closes the main menu.
     function closeMainMenu (): void {
         mainMenuIsOpen.value = false;
+        emitToParent('menu-is-closed');
     }
 
 </script>
@@ -93,11 +98,10 @@
         &__main-menu {
             position: absolute;
             top: 0;
-            bottom: 0;
             left: -22rem;
             right: 0;
             width: 100vw;
-            height: 100vh;
+            height: 150vh;
             max-width: 22rem;
             transition: left 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
