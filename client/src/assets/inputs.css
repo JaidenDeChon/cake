@@ -1,0 +1,5 @@
+input {
+    height: var(--global-input-height);
+    border: 0.1rem solid var(--vt-c-indigo);
+    border-radius: var(--content-block-border-radius--small);
+}

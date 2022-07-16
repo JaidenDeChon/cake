@@ -48,6 +48,8 @@
 <style>
 
     @import '@/assets/base.css';
+    @import '@/assets/inputs.css';
+    @import '@/assets/buttons.css';
 
     #app {
         font-weight: normal;
