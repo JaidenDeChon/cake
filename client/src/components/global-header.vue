@@ -1,33 +1,45 @@
 <script setup lang="ts">
 
-    // Import Vue stuff.
-    import { ref } from 'vue';
+    import { ref, watch } from 'vue';
+    import { useRoute } from 'vue-router';
 
-    // Import components.
     import MainMenu from '@/components/main-menu.vue';
     import IconMainMenu from '@/components/icons/icon-menu.vue';
     import IconCart from '@/components/icons/icon-cart.vue';
 
-    // Declare what emits this component uses.
-    const emitToParent = defineEmits(['menu-is-open', 'menu-is-closed']);
+    /**
+     * General variables.
+     */
 
-    // App title.
     const appTitle = ref('Lorem Ipsum');
 
-    // Controls whether the main menu is open.
+    /**
+     * Main meun open/close state functionality.
+     */
+
+    const emitToParent = defineEmits(['menu-is-open', 'menu-is-closed']);
+
     const mainMenuIsOpen = ref(false);
 
-    // Opens the main menu.
     function openMainMenu (): void {
         mainMenuIsOpen.value = true;
         emitToParent('menu-is-open');
     }
 
-    // Closes the main menu.
     function closeMainMenu (): void {
         mainMenuIsOpen.value = false;
         emitToParent('menu-is-closed');
     }
+
+    /**
+     * Close main menu whenever route path changes.
+     */
+
+    const $route = useRoute();
+
+    watch(() => $route.path, () => {
+        if (mainMenuIsOpen.value) closeMainMenu();
+    });
 
 </script>
 
