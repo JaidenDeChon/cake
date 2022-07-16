@@ -103,7 +103,7 @@
             width: 100vw;
             height: 100vh;
             max-width: 22rem;
-            transition: left 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: left 0.3s ease, box-shadow 0.3s ease;
 
             &--open {
                 box-shadow: rgba(100, 100, 111, 0.2) 0rem 0.4375rem 1.8125rem 0;
