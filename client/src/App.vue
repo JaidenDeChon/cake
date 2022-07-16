@@ -41,7 +41,9 @@
 </script>
 
 <template>
-    <GlobalHeader @menu-is-open="lockScrolling" @menu-is-closed="unlockScrolling"/>
+    <div class="sticky-header-container">
+        <GlobalHeader class="global-header" @menu-is-open="lockScrolling" @menu-is-closed="unlockScrolling"/>
+    </div>
     <RouterView v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
             <component :is="Component" />
@@ -57,7 +59,16 @@
 
     #app {
         font-weight: normal;
+        padding-top: var(--global-header-height);
     }
+
+    .sticky-header-container {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+    }
+
     /* Route transition styles */
 
     .fade-enter-active,
