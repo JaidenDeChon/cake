@@ -101,7 +101,7 @@
             left: -22rem;
             right: 0;
             width: 100vw;
-            height: 150vh;
+            height: 100vh;
             max-width: 22rem;
             transition: left 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
