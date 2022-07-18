@@ -3,7 +3,7 @@
     import { ref, watch } from 'vue';
     import { useRoute } from 'vue-router';
 
-    import MainMenu from '@/components/main-menu.vue';
+    import MainMenu, { MainMenuLink } from '@/components/main-menu.vue';
     import IconMainMenu from '@/components/icons/icon-menu.vue';
     import IconCart from '@/components/icons/icon-cart.vue';
     import { routeNames } from '@/router';
@@ -15,7 +15,30 @@
     const appTitle = ref('Lorem Ipsum');
 
     /**
-     * Main meun open/close state functionality.
+     * Variables to be used as props.
+     */
+
+    const viewingAdminRoute = ref(false);
+
+    const adminRoutes: MainMenuLink[] = [];
+
+    const nonAdminRoutes: MainMenuLink[] = [
+        {
+            routeName: routeNames.HOME,
+            linkText: 'Home'
+        },
+        {
+            routeName: routeNames.ABOUT,
+            linkText: 'About'
+        },
+        {
+            routeName: routeNames.ADMIN_LOGIN,
+            linkText: 'Admin'
+        }
+    ];
+
+    /**
+     * Main menu open/close state functionality.
      */
 
     const emitToParent = defineEmits(['menu-is-open', 'menu-is-closed']);
@@ -61,6 +84,9 @@
         </button>
 
         <MainMenu
+            :viewing-admin-route="viewingAdminRoute"
+            :admin-routes="adminRoutes"
+            :non-admin-routes="nonAdminRoutes"
             :class="['header__main-menu', { 'header__main-menu--open': mainMenuIsOpen }]"
             @close-main-menu="closeMainMenu"
         />

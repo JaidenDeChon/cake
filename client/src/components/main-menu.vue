@@ -3,6 +3,17 @@
     import { routeNames } from '@/router';
     import IconCloseComponent from '../components/icons/icon-close.vue';
 
+    export interface MainMenuLink {
+        routeName: string,
+        linkText: string
+    }
+
+    const props = defineProps<{
+        viewingAdminRoute: boolean,
+        nonAdminRoutes: Array<MainMenuLink>,
+        adminRoutes: Array<MainMenuLink>
+    }>();
+
     const emit = defineEmits(['close-main-menu']);
 
     const homeText = "Home";
@@ -25,20 +36,15 @@ nav.main-menu
     )
         IconCloseComponent.main-menu__menu-item-icon
 
-    // Main Menu links list
-    ul
+    // Main Menu links list (admin)
+    ul(v-if="viewingAdminRoute")
+        li(v-for="item in adminRoutes")
+            router-link.main-menu__menu-item(:to="{ name: item.routeName }") {{ item.linkText }}
 
-        // Home
-        li
-            router-link.main-menu__menu-item(:to="{ name: routeNames.HOME }") {{ homeText }}
-
-        // About
-        li
-            router-link.main-menu__menu-item(:to="{ name: routeNames.ABOUT }") {{ aboutText }}
-
-        // Admin link
-        li
-            router-link.main-menu__menu-item(:to="{ name: routeNames.ADMIN_LOGIN }") {{ adminText }}
+    // Main Menu links list (non-admin)
+    ul(v-else)
+        li(v-for="item in nonAdminRoutes")
+            router-link.main-menu__menu-item(:to="{ name: item.routeName }") {{ item.linkText }}
 
 </template>
 
