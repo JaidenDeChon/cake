@@ -2,6 +2,7 @@
 
     import { ref, watch } from 'vue';
     import { useRoute } from 'vue-router';
+    import { computed } from '@vue/reactivity';
 
     import MainMenu, { MainMenuLink } from '@/components/main-menu.vue';
     import IconMainMenu from '@/components/icons/icon-menu.vue';
@@ -18,7 +19,11 @@
      * Variables to be used as props.
      */
 
-    const viewingAdminRoute = ref(false);
+    const viewingAdminRoute = computed(() => {
+        return $route
+            .matched
+            .some(({ name }) => name === routeNames.ADMIN_HOME);
+    });
 
     const adminRoutes: MainMenuLink[] = [];
 
