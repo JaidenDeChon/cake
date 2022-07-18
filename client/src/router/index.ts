@@ -6,16 +6,16 @@ import { useAuthenticationStore } from '@/stores/authentication';
 export enum routeNames {
   HOME = 'home',
   ABOUT = 'about',
-  ADMIN_LOGIN = 'login',
   ADMIN = 'admin',
+  ADMIN_LOGIN = 'admin login',
   ADMIN_HOME = 'admin home'
 }
 
 export enum routeRoutes {
   HOME = '/',
   ABOUT = '/about',
-  ADMIN_LOGIN = '/login',
   ADMIN = '/admin',
+  ADMIN_LOGIN = '/admin-login',
   ADMIN_HOME = '/admin-home'
 }
 
@@ -45,24 +45,24 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: routeRoutes.HOME,
       name: routeNames.HOME,
+      path: routeRoutes.HOME,
       component: ClientHome
     },
     {
-      path: routeRoutes.ABOUT,
       name: routeNames.ABOUT,
+      path: routeRoutes.ABOUT,
       component: () => import('@/views/about-view.vue')
     },
     {
-      path: routeRoutes.ADMIN,
       name: routeNames.ADMIN,
+      path: routeRoutes.ADMIN,
       component: () => import('@/views/admin/admin.vue'),
       beforeEnter: [checkForAuthentication],
       children: [
         {
-          path: routeRoutes.ADMIN_LOGIN,
           name: routeNames.ADMIN_LOGIN,
+          path: routeRoutes.ADMIN_LOGIN,
           component: () => import('@/views/admin/admin-login.vue')
         },
         {
