@@ -1,7 +1,11 @@
-button {
+button.jaid-button {
+
     height: var(--global-input-height);
+
+    color: var(--color-text--inverted);
+
     border: none;
     border-radius: var(--content-block-border-radius--small);
     background-color: var(--color-background-mute--inverted);
-    color: var(--color-text--inverted);
+    cursor: pointer;
 }
