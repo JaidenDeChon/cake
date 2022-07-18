@@ -7,3 +7,15 @@
             component(:is="Component")
 
 </template>
+
+<style lang="scss">
+
+    .admin {
+        padding: var(--global-padding);
+    }
+
+    .config-title-area {
+        margin-bottom: var(--global-padding);
+    }
+
+</style>

@@ -8,15 +8,17 @@ export enum routeNames {
   ABOUT = 'about',
   ADMIN = 'admin',
   ADMIN_LOGIN = 'admin login',
-  ADMIN_HOME = 'admin home'
+  ADMIN_HOME = 'admin home',
+  ADMIN_CONFIG_HERO = 'admin hero'
 }
 
 export enum routeRoutes {
   HOME = '/',
   ABOUT = '/about',
   ADMIN = '/admin',
-  ADMIN_LOGIN = '/admin-login',
-  ADMIN_HOME = '/admin-home'
+  ADMIN_LOGIN = '/login',
+  ADMIN_HOME = '/config',
+  ADMIN_CONFIG_HERO = '/hero'
 }
 
 /**
@@ -68,7 +70,15 @@ const router = createRouter({
         {
           name: routeNames.ADMIN_HOME,
           path: routeRoutes.ADMIN_HOME,
-          component: () => import('@/views/admin/admin-home.vue')
+          component: () => import('@/views/admin/admin-home.vue'),
+          redirect: () => ({ name: routeNames.ADMIN_CONFIG_HERO }),
+          children: [
+            {
+              name: routeNames.ADMIN_CONFIG_HERO,
+              path: routeRoutes.ADMIN_CONFIG_HERO,
+              component: () => import('@/views/admin/admin-config-hero.vue')
+            }
+          ]
         }
       ]
     }
