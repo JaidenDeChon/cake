@@ -1,14 +1,25 @@
 <script setup lang="ts">
     
     import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
+
+    import { useAuthenticationStore } from '@/stores/authentication';
+    import { routeNames } from '@/router';
+
+    const $router = useRouter();
+    const authenticationStore = useAuthenticationStore();
+
+    function handleLogin(): void {
+        try {
+            authenticationStore.setUserIsAuthenticated(true)
+        } catch {
+            // todo - handle error with auth
+        }
+        $router.push({ name: routeNames.ADMIN });
+    }
 
     let username = ref('');
     let password = ref('');
-
-    function handleLogin(): void {
-        // todo - try authentication
-        // todo - route to next page if auth successful
-    }
 
 </script>
 
@@ -48,8 +59,6 @@ form.login-panel
     .login-panel__label {
         margin-bottom: var(--global-padding);
     }
-
-    .login-panel__input {}
 
     .login-panel__submit-button {
         margin-top: calc(var(--global-padding) / 2);

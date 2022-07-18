@@ -38,7 +38,7 @@ nav.main-menu
 
         // Admin link
         li
-            router-link.main-menu__menu-item(:to="{ name: routeNames.ADMIN }") {{ adminText }}
+            router-link.main-menu__menu-item(:to="{ name: routeNames.ADMIN_LOGIN }") {{ adminText }}
 
 </template>
 
