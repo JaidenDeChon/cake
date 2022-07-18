@@ -8,6 +8,7 @@ export enum routeNames {
   ABOUT = 'about',
   ADMIN_LOGIN = 'login',
   ADMIN = 'admin',
+  ADMIN_HOME = 'admin home'
 }
 
 export enum routeRoutes {
@@ -15,6 +16,7 @@ export enum routeRoutes {
   ABOUT = '/about',
   ADMIN_LOGIN = '/login',
   ADMIN = '/admin',
+  ADMIN_HOME = '/admin-home'
 }
 
 /**
@@ -29,7 +31,7 @@ function checkForAuthentication (to: RouteLocationNormalized, from: RouteLocatio
   const userIsAuthenticated = authenticationStore.userIsAuthenticated;
 
   if (to.name === routeNames.ADMIN_LOGIN) {
-    if (userIsAuthenticated) router.push({ name: routeNames.ADMIN });
+    if (userIsAuthenticated) router.push({ name: routeNames.ADMIN_HOME });
     else return true;
   }
 
@@ -63,6 +65,11 @@ const router = createRouter({
           name: routeNames.ADMIN_LOGIN,
           component: () => import('@/views/admin/admin-login.vue')
         },
+        {
+          name: routeNames.ADMIN_HOME,
+          path: routeRoutes.ADMIN_HOME,
+          component: () => import('@/views/admin/admin-home.vue')
+        }
       ]
     }
   ]
