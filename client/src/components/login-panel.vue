@@ -22,7 +22,7 @@ form.login-panel
     label.login-panel__label Password
         input.login-panel__input(v-model="password")
 
-    button.login-panel__submit-button(@click.prevent="handleLogin") Submit
+    button.login-panel__submit-button.jaid-button(@click.prevent="handleLogin") Submit
 
 </template>
 
