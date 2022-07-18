@@ -1,25 +1,18 @@
 <script setup lang="ts">
     
     import { ref } from 'vue';
-    import { useRouter } from 'vue-router';
 
-    import { useAuthenticationStore } from '@/stores/authentication';
-    import { routeNames } from '@/router';
-
-    const $router = useRouter();
-    const authenticationStore = useAuthenticationStore();
-
-    function handleLogin(): void {
-        try {
-            authenticationStore.setUserIsAuthenticated(true)
-        } catch {
-            // todo - handle error with auth
-        }
-        $router.push({ name: routeNames.ADMIN });
-    }
+    const $emit = defineEmits(['attempt-login']);
 
     let username = ref('');
     let password = ref('');
+
+    /**
+     * Signals to the parent to attempt a login with the given username and password.
+     */
+    function attemptLogin (): void {
+        $emit('attempt-login', { username, password });
+    }
 
 </script>
 
@@ -33,7 +26,7 @@ form.login-panel
     label.login-panel__label Password
         input.login-panel__input(v-model="password")
 
-    button.login-panel__submit-button.jaid-button(@click.prevent="handleLogin") Submit
+    button.login-panel__submit-button.jaid-button(@click.prevent="attemptLogin") Submit
 
 </template>
 
