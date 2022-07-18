@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-import { fetchHero } from '@/api/heroApi';
+import { changeHero, fetchHero } from '@/api/heroApi';
 import type { IHero } from '@models/';
 
 export const useHeroStore = defineStore({
@@ -17,9 +17,16 @@ export const useHeroStore = defineStore({
     } as IHero),
 
     actions: {
-        async fetchHero(): Promise<void> {
+
+        async fetchHero(): Promise<IHero> {
             const hero = await fetchHero();
             this.$patch({ ...hero });
+            return hero;
+        },
+
+        async changeHero (newData: IHero): Promise<void> {
+            await changeHero(newData);
+            await fetchHero();
         }
     }
 });

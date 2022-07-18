@@ -8,7 +8,6 @@
 
     // Set up viewport (workaround for iOS Safari devices not behaving as expected when using vh).
     onMounted(() => {
-        // Bail out if this is not safari.
         const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${ vh }px`);
     });
