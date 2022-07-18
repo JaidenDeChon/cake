@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-    import { onMounted, ref } from 'vue';
+    import { onMounted } from 'vue';
     import { RouterView } from 'vue-router'
 
     import GlobalHeader from '@/components/global-header.vue';
