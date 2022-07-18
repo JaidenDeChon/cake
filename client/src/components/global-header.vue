@@ -6,6 +6,7 @@
     import MainMenu from '@/components/main-menu.vue';
     import IconMainMenu from '@/components/icons/icon-menu.vue';
     import IconCart from '@/components/icons/icon-cart.vue';
+    import { routeNames } from '@/router';
 
     /**
      * General variables.
@@ -50,7 +51,9 @@
             <IconMainMenu />
         </button>
 
-        <h2>{{ appTitle }}</h2>
+        <router-link :to="{ name: routeNames.HOME }" class="header__home-link">
+            <h2>{{ appTitle }}</h2>
+        </router-link>
 
         <!-- Cart button -->
         <button class="header__main-menu-button">
@@ -99,6 +102,11 @@
                 margin: 0;
                 width: 1rem;
             }
+        }
+
+        &__home-link {
+            color: var(--color-text);
+            text-decoration: none;
         }
 
         @media (hover: hover) {
