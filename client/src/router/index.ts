@@ -8,8 +8,9 @@ export enum routeNames {
   ABOUT = 'about',
   ADMIN = 'admin',
   ADMIN_LOGIN = 'admin login',
+  ADMIN_LOGOUT = 'admin logout',
   ADMIN_HOME = 'admin home',
-  ADMIN_CONFIG_HERO = 'admin hero'
+  ADMIN_CONFIG_HERO = 'admin hero',
 }
 
 export enum routeRoutes {
@@ -17,6 +18,7 @@ export enum routeRoutes {
   ABOUT = '/about',
   ADMIN = '/admin',
   ADMIN_LOGIN = '/login',
+  ADMIN_LOGOUT = '/logout',
   ADMIN_HOME = '/config',
   ADMIN_CONFIG_HERO = '/hero'
 }
@@ -77,6 +79,11 @@ const router = createRouter({
           name: routeNames.ADMIN_LOGIN,
           path: routeRoutes.ADMIN_LOGIN,
           component: () => import('@/views/admin/admin-login.vue')
+        },
+        {
+          name: routeNames.ADMIN_LOGOUT,
+          path: routeRoutes.ADMIN_LOGOUT,
+          component: () => import('@/views/admin/admin-logout.vue')
         },
         {
           name: routeNames.ADMIN_HOME,
