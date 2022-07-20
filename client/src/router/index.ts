@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, type NavigationGuardNext, type RouteLocationNormalized } from 'vue-router'
+import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router'
 
 import ClientHome from '@/views/home-view.vue';
 import { useAuthenticationStore } from '@/stores/authentication';
@@ -44,7 +44,18 @@ function checkForAuthentication (to: RouteLocationNormalized, from: RouteLocatio
 }
 
 const router = createRouter({
+
+  // 500ms value is 0.3s transition + 0.2s transition delay
+  scrollBehavior () {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ top: 0, left: 0 });
+      }, 500)
+    });
+  },
+
   history: createWebHistory(import.meta.env.BASE_URL),
+  
   routes: [
     {
       name: routeNames.HOME,
