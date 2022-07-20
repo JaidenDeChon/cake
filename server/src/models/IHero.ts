@@ -16,6 +16,6 @@ export interface IHero {
     secondaryText?: string;
     primaryCallToAction?: string;
     secondaryCallToAction?: string;
-    justify?: JustifyOptions;
+    justify?: string;
     img?: string;
 }
