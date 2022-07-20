@@ -1,68 +1,40 @@
 <script setup lang="ts">
 
-    import { onMounted, watch, ref } from 'vue';
-    import { computed } from '@vue/reactivity';
+    import { onMounted, ref } from 'vue';
 
-    import { useHeroStore } from '@/stores/hero';
     import type { IHero } from '@models/';
+    import { useHeroStore } from '../../stores/hero';
     import LandingHeroComponent from '../../components/landing-hero.vue';
 
-    let primaryText = ref('');
-    let secondaryText = ref('');
-    let primaryCallToAction = ref('');
-    let secondaryCallToAction = ref('');
-    let justify = ref('');
-    let img = ref('')
+    let primaryText = ref('' as string | undefined);
+    let secondaryText = ref('' as string | undefined);
+    let primaryCallToAction = ref('' as string | undefined);
+    let secondaryCallToAction = ref('' as string | undefined);
+    let justify = ref('' as string | undefined);
+    let img = ref('' as string | undefined)
 
     const heroStore = useHeroStore();
 
     onMounted(async () => {
-        await heroStore.fetchHero();
+        const updatedHero = await heroStore.fetchHero();
+        primaryText.value = updatedHero.primaryText ?? '';
+        secondaryText.value = updatedHero.secondaryText ?? '';
+        primaryCallToAction.value = updatedHero.primaryCallToAction ?? '';
+        secondaryCallToAction.value = updatedHero.secondaryCallToAction ?? '';
+        justify.value = updatedHero.justify ?? 'left';
+        img.value = updatedHero.img ?? '';
     });
 
-    const hero = computed(() => ({
-        primaryText: heroStore.primaryText,
-        secondaryText: heroStore.secondaryText,
-        primaryCallToAction: heroStore.primaryCallToAction,
-        secondaryCallToAction: heroStore.secondaryCallToAction,
-        justify: heroStore.justify,
-        img: heroStore.img
-    } as IHero));
-
-    watch(
-        hero,
-        () => {
-            primaryText.value = hero.value.primaryText;
-            secondaryText.value = hero.value.secondaryText;
-            primaryCallToAction.value = hero.value.primaryCallToAction;
-            secondaryCallToAction.value = hero.value.secondaryCallToAction;
-            justify.value = hero.value.justify;
-            img.value= hero.value.img;
-        },
-        {
-            deep: true,
-            immediate: true
-        }
-    );
-
-    const newHero = computed(() => ({
-        primaryText: primaryText.value,
-        secondaryText: secondaryText.value,
-        primaryCallToAction: primaryCallToAction.value,
-        secondaryCallToAction: secondaryCallToAction.value,
-        justify: justify.value,
-        img: img.value
-    }));
-
     async function saveChanges (): Promise<void> {
-        try {
-            await heroStore.changeHero(newHero.value);
-        }
-        catch (error) {
-            alert(error);
-            return;
-        }
-
+        const hero = {
+            primaryText: primaryText.value,
+            secondaryText: secondaryText.value,
+            primaryCallToAction: primaryCallToAction.value,
+            secondaryCallToAction: secondaryCallToAction.value,
+            justify: justify.value,
+            img: img.value
+        } as IHero;
+        await heroStore.changeHero(hero);
         alert('Your changes have been saved.');
     }
 
@@ -76,7 +48,10 @@
         h2 Configure Hero
         p Here, you can modify the appearance and contents of your site hero, as shown below.
 
-    landing-hero-component.landing-hero-component(v-if="newHero" :hero="newHero")
+    landing-hero-component.landing-hero-component(
+        v-if="heroStore"
+        :hero="{ primaryText, secondaryText, primaryCallToAction, secondaryCallToAction, justify, img }"
+    )
 
     .admin-config-hero__form-area
 
