@@ -25,7 +25,12 @@
             .some(({ name }) => name === routeNames.ADMIN_HOME);
     });
 
-    const adminRoutes: MainMenuLink[] = [];
+    const adminRoutes: MainMenuLink[] = [
+        {
+            routeName: routeNames.ADMIN_CONFIG_HERO,
+            linkText: 'Configure Hero'
+        }
+    ];
 
     const nonAdminRoutes: MainMenuLink[] = [
         {
