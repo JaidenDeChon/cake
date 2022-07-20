@@ -29,6 +29,10 @@
         {
             routeName: routeNames.ADMIN_CONFIG_HERO,
             linkText: 'Configure Hero'
+        },
+        {
+            routeName: routeNames.ADMIN_LOGOUT,
+            linkText: 'Log Out'
         }
     ];
 
