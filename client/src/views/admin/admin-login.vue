@@ -14,7 +14,8 @@
      */
     function attemptLogin({ username, password }: { username: string, password: string }): void {
         try {
-            authenticationStore.setUserIsAuthenticated(true)
+            // todo - actually authenticate
+            authenticationStore.userIsAuthenticated = true;
         } catch {
             // todo - handle error with auth
         }
