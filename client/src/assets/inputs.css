@@ -1,6 +1,17 @@
 input,
-select {
-    height: var(--global-input-height);
+select,
+textarea {
     border: 0.1rem solid var(--vt-c-indigo);
     border-radius: var(--content-block-border-radius--small);
+}
+
+input,
+select {
+    height: var(--global-input-height);
+}
+
+textarea {
+    height: 10rem;
+    max-width: 100%;
+    min-width: 100%;
 }
