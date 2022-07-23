@@ -69,35 +69,37 @@
 
 .admin-config-hero
 
-    .admin-config-hero__title-area.config-title-area
+    .admin-config-title-area
         h2 Configure Hero
         p Here, you can modify the appearance and contents of your site hero, as shown below.
 
-    landing-hero-component.landing-hero-component(
+    hr.admin-config-hr
+
+    landing-hero-component.admin-config-live-component(
         v-if="heroStore"
         :hero="{ primaryText, secondaryText, primaryCallToAction, secondaryCallToAction, justify, img }"
     )
 
-    .admin-config-hero__form-area
+    .admin-config-form
 
-        label.admin-config-hero__label Primary Text
-            input.admin-config-hero__input(v-model="primaryText")
+        label.admin-config-form__label Primary Text
+            input.admin-config-form__input(v-model="primaryText")
 
-        label.admin-config-hero__label Secondary Text
-            input.admin-config-hero__input(v-model="secondaryText")
+        label.admin-config-form__label Secondary Text
+            input.admin-config-form__input(v-model="secondaryText")
 
-        label.admin-config-hero__label Primary Call to Action
-            input.admin-config-hero__input(v-model="primaryCallToAction")
+        label.admin-config-form__label Primary Call to Action
+            input.admin-config-form__input(v-model="primaryCallToAction")
 
-        label.admin-config-hero__label Secondary Call to Action
-            input.admin-config-hero__input(v-model="secondaryCallToAction")
+        label.admin-config-form__label Secondary Call to Action
+            input.admin-config-form__input(v-model="secondaryCallToAction")
 
-        label.admin-config-hero__label Justify
-            select.admin-config-hero__input(v-model="justify")
+        label.admin-config-form__label Justify
+            select.admin-config-form__input(v-model="justify")
                 option(v-for="item in Object.values(justifyOptions)") {{ item }}
 
-        label.admin-config-hero__label Background image
-            input.admin-config-hero__input(v-model="img")
+        label.admin-config-form__label Background image
+            input.admin-config-form__input(v-model="img")
 
     button.jaid-button(
         :disabled="!changesHaveBeenMade || currentlySaving"
@@ -105,22 +107,3 @@
     ) {{ saveButtonText }}
 
 </template>
-
-<style lang="scss" scoped>
-
-    .admin-config-hero {
-
-        .landing-hero-component,
-        &__label,
-        button.jaid-button {
-            margin-bottom: var(--global-padding);
-        }
-
-        &__form-area,
-        &__label {
-            display: flex;
-            flex-direction: column;
-        }
-    }
-
-</style>
