@@ -41,7 +41,7 @@
     }));
 
     /**
-     * Updates the component data with the Hero data saved in the DB.
+     * Updates the component with the Hero data saved in the DB.
      */
     async function updateHeroData (): Promise<void> {
         const updatedHero = await heroStore.fetchHero();
@@ -71,7 +71,7 @@
 
     .admin-config-title-area
         h2 Configure Hero
-        p Here, you can modify the appearance and contents of your site hero, as shown below.
+        p On this page, your site's Hero (shown below) can be modified. The Hero updates as you type, so play around with it!
 
     hr.admin-config-hr
 
