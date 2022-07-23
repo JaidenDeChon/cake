@@ -1,41 +1,66 @@
 <script setup lang="ts">
 
     import { onMounted, ref } from 'vue';
+    import { computed } from '@vue/reactivity';
+    import { isEqual } from 'lodash';
 
     import type { IHero } from '@models/';
     import { useHeroStore } from '../../stores/hero';
     import LandingHeroComponent from '../../components/landing-hero.vue';
+
+    /** Lifecycle stuff. */
+
+    onMounted(async () => await updateHeroData());
+
+    /** Save-button stuff. */
+
+    let currentlySaving = ref(false);
+    const saveButtonText = computed(() => currentlySaving.value ? 'Saving...' : 'Save Changes');
+    const changesHaveBeenMade = computed(() => !isEqual(heroStore.hero, heroFormData.value));
+
+    /** Hero-related stuff. */
+
+    const heroStore = useHeroStore();
 
     let primaryText = ref('' as string | undefined);
     let secondaryText = ref('' as string | undefined);
     let primaryCallToAction = ref('' as string | undefined);
     let secondaryCallToAction = ref('' as string | undefined);
     let justify = ref('' as string | undefined);
-    let img = ref('' as string | undefined)
+    let img = ref('' as string | undefined);
 
-    const heroStore = useHeroStore();
+    const justifyOptions = { left: 'left', center: 'center', right: 'right' };
 
-    onMounted(async () => {
+    const heroFormData = computed((): IHero => ({
+        primaryText: primaryText.value,
+        secondaryText: secondaryText.value,
+        primaryCallToAction: primaryCallToAction.value,
+        secondaryCallToAction: secondaryCallToAction.value,
+        justify: justify.value,
+        img: img.value
+    }));
+
+    /**
+     * Updates the component data with the Hero data saved in the DB.
+     */
+    async function updateHeroData (): Promise<void> {
         const updatedHero = await heroStore.fetchHero();
         primaryText.value = updatedHero.primaryText ?? '';
         secondaryText.value = updatedHero.secondaryText ?? '';
         primaryCallToAction.value = updatedHero.primaryCallToAction ?? '';
         secondaryCallToAction.value = updatedHero.secondaryCallToAction ?? '';
-        justify.value = updatedHero.justify ?? 'left';
+        justify.value = updatedHero.justify ?? justifyOptions.left;
         img.value = updatedHero.img ?? '';
-    });
+    }
 
+    /**
+     * Saves the data currently in the fields to the DB.
+     */
     async function saveChanges (): Promise<void> {
-        const hero = {
-            primaryText: primaryText.value,
-            secondaryText: secondaryText.value,
-            primaryCallToAction: primaryCallToAction.value,
-            secondaryCallToAction: secondaryCallToAction.value,
-            justify: justify.value,
-            img: img.value
-        } as IHero;
-        await heroStore.changeHero(hero);
+        currentlySaving.value = true;
+        await heroStore.changeHero(heroFormData.value);
         alert('Your changes have been saved.');
+        currentlySaving.value = false;
     }
 
 </script>
@@ -68,12 +93,16 @@
             input.admin-config-hero__input(v-model="secondaryCallToAction")
 
         label.admin-config-hero__label Justify
-            input.admin-config-hero__input(v-model="justify")
+            select.admin-config-hero__input(v-model="justify")
+                option(v-for="item in Object.values(justifyOptions)") {{ item }}
 
         label.admin-config-hero__label Background image
             input.admin-config-hero__input(v-model="img")
 
-    button.jaid-button(@click="saveChanges") Save
+    button.jaid-button(
+        :disabled="!changesHaveBeenMade || currentlySaving"
+        @click="saveChanges"
+    ) {{ saveButtonText }}
 
 </template>
 
