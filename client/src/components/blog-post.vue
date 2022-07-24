@@ -15,10 +15,16 @@
 
         .article__edit-controls
 
+            // Save modifications
             button.jaid-button(
                 :disabled="!changesHaveBeenMade || awaitingAnything"
                 @click="saveChanges"
             ) {{ saveButtonText }}
+
+            // Cancel modifications
+            button.jaid-button(
+                @click="cancelChanges"
+            ) {{ cancelButtonChanges }}
 
     template(v-else)
 
@@ -74,14 +80,32 @@
 
     /** Blog Post configuration-related functionality.  */
 
-    const blogPostUpdate = {} as IBlogPost;
+    const blogPostUpdate = ref({} as IBlogPost);
 
     const currentlyEditing = ref(false);
 
     const editButtonText = 'Edit Blog Post';
     const deleteButtonText = computed(() => props.awaitingDelete ? 'Deleting...' : 'Delete Blog Post');
     const saveButtonText = computed(() => props.awaitingSave ? 'Saving...' : 'Save Changes');
-    const changesHaveBeenMade = computed(() => !isEqual(blogPost, blogPostUpdate));
+    const cancelButtonChanges = 'Cancel';
+    const changesHaveBeenMade = computed(() => Object.keys(modifiedFields.value).length);
+
+    const modifiedFields = computed((): Partial<IBlogPost> => {
+
+        const modifiedBlogPostFields = {} as Partial<IBlogPost>;
+
+        if (blogPostUpdate.value.title !== blogPost.value.title)
+            modifiedBlogPostFields.title = blogPostUpdate.value.title;
+
+        if (blogPostUpdate.value.img !== blogPost.value.img)
+            modifiedBlogPostFields.img = blogPostUpdate.value.img;
+
+        if (blogPostUpdate.value.content !== blogPost.value.content)
+            modifiedBlogPostFields.content = blogPostUpdate.value.content;
+
+        return modifiedBlogPostFields;
+
+    });
 
     const awaitingAnything = computed(() =>
         props.awaitingCreate || props.awaitingSave || props.awaitingDelete
@@ -95,21 +119,27 @@
      * Updates the v-model object of this component to make editing a smoother process.
      */
     function setupBlogPostUpdateVModels () {
-        blogPostUpdate.id = props.blogPost.id;
-        blogPostUpdate.title = props.blogPost.title;
-        blogPostUpdate.content = props.blogPost.content;
-        blogPostUpdate.date = props.blogPost.date;
-        blogPostUpdate.img = props.blogPost.img;
+        blogPostUpdate.value.id = props.blogPost.id;
+        blogPostUpdate.value.title = props.blogPost.title;
+        blogPostUpdate.value.content = props.blogPost.content;
+        blogPostUpdate.value.date = props.blogPost.date;
+        blogPostUpdate.value.img = props.blogPost.img;
     }
 
     /**
      * Emits to the parent that the changes to the Blog Post should be saved.
      */
     function saveChanges () {
-        emitToParent('update-blog-post');
+        if (!changesHaveBeenMade.value) return;
+        if (!blogPost.value.id) throw new Error('Attempted to update Blog Post with invalid ID.');
+        emitToParent('update-blog-post', { id: blogPost.value.id, ...modifiedFields.value });
         currentlyEditing.value = false;
     }
 
+    function cancelChanges () {
+        currentlyEditing.value = false;
+        setupBlogPostUpdateVModels();
+    }
 </script>
 
 <style lang="scss" scoped>

@@ -77,6 +77,10 @@
         awaitingCreate.value = false;
     }
 
+    async function updateBlogPost (blogPostChanges: Partial<IBlogPost>) {
+        await blogPostsStore.updateBlogPost(blogPostChanges);
+    }
+
 </script>
 
 <template lang="pug">
@@ -113,16 +117,16 @@
     .admin-config-title-area
         h3 Manage Blog Posts
 
-    template(v-for="blogPost in blogPosts")
-
-        blog-post-component.admin-config-live-component.admin-config-live-component--double-margin(
-            :blog-post="blogPost"
-            :is-modifiable="true"
-            :show-content="false"
-            :awaiting-create="awaitingCreate"
-            :awaiting-save="awaitingSave"
-            :awaiting-delete="awaitingDelete"
-        )
+    blog-post-component.admin-config-live-component.admin-config-live-component--double-margin(
+        v-for="blogPost in blogPosts"
+        :blog-post="blogPost"
+        :is-modifiable="true"
+        :show-content="false"
+        :awaiting-create="awaitingCreate"
+        :awaiting-save="awaitingSave"
+        :awaiting-delete="awaitingDelete"
+        @update-blog-post="updateBlogPost"
+    )
 
 </template>
 

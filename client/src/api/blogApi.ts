@@ -15,3 +15,8 @@ export async function createBlogPost (newData: IBlogPost): Promise<{ id: string 
     catch (e) { throw e; }
     return result.data;
 }
+
+export async function updateBlogPost (newData: Partial<IBlogPost>): Promise<void> {
+    try { await axios.patch(`api/blog-posts/update-blog-post/${ newData.id?.toString() }`, newData) }
+    catch (e) { throw e; }
+}
