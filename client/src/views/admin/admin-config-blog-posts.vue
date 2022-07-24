@@ -78,7 +78,13 @@
     }
 
     async function updateBlogPost (blogPostChanges: Partial<IBlogPost>) {
-        await blogPostsStore.updateBlogPost(blogPostChanges);
+        // Try/catch is here because the updateBlogPost function has no return value to check.
+        try {
+            await blogPostsStore.updateBlogPost(blogPostChanges);
+            alert('Your blog post has been updated.')
+        }
+        catch (e) { throw e; }
+    }
 
     async function deleteBlogPost (blogPostId: string | undefined) {
         await blogPostsStore.deleteBlogPost(blogPostId ?? '');
@@ -129,8 +135,7 @@
         :awaiting-save="awaitingSave"
         :awaiting-delete="awaitingDelete"
         @update-blog-post="updateBlogPost"
+        @delete-blog-post="deleteBlogPost(blogPost.id)"
     )
 
 </template>
-
-<style lang="scss"></style>

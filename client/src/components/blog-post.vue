@@ -28,21 +28,21 @@
 
     template(v-else)
 
-        img.article__img(v-if="blogPost.img" :src="blogPost.img")
-        h2.article__title {{ blogPost.title }}
-        p.article__date {{ blogPost.date }}
-        p.article__content(v-if="showContent") {{ blogPost.content }}
+        img.article__img(v-if="props.blogPost.img" :src="props.blogPost.img")
+        h2.article__title {{ props.blogPost.title }}
+        p.article__date {{ props.blogPost.date }}
+        p.article__content(v-if="showContent") {{ props.blogPost.content }}
 
         .article__edit-controls(v-if="isModifiable && !currentlyEditing")
 
             button.jaid-button(
-                :disabled="!changesHaveBeenMade || awaitingAnything"
+                :disabled="awaitingAnything"
                 @click="enableEditMode"
             ) {{ editButtonText }}
 
             button.jaid-button(
-                :disabled="!changesHaveBeenMade || awaitingAnything"
-                @click="saveChanges"
+                :disabled="awaitingAnything"
+                @click="deleteBlogPost"
             ) {{ deleteButtonText }}
 
 </template>
@@ -51,7 +51,6 @@
 
     import { onMounted, ref, type PropType } from 'vue';
     import { computed } from '@vue/reactivity';
-    import { isEqual } from 'lodash';
 
     import type { IBlogPost } from '@models/';
 
@@ -74,10 +73,6 @@
 
     onMounted(() => setupBlogPostUpdateVModels());
 
-    /** Blog Post-related functionality. */
-
-    const blogPost = ref(props.blogPost);
-
     /** Blog Post configuration-related functionality.  */
 
     const blogPostUpdate = ref({} as IBlogPost);
@@ -94,13 +89,13 @@
 
         const modifiedBlogPostFields = {} as Partial<IBlogPost>;
 
-        if (blogPostUpdate.value.title !== blogPost.value.title)
+        if (blogPostUpdate.value.title !== props.blogPost.title)
             modifiedBlogPostFields.title = blogPostUpdate.value.title;
 
-        if (blogPostUpdate.value.img !== blogPost.value.img)
+        if (blogPostUpdate.value.img !== props.blogPost.img)
             modifiedBlogPostFields.img = blogPostUpdate.value.img;
 
-        if (blogPostUpdate.value.content !== blogPost.value.content)
+        if (blogPostUpdate.value.content !== props.blogPost.content)
             modifiedBlogPostFields.content = blogPostUpdate.value.content;
 
         return modifiedBlogPostFields;
@@ -131,7 +126,7 @@
      */
     function saveChanges () {
         if (!changesHaveBeenMade.value) return;
-        emitToParent('update-blog-post', { id: blogPost.value.id, ...modifiedFields.value });
+        emitToParent('update-blog-post', { id: props.blogPost.id, ...modifiedFields.value });
         currentlyEditing.value = false;
     }
 
