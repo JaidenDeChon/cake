@@ -5,7 +5,6 @@
 
     import type { IBlogPost } from '@models/';
     import { useBlogsStore } from '@/stores/blogs';
-    import { createBlogPost } from '@/api/blogApi';
     import BlogPostComponent from '../../components/blog-post.vue';
 
     /** Lifecycle stuff. */
@@ -64,6 +63,8 @@
      */
     async function createNewBlogPost () {
 
+        awaitingCreate.value = true;
+
         const { id } = await blogPostsStore.createBlogPost(newBlogPostObject.value);
 
         if (id) {
@@ -72,6 +73,8 @@
             newBlogPostImage.value = '';
             newBlogPostContent.value = '';
         }
+
+        awaitingCreate.value = false;
     }
 
 </script>
@@ -116,6 +119,9 @@
             :blog-post="blogPost"
             :is-modifiable="true"
             :show-content="false"
+            :awaiting-create="awaitingCreate"
+            :awaiting-save="awaitingSave"
+            :awaiting-delete="awaitingDelete"
         )
 
 </template>
