@@ -16,7 +16,7 @@
         .article__edit-controls
 
             button.jaid-button(
-                :disabled="!changesHaveBeenMade || currentlySaving"
+                :disabled="!changesHaveBeenMade || awaitingAnything"
                 @click="saveChanges"
             ) {{ saveButtonText }}
 
@@ -30,12 +30,12 @@
         .article__edit-controls(v-if="isModifiable && !currentlyEditing")
 
             button.jaid-button(
-                :disabled="!changesHaveBeenMade || currentlySaving"
+                :disabled="!changesHaveBeenMade || awaitingAnything"
                 @click="enableEditMode"
             ) {{ editButtonText }}
 
             button.jaid-button(
-                :disabled="!changesHaveBeenMade || currentlySaving"
+                :disabled="!changesHaveBeenMade || awaitingAnything"
                 @click="saveChanges"
             ) {{ deleteButtonText }}
 
@@ -54,6 +54,9 @@
     const props = defineProps({
         blogPost: { type: Object as PropType<IBlogPost>, required: true },
         isModifiable: { type: Boolean, required: false },
+        awaitingCreate: { type: Boolean, required: false },
+        awaitingSave: { type: Boolean, required: false },
+        awaitingDelete: { type: Boolean, required: false },
         showContent: { type: Boolean, required: false, default: true }
     });
 
@@ -74,13 +77,15 @@
     const blogPostUpdate = {} as IBlogPost;
 
     const currentlyEditing = ref(false);
-    const currentlySaving = ref(false);
-    const currentlyDeleting = ref(false);
 
     const editButtonText = 'Edit Blog Post';
-    const deleteButtonText = computed(() => currentlyDeleting.value ? 'Deleting...' : 'Delete Blog Post');
-    const saveButtonText = computed(() => currentlySaving.value ? 'Saving...' : 'Save Changes');
+    const deleteButtonText = computed(() => props.awaitingDelete ? 'Deleting...' : 'Delete Blog Post');
+    const saveButtonText = computed(() => props.awaitingSave ? 'Saving...' : 'Save Changes');
     const changesHaveBeenMade = computed(() => !isEqual(blogPost, blogPostUpdate));
+
+    const awaitingAnything = computed(() =>
+        props.awaitingCreate || props.awaitingSave || props.awaitingDelete
+    );
 
     function enableEditMode (): void {
         currentlyEditing.value = true;
