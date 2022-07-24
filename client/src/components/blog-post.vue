@@ -68,7 +68,7 @@
 
     /** Set up emits. */
 
-    const emitToParent = defineEmits(['update-blog-post']);
+    const emitToParent = defineEmits(['update-blog-post', 'delete-blog-post']);
 
     /** Lifecycle hooks. */
 
@@ -131,7 +131,6 @@
      */
     function saveChanges () {
         if (!changesHaveBeenMade.value) return;
-        if (!blogPost.value.id) throw new Error('Attempted to update Blog Post with invalid ID.');
         emitToParent('update-blog-post', { id: blogPost.value.id, ...modifiedFields.value });
         currentlyEditing.value = false;
     }
@@ -140,6 +139,11 @@
         currentlyEditing.value = false;
         setupBlogPostUpdateVModels();
     }
+
+    function deleteBlogPost () {
+        emitToParent('delete-blog-post');
+    }
+
 </script>
 
 <style lang="scss" scoped>

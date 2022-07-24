@@ -79,6 +79,9 @@
 
     async function updateBlogPost (blogPostChanges: Partial<IBlogPost>) {
         await blogPostsStore.updateBlogPost(blogPostChanges);
+
+    async function deleteBlogPost (blogPostId: string | undefined) {
+        await blogPostsStore.deleteBlogPost(blogPostId ?? '');
     }
 
 </script>

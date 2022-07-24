@@ -17,6 +17,13 @@ export async function createBlogPost (newData: IBlogPost): Promise<{ id: string 
 }
 
 export async function updateBlogPost (newData: Partial<IBlogPost>): Promise<void> {
+    if (!newData.id) throw new Error('Attempted to update Blog Post with invalid ID.');
     try { await axios.patch(`api/blog-posts/update-blog-post/${ newData.id?.toString() }`, newData) }
+    catch (e) { throw e; }
+}
+
+export async function deleteBlogPost (blogPostId: string): Promise<void> {
+    if (!blogPostId) throw new Error('Attempted to delete a Blog Post without a valid ID.');
+    try { await axios.delete(`api/blog-posts/delete-blog-post/${ blogPostId.toString() }`) }
     catch (e) { throw e; }
 }

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-import { fetchBlogPosts, createBlogPost, updateBlogPost } from '@/api/blogApi';
+import { fetchBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } from '@/api/blogApi';
 import type { IBlogPost } from '@models/';
 
 export const useBlogsStore = defineStore({
@@ -26,6 +26,11 @@ export const useBlogsStore = defineStore({
 
         async updateBlogPost (newData: Partial<IBlogPost>): Promise<void> {
             await updateBlogPost(newData);
+            await this.fetchBlogPosts();
+        },
+
+        async deleteBlogPost (blogPostId: string): Promise<void> {
+            await deleteBlogPost(blogPostId);
             await this.fetchBlogPosts();
         }
     }
