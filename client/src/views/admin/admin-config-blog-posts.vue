@@ -5,6 +5,7 @@
 
     import type { IBlogPost } from '@models/';
     import { useBlogsStore } from '@/stores/blogs';
+    import { createBlogPost } from '@/api/blogApi';
     import BlogPostComponent from '../../components/blog-post.vue';
 
     /** Lifecycle stuff. */
@@ -17,7 +18,7 @@
 
     const blogPostsStore = useBlogsStore();
 
-    const blogPosts = blogPostsStore.posts;
+    const blogPosts = computed(() => blogPostsStore.posts);
 
     const awaitingCreate = ref(false);
     const awaitingSave = ref(false);
@@ -63,11 +64,14 @@
      */
     async function createNewBlogPost () {
 
-        // TODO - Do save
+        const { id } = await blogPostsStore.createBlogPost(newBlogPostObject.value);
 
-        newBlogPostTitle.value = '';
-        newBlogPostImage.value = '';
-        newBlogPostContent.value = '';
+        if (id) {
+            alert('New blog post created.');
+            newBlogPostTitle.value = '';
+            newBlogPostImage.value = '';
+            newBlogPostContent.value = '';
+        }
     }
 
 </script>
@@ -98,7 +102,7 @@
 
         button.jaid-button(
             :disabled="!canCreateBlogPost"
-            @click="createNewBlogPost()"
+            @click="createNewBlogPost"
         ) {{ createBlogPostButtonText }}
 
     hr.admin-config-hr
