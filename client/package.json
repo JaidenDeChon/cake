@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "lodash": "^4.17.21",
     "pinia": "^2.0.13",
     "pug": "^3.0.2",
     "vue": "^3.2.33",
@@ -19,7 +20,8 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/jsdom": "^16.2.14",
-    "@types/node": "^16.11.27",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^16.11.45",
     "@vitejs/plugin-vue": "^2.3.1",
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/test-utils": "^2.0.0-rc.20",

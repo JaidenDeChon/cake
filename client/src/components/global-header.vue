@@ -1,28 +1,99 @@
 <script setup lang="ts">
 
-    // Import Vue stuff.
-    import { ref } from 'vue';
+    import { ref, watch } from 'vue';
+    import { useRoute } from 'vue-router';
+    import { computed } from '@vue/reactivity';
 
-    // Import components.
-    import MainMenu from '@/components/main-menu.vue';
+    import MainMenu, { type MainMenuLink } from '@/components/main-menu.vue';
     import IconMainMenu from '@/components/icons/icon-menu.vue';
     import IconCart from '@/components/icons/icon-cart.vue';
+    import { routeNames } from '@/router';
 
-    // App title.
+    /**
+     * General variables.
+     */
+
     const appTitle = ref('Lorem Ipsum');
 
-    // Controls whether the main menu is open.
+    /**
+     * Variables to be used as props.
+     */
+
+    const viewingAdminRoute = computed(() => {
+        return $route
+            .matched
+            .some(({ name }) => name === routeNames.ADMIN_HOME);
+    });
+
+    enum AdminLinkText {
+        CONFIG_HERO = 'Configure Hero',
+        CONFIG_BLOG_POSTS = 'Configure Blog Posts',
+        LOG_OUT = 'Log Out'
+    }
+
+    const adminRoutes: MainMenuLink[] = [
+        {
+            routeName: routeNames.ADMIN_CONFIG_HERO,
+            linkText: AdminLinkText.CONFIG_HERO
+        },
+        {
+            routeName: routeNames.ADMIN_CONFIG_BLOG_POSTS,
+            linkText: AdminLinkText.CONFIG_BLOG_POSTS,
+        },
+        {
+            routeName: routeNames.ADMIN_LOGOUT,
+            linkText: AdminLinkText.LOG_OUT
+        }
+    ];
+
+    enum NonAdminLinkText {
+        HOME = 'Home',
+        ABOUT = 'About',
+        ADMIN_LOGIN = 'Admin'
+    }
+
+    const nonAdminRoutes: MainMenuLink[] = [
+        {
+            routeName: routeNames.HOME,
+            linkText: NonAdminLinkText.HOME
+        },
+        {
+            routeName: routeNames.ABOUT,
+            linkText: NonAdminLinkText.ABOUT
+        },
+        {
+            routeName: routeNames.ADMIN_LOGIN,
+            linkText: NonAdminLinkText.ADMIN_LOGIN
+        }
+    ];
+
+    /**
+     * Main menu open/close state functionality.
+     */
+
+    const emitToParent = defineEmits(['menu-is-open', 'menu-is-closed']);
+
     const mainMenuIsOpen = ref(false);
 
-    // Opens the main menu.
     function openMainMenu (): void {
         mainMenuIsOpen.value = true;
+        emitToParent('menu-is-open');
     }
 
-    // Closes the main menu.
     function closeMainMenu (): void {
         mainMenuIsOpen.value = false;
+        emitToParent('menu-is-closed');
     }
+
+    /**
+     * Close main menu whenever route path changes.
+     */
+
+    const $route = useRoute();
+
+    watch(() => $route.path, () => {
+        if (mainMenuIsOpen.value) closeMainMenu();
+    });
 
 </script>
 
@@ -33,7 +104,9 @@
             <IconMainMenu />
         </button>
 
-        <h2>{{ appTitle }}</h2>
+        <router-link :to="{ name: routeNames.HOME }" class="header__home-link">
+            <h2>{{ appTitle }}</h2>
+        </router-link>
 
         <!-- Cart button -->
         <button class="header__main-menu-button">
@@ -41,6 +114,9 @@
         </button>
 
         <MainMenu
+            :viewing-admin-route="viewingAdminRoute"
+            :admin-routes="adminRoutes"
+            :non-admin-routes="nonAdminRoutes"
             :class="['header__main-menu', { 'header__main-menu--open': mainMenuIsOpen }]"
             @close-main-menu="closeMainMenu"
         />
@@ -84,6 +160,11 @@
             }
         }
 
+        &__home-link {
+            color: var(--color-text);
+            text-decoration: none;
+        }
+
         @media (hover: hover) {
             &__main-menu-button:hover {
                 background-color: var(--color-background-mute);
@@ -93,13 +174,12 @@
         &__main-menu {
             position: absolute;
             top: 0;
-            bottom: 0;
             left: -22rem;
             right: 0;
             width: 100vw;
             height: 100vh;
             max-width: 22rem;
-            transition: left 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: left 0.3s ease, box-shadow 0.3s ease;
 
             &--open {
                 box-shadow: rgba(100, 100, 111, 0.2) 0rem 0.4375rem 1.8125rem 0;

@@ -5,6 +5,8 @@
   --global-padding: 2rem;
   --global-header-height: 5rem;
   --content-block-border-radius: 0.5rem;
+  --content-block-border-radius--small: 0.25rem;
+  --global-input-height: 2.25rem;
 }
 
 /* color palette from <https://github.com/vuejs/theme> */
