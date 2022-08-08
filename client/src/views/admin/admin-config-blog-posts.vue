@@ -6,6 +6,7 @@
     import type { IBlogPost } from '@models/';
     import { useBlogsStore } from '@/stores/blogs';
     import BlogPostComponent from '../../components/blog-post.vue';
+    import QuillEditorComponent from '../../components/quill-editor.vue'
 
     /** Lifecycle stuff. */
 
@@ -99,6 +100,10 @@
     .admin-config-title-area
         h2 Configure Blog Posts
         p On this page, blog posts can be created, modified, and deleted.
+
+    hr.admin-config-hr
+
+    quill-editor-component
 
     hr.admin-config-hr
 
