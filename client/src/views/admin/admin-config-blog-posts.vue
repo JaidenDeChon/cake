@@ -6,7 +6,7 @@
     import type { IBlogPost } from '@models/';
     import { useBlogsStore } from '@/stores/blogs';
     import BlogPostComponent from '../../components/blog-post.vue';
-    import QuillEditorComponent from '../../components/quill-editor.vue'
+    import QuillEditorComponent from '../../components/quill-editor.vue';
 
     /** Lifecycle stuff. */
 
@@ -58,8 +58,11 @@
             && contentIsPopulated;
     });
 
+    function updateBlogPostQuillContent (newValue: object) {
+        newBlogPostContent.value = newValue;
+    }
+
     /**
-     * TODO
      * Creates a new blog post using the data entered.
      */
     async function createNewBlogPost () {
@@ -104,6 +107,8 @@
 
     .admin-config-form
 
+        //- TODO - Combine the inputs here and in blog-post.vue
+
         label.admin-config-form__label Title
             input.admin-config-form__input(v-model="newBlogPostTitle")
 
@@ -112,8 +117,9 @@
 
         label.admin-config-form__label Content
             quill-editor-component.admin-config-form__input(
-                v-model="newBlogPostContent"
+                :disabled="false"
                 @click.prevent=""
+                @contents-changed="updateBlogPostQuillContent"
             )
 
         button.jaid-button(
