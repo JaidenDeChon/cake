@@ -5,6 +5,14 @@ textarea {
     border-radius: var(--content-block-border-radius--small);
 }
 
+.has-input-border {
+    border: 0.1rem solid var(--vt-c-indigo) !important;
+}
+
+.has-input-border-radius {
+    border-radius: var(--content-block-border-radius--small) !important;
+}
+
 input,
 select {
     height: var(--global-input-height);

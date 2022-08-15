@@ -103,10 +103,6 @@
 
     hr.admin-config-hr
 
-    quill-editor-component
-
-    hr.admin-config-hr
-
     .admin-config-title-area
         h3 Create a new Blog Post
 
@@ -119,7 +115,10 @@
             input.admin-config-form__input(v-model="newBlogPostImage")
 
         label.admin-config-form__label Content
-            textarea.admin-config-form__input(v-model="newBlogPostContent")
+            quill-editor-component.admin-config-form__input(
+                v-model="newBlogPostContent"
+                @click.prevent=""
+            )
 
         button.jaid-button(
             :disabled="!canCreateBlogPost"
