@@ -37,7 +37,7 @@
 
     const newBlogPostTitle = ref('');
     const newBlogPostImage = ref('');
-    const newBlogPostContent = ref('');
+    const newBlogPostContent = ref({});
 
     const createBlogPostButtonText = computed(() => awaitingCreate.value ? 'Creating Blog Post...' : 'Create Blog Post');
 

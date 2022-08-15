@@ -4,7 +4,7 @@
 export interface IBlogPost {
     id?: string;
     title: string;
-    content: string;
+    content: object;
     date: string;
     img: string;
 }
