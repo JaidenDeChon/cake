@@ -11,7 +11,12 @@
             input.admin-config-form__input(v-model="blogPostUpdate.img")
 
         label.admin-config-form__label Content
-            textarea.admin-config-form__input(v-model="blogPostUpdate.content")
+            quill-editor-component.admin-config-form__input(
+                :disabled="false"
+                :contents="props.blogPost.content"
+                @click.prevent=""
+                @contents-changed="updateBlogPostQuillContent"
+            )
 
         .article__edit-controls
 
@@ -31,7 +36,11 @@
         img.article__img(v-if="props.blogPost.img" :src="props.blogPost.img")
         h2.article__title {{ props.blogPost.title }}
         p.article__date {{ props.blogPost.date }}
-        p.article__content(v-if="showContent") {{ props.blogPost.content }}
+        quill-editor-component.admin-config-form__input(
+            :contents="props.blogPost.content"
+            @click.prevent=""
+            @contents-changed="updateBlogPostQuillContent"
+        )
 
         .article__edit-controls(v-if="isModifiable && !currentlyEditing")
 
@@ -53,6 +62,8 @@
     import { computed } from '@vue/reactivity';
 
     import type { IBlogPost } from '@models/';
+
+    import quillEditorComponent from './quill-editor.vue';
 
     /** Set up props. */
 
@@ -119,6 +130,14 @@
         blogPostUpdate.value.content = props.blogPost.content;
         blogPostUpdate.value.date = props.blogPost.date;
         blogPostUpdate.value.img = props.blogPost.img;
+    }
+
+    /**
+     * Updates the content of the blog post with the contents of the Quill editor.
+     * @param   { object }   newValue   Delta object representing the Quill editor contents.
+     */
+    function updateBlogPostQuillContent (newValue: object) {
+        blogPostUpdate.value.content = newValue;
     }
 
     /**

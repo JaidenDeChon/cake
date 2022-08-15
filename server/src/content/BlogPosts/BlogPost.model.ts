@@ -7,7 +7,7 @@ import { IBlogPost } from '../../models';
  */
 export const BlogPostSchema = new mongoose.Schema<IBlogPost>({
     title: { type: String, required: true },
-    content: { type: String, required: true },
+    content: { type: Object, required: true },
     date: { type: String, required: true },
     img: { type: String, required: false }
 });

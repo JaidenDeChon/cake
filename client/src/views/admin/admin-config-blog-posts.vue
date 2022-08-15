@@ -6,7 +6,7 @@
     import type { IBlogPost } from '@models/';
     import { useBlogsStore } from '@/stores/blogs';
     import BlogPostComponent from '../../components/blog-post.vue';
-    import QuillEditorComponent from '../../components/quill-editor.vue'
+    import QuillEditorComponent from '../../components/quill-editor.vue';
 
     /** Lifecycle stuff. */
 
@@ -37,7 +37,7 @@
 
     const newBlogPostTitle = ref('');
     const newBlogPostImage = ref('');
-    const newBlogPostContent = ref('');
+    const newBlogPostContent = ref({});
 
     const createBlogPostButtonText = computed(() => awaitingCreate.value ? 'Creating Blog Post...' : 'Create Blog Post');
 
@@ -58,8 +58,11 @@
             && contentIsPopulated;
     });
 
+    function updateBlogPostQuillContent (newValue: object) {
+        newBlogPostContent.value = newValue;
+    }
+
     /**
-     * TODO
      * Creates a new blog post using the data entered.
      */
     async function createNewBlogPost () {
@@ -79,12 +82,8 @@
     }
 
     async function updateBlogPost (blogPostChanges: Partial<IBlogPost>) {
-        // Try/catch is here because the updateBlogPost function has no return value to check.
-        try {
-            await blogPostsStore.updateBlogPost(blogPostChanges);
-            alert('Your blog post has been updated.')
-        }
-        catch (e) { throw e; }
+        await blogPostsStore.updateBlogPost(blogPostChanges);
+        alert('Your blog post has been updated.');
     }
 
     async function deleteBlogPost (blogPostId: string | undefined) {
@@ -103,14 +102,12 @@
 
     hr.admin-config-hr
 
-    quill-editor-component
-
-    hr.admin-config-hr
-
     .admin-config-title-area
         h3 Create a new Blog Post
 
     .admin-config-form
+
+        //- TODO - Combine the inputs here and in blog-post.vue
 
         label.admin-config-form__label Title
             input.admin-config-form__input(v-model="newBlogPostTitle")
@@ -119,7 +116,11 @@
             input.admin-config-form__input(v-model="newBlogPostImage")
 
         label.admin-config-form__label Content
-            textarea.admin-config-form__input(v-model="newBlogPostContent")
+            quill-editor-component.admin-config-form__input(
+                :disabled="false"
+                @click.prevent=""
+                @contents-changed="updateBlogPostQuillContent"
+            )
 
         button.jaid-button(
             :disabled="!canCreateBlogPost"
