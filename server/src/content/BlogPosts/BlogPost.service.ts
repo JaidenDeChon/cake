@@ -78,7 +78,7 @@ export class BlogPostService {
 
     /**
      * Deletes a blog post.
-     * @param   { string }   _id   The ID of the Blog Post to update.
+     * @param   { string }   _id   The ID of the Blog Post to delete.
      */
     async deleteBlogPost (_id: string): Promise<void> {
         await this.blogPostModel.deleteOne({ _id }).exec();

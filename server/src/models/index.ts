@@ -1,3 +1,3 @@
 export { IBlogPost } from './IBlogPost';
 export { IHero, JustifyOptions } from './IHero';
-export { IJaidRoute } from './IRoute';
+export { IJaidRoute } from './IJaidRoute';

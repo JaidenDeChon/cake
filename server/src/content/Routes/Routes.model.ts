@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import { RouteRecordRaw } from 'vue-router';
 
-import { IJaidRoute } from '../../models/IRoute';
+import { IJaidRoute } from '../../models/IJaidRoute';
 
 /**
  * Mongoose Schema object representing a VueRouter route object.
