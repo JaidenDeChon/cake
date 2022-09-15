@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RouteRecordRaw } from 'vue-router';
 
 import { IJaidRoute } from '../../models';
 import { JaidModuleNames } from '../../constants';
@@ -24,10 +23,10 @@ export class RoutesService {
      */
     async createRoute (newRoute: IJaidRoute) {
         const pageTitle = newRoute.pageTitle;
+        const pagePath = newRoute.pagePath;
         const content = newRoute.content;
-        const vueRouterObject = newRoute.vueRouterObject;
 
-        const newJaidRoute = new this.jaidRoutesModel({ pageTitle, content, vueRouterObject});
+        const newJaidRoute = new this.jaidRoutesModel({ pageTitle, pagePath, content });
 
         const result = await newJaidRoute.save();
         return result.id as string;
@@ -53,21 +52,23 @@ export class RoutesService {
 
     /**
      * Updates a JaidRoute.
-     * @param   { string }           _id               The ID of the JaidRoute to update.
-     * @param   { string }           pageTitle         The new page title of the JaidRoute.
-     * @param   { object }           content           The new content of the JaidRoute.
-     * @param   { RouteRecordRaw }   vueRouterObject   The new Vue Router object for the JaidRoute.
+     * @param   { string }   _id         The ID of the JaidRoute to update.
+     * @param   { string }   pageTitle   The new page title of the JaidRoute.
+     * @param   { string }   pagePath    The new page path of the JaidRoute.
+     * @param   { object }   content     The new page content of the JaidRoute.
      * @returns 
      */
     async updateRoute (
         _id: string,
         pageTitle: string,
-        content: object,
-        vueRouterObject: RouteRecordRaw
+        pagePath: string,
+        content: object
     ): Promise<IJaidRoute> {
-        const route = await this.jaidRoutesModel.findByIdAndUpdate({ _id }, { pageTitle, content, vueRouterObject }).exec();
+        const route = await this.jaidRoutesModel.findByIdAndUpdate({ _id }, { pageTitle, pagePath, content }).exec();
         if (!route) throw new NotFoundException('Could not find JaidRoute to update');
-        return route;
+
+        const updatedRoute = await this.jaidRoutesModel.findById(_id);
+        return updatedRoute;
     }
 
     /**
