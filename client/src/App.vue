@@ -1,19 +1,25 @@
 <script setup lang="ts">
 
     import { onMounted } from 'vue';
-    import { RouterView } from 'vue-router'
+    import { RouterView, useRouter } from 'vue-router'
 
     import GlobalHeader from '@/components/global-header.vue';
     import { useHeroStore } from './stores/hero';
+    import { useRoutesStore } from '@/stores/routes';
     import { useBlogsStore } from '@/stores/blogs';
+
+    // Set up Vue properties.
+    const $router = useRouter();
 
     // Set up stores.
     const heroStore = useHeroStore();
+    const routesStore = useRoutesStore();
     const blogStore = useBlogsStore();
 
     // Mounted hook.
     onMounted(async () => {
         await heroStore.fetchHero();
+        await routesStore.getAllRoutes($router);
         await blogStore.fetchBlogPosts();
     });
 
@@ -46,7 +52,7 @@
     </div>
     <RouterView v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
-            <component :is="Component" />
+            <component :is="Component" :key="$router.currentRoute.value.fullPath" />
         </Transition>
     </RouterView>
 </template>

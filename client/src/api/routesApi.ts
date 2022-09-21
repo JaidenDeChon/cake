@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import type { IJaidRoute } from '@models/';
 
-export async function createRoute (newData: IJaidRoute): Promise<IJaidRoute> {
+export async function createRoute (newData: IJaidRoute): Promise<{ id: string }> {
     const result = await axios.post('api/routes/create-route', { ...newData });
     return result.data;
 }

@@ -2,74 +2,15 @@
 
     import { ref, watch } from 'vue';
     import { useRoute } from 'vue-router';
-    import { computed } from '@vue/reactivity';
 
-    import MainMenu, { type MainMenuLink } from '@/components/main-menu.vue';
+    import MainMenu from '@/components/main-menu.vue';
     import IconMainMenu from '@/components/icons/icon-menu.vue';
     import IconCart from '@/components/icons/icon-cart.vue';
     import { routeNames } from '@/router';
 
-    /**
-     * General variables.
-     */
+     const $route = useRoute();
 
     const appTitle = ref('Lorem Ipsum');
-
-    /**
-     * Variables to be used as props.
-     */
-
-    const viewingAdminRoute = computed(() => {
-        return $route
-            .matched
-            .some(({ name }) => name === routeNames.ADMIN_HOME);
-    });
-
-    enum AdminLinkText {
-        CONFIG_HERO = 'Configure Hero',
-        CONFIG_BLOG_POSTS = 'Configure Blog Posts',
-        LOG_OUT = 'Log Out'
-    }
-
-    const adminRoutes: MainMenuLink[] = [
-        {
-            routeName: routeNames.ADMIN_CONFIG_HERO,
-            linkText: AdminLinkText.CONFIG_HERO
-        },
-        {
-            routeName: routeNames.ADMIN_CONFIG_BLOG_POSTS,
-            linkText: AdminLinkText.CONFIG_BLOG_POSTS,
-        },
-        {
-            routeName: routeNames.ADMIN_LOGOUT,
-            linkText: AdminLinkText.LOG_OUT
-        }
-    ];
-
-    enum NonAdminLinkText {
-        HOME = 'Home',
-        ABOUT = 'About',
-        ADMIN_LOGIN = 'Admin'
-    }
-
-    const nonAdminRoutes: MainMenuLink[] = [
-        {
-            routeName: routeNames.HOME,
-            linkText: NonAdminLinkText.HOME
-        },
-        {
-            routeName: routeNames.ABOUT,
-            linkText: NonAdminLinkText.ABOUT
-        },
-        {
-            routeName: routeNames.ADMIN_LOGIN,
-            linkText: NonAdminLinkText.ADMIN_LOGIN
-        }
-    ];
-
-    /**
-     * Main menu open/close state functionality.
-     */
 
     const emitToParent = defineEmits(['menu-is-open', 'menu-is-closed']);
 
@@ -88,8 +29,6 @@
     /**
      * Close main menu whenever route path changes.
      */
-
-    const $route = useRoute();
 
     watch(() => $route.path, () => {
         if (mainMenuIsOpen.value) closeMainMenu();
@@ -114,9 +53,6 @@
         </button>
 
         <MainMenu
-            :viewing-admin-route="viewingAdminRoute"
-            :admin-routes="adminRoutes"
-            :non-admin-routes="nonAdminRoutes"
             :class="['header__main-menu', { 'header__main-menu--open': mainMenuIsOpen }]"
             @close-main-menu="closeMainMenu"
         />

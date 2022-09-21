@@ -15,5 +15,5 @@ export interface IJaidRoute {
     pageTitle: string;
 
     // The content of this page represented in a QuillJS Delta object.
-    content: object;
+    content?: object;
 }

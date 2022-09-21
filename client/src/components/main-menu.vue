@@ -1,24 +1,37 @@
 <script setup lang="ts">
 
-    import { routeNames } from '@/router';
+    import { computed } from '@vue/reactivity';
+    import { useRoute } from 'vue-router';
+
+    import type { IJaidRoute } from '@models/';
+    import { routeRoutes } from '@/router';
+    import { useRoutesStore } from '@/stores/routes';
     import IconCloseComponent from '../components/icons/icon-close.vue';
 
-    export interface MainMenuLink {
-        routeName: string,
-        linkText: string
-    }
-
-    const props = defineProps<{
-        viewingAdminRoute: boolean,
-        nonAdminRoutes: Array<MainMenuLink>,
-        adminRoutes: Array<MainMenuLink>
-    }>();
-
     const emit = defineEmits(['close-main-menu']);
+    const routesStore = useRoutesStore();
+    const $route = useRoute();
 
-    const homeText = "Home";
-    const aboutText = "About";
-    const adminText = "Admin";
+    const onAdminRoute = computed(() => $route.matched.some(({ name }) => name === routeRoutes.ADMIN_HOME));
+
+    const adminRoutes: IJaidRoute[] = [
+        { pagePath: routeRoutes.ADMIN_CONFIG_HERO, pageTitle: 'Configure Hero' },
+        { pagePath: routeRoutes.ADMIN_CONFIG_BLOG_POSTS, pageTitle: 'Configure Blog Posts' },
+        { pagePath: routeRoutes.ADMIN_CONFIG_ROUTES, pageTitle: 'Configure Pages' },
+        { pagePath: routeRoutes.ADMIN_LOGOUT, pageTitle: 'Log Out' }
+    ];
+
+    const nonAdminRoutes = computed(() => {
+        const routes: IJaidRoute[] = [];
+        const homePath: IJaidRoute = { pagePath: routeRoutes.HOME, pageTitle: 'Home' };
+        const adminLoginPath: IJaidRoute = { pagePath: routeRoutes.ADMIN_LOGIN, pageTitle: 'Login' };
+
+        routes.push(homePath);
+        routesStore.routes.forEach(route => routes.push(route));
+        routes.push(adminLoginPath);
+
+        return routes;
+    });
 
     function closeMainMenu(): void {
         emit('close-main-menu');
@@ -30,21 +43,21 @@
 
 nav.main-menu
 
-    // Close Main Menu button
+    //- Close Main Menu button
     button.main-menu__menu-item.main-menu__menu-item--align-right(
         @click="closeMainMenu"
     )
         IconCloseComponent.main-menu__menu-item-icon
 
-    // Main Menu links list (admin)
-    ul(v-if="viewingAdminRoute")
+    //- Main Menu links list (admin)
+    ul(v-if="onAdminRoute")
         li(v-for="item in adminRoutes")
-            router-link.main-menu__menu-item(:to="{ name: item.routeName }") {{ item.linkText }}
+            router-link.main-menu__menu-item(:to="{ path: item.pagePath }") {{ item.pageTitle }}
 
-    // Main Menu links list (non-admin)
+    //- Main Menu links list (non-admin)
     ul(v-else)
         li(v-for="item in nonAdminRoutes")
-            router-link.main-menu__menu-item(:to="{ name: item.routeName }") {{ item.linkText }}
+            router-link.main-menu__menu-item(:to="{ path: item.pagePath }") {{ item.pageTitle }}
 
 </template>
 
