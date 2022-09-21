@@ -3,10 +3,15 @@
     import { ref } from 'vue';
     import { computed } from '@vue/reactivity';
     import { kebabCase } from 'lodash';
+    import { useRouter } from 'vue-router';
 
     import type { IJaidRoute } from '@models/';
     import { useRoutesStore } from '@/stores/routes';
     import QuillEditorComponent from '../../components/quill-editor.vue';
+
+    // Vue things.
+
+    const $router = useRouter();
 
     // Stores.
 
@@ -18,7 +23,7 @@
     const newPageContent = ref({});
 
     const newPageObject = computed((): IJaidRoute => ({
-        pagePath: kebabCase(newPageTitle.value), // START HERE
+        pagePath: `/${kebabCase(newPageTitle.value)}`, // START HERE
         pageTitle: newPageTitle.value,
         content: newPageContent.value
     }));
@@ -51,7 +56,7 @@
 
         awaitingCreate.value = true;
 
-        const { id } = await routesStore.createNewRoute(newPageObject.value);
+        const { id } = await routesStore.createNewRoute(newPageObject.value, $router);
 
         if (id) {
             alert("New page created.");

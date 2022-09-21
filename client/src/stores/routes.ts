@@ -15,9 +15,9 @@ export const useRoutesStore = defineStore({
 
     actions: {
 
-        async createNewRoute (newRoute: IJaidRoute): Promise<{ id: string }> {
+        async createNewRoute (newRoute: IJaidRoute, updateRouter?: Router): Promise<{ id: string }> {
             const result = await createRoute(newRoute);
-            await this.getAllRoutes();
+            await this.getAllRoutes(updateRouter);
             return result;
         },
 
@@ -27,15 +27,15 @@ export const useRoutesStore = defineStore({
             if (updateRouter) this.updateRouter(updateRouter);
         },
 
-        async updateExistingRoute (newData: Partial<IJaidRoute>): Promise<IJaidRoute> {
+        async updateExistingRoute (newData: Partial<IJaidRoute>, updateRouter?: Router): Promise<IJaidRoute> {
             const route = await updateRoute(newData);
-            await this.getAllRoutes();
+            await this.getAllRoutes(updateRouter);
             return route;
         },
 
-        async deleteExistingRoute (id: string): Promise<void> {
+        async deleteExistingRoute (id: string, updateRouter?: Router): Promise<void> {
             await deleteRoute(id);
-            await getAllRoutes();
+            await this.getAllRoutes(updateRouter);
         },
 
         getOneRoute (id: string): IJaidRoute | undefined {

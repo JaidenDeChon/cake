@@ -12,7 +12,7 @@
     const routesStore = useRoutesStore();
     const $route = useRoute();
 
-    const onAdminRoute = computed(() => $route.matched.some(({ name }) => name === routeRoutes.ADMIN_HOME));
+    const onAdminRoute = computed(() => $route.matched.some(({ path }) => path === routeRoutes.ADMIN_HOME));
 
     const adminRoutes: IJaidRoute[] = [
         { pagePath: routeRoutes.ADMIN_CONFIG_HERO, pageTitle: 'Configure Hero' },
