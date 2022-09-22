@@ -30,4 +30,9 @@
 
 </script>
 
-<style></style>
+<style>
+
+    .custom-view {
+        padding: var(--global-padding);
+    }
+</style>
