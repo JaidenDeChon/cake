@@ -24,7 +24,7 @@
     const nonAdminRoutes = computed(() => {
         const routes: IJaidRoute[] = [];
         const homePath: IJaidRoute = { pagePath: routeRoutes.HOME, pageTitle: 'Home' };
-        const adminLoginPath: IJaidRoute = { pagePath: routeRoutes.ADMIN_LOGIN, pageTitle: 'Login' };
+        const adminLoginPath: IJaidRoute = { pagePath: routeRoutes.ADMIN_LOGIN, pageTitle: 'Admin' };
 
         routes.push(homePath);
         routesStore.routes.forEach(route => routes.push(route));
