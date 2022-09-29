@@ -5,24 +5,24 @@ import { useAuthenticationStore } from '@/stores/authentication';
 
 export enum routeNames {
   HOME = 'home',
-  ABOUT = 'about',
   ADMIN = 'admin',
   ADMIN_LOGIN = 'admin login',
   ADMIN_LOGOUT = 'admin logout',
   ADMIN_HOME = 'admin home',
   ADMIN_CONFIG_HERO = 'admin hero',
-  ADMIN_CONFIG_BLOG_POSTS = 'admin blog posts'
+  ADMIN_CONFIG_BLOG_POSTS = 'admin blog posts',
+  ADMIN_CONFIG_ROUTES = 'admin routes'
 }
 
 export enum routeRoutes {
   HOME = '/',
-  ABOUT = '/about',
   ADMIN = '/admin',
   ADMIN_LOGIN = '/login',
   ADMIN_LOGOUT = '/logout',
   ADMIN_HOME = '/config',
   ADMIN_CONFIG_HERO = '/admin-hero',
-  ADMIN_CONFIG_BLOG_POSTS = '/admin-blog-posts'
+  ADMIN_CONFIG_BLOG_POSTS = '/admin-blog-posts',
+  ADMIN_CONFIG_ROUTES = '/admin-routes'
 }
 
 /**
@@ -67,11 +67,6 @@ const router = createRouter({
       component: ClientHome
     },
     {
-      name: routeNames.ABOUT,
-      path: routeRoutes.ABOUT,
-      component: () => import('@/views/about-view.vue')
-    },
-    {
       name: routeNames.ADMIN,
       path: routeRoutes.ADMIN,
       component: () => import('@/views/admin/admin.vue'),
@@ -102,6 +97,11 @@ const router = createRouter({
               name: routeNames.ADMIN_CONFIG_BLOG_POSTS,
               path: routeRoutes.ADMIN_CONFIG_BLOG_POSTS,
               component: () => import('@/views/admin/admin-config-blog-posts.vue')
+            },
+            {
+              name: routeNames.ADMIN_CONFIG_ROUTES,
+              path: routeRoutes.ADMIN_CONFIG_ROUTES,
+              component: () => import('@/views/admin/admin-config-routes.vue')
             }
           ]
         }

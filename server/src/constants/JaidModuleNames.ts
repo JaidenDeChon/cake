@@ -3,5 +3,6 @@
  */
  export enum JaidModuleNames {
     BLOG_POST = 'BlogPost',
-    HERO = 'Hero'
+    HERO = 'Hero',
+    ROUTES = 'Routes'
 }

@@ -108,6 +108,26 @@ function emitContentsChanged (): void {
             stroke: var(--color-text) !important;
         }
 
+        .ql-editor p {
+            color: var(--vt-c-indigo);
+        }
+
+        button {
+            margin-right: 0.25rem;
+            border-radius: var(--content-block-border-radius--small);
+            &.ql-active {
+                background-color: var(--color-text);
+                .ql-stroke, .ql-fill {
+                    stroke: var(--vt-c-white) !important;
+                }
+            }
+            &:not(.ql-active) {
+                .ql-stroke, .ql-fill {
+                    stroke: var(--vt-c-indigo) !important;
+                }
+            }
+        }
+
         @media (prefers-color-scheme: dark) {
 
             .quill-editor {
@@ -116,6 +136,20 @@ function emitContentsChanged (): void {
 
             .ql-editor.ql-blank::before {
                 color: var(--color-text--inverted) !important;
+            }
+
+            button {
+                &.ql-active {
+                    background-color: var(--vt-c-white);
+                    .ql-stroke, .ql-fill {
+                        stroke: var(--vt-c-indigo) !important;
+                    }
+                }
+                &:not(.ql-active) {
+                    .ql-stroke, .ql-fill {
+                        stroke: var(--vt-c-white) !important;
+                    }
+                }
             }
         }
     }
