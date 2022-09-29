@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 
-    import { onActivated } from 'vue';
     import { useRoute } from 'vue-router';
     import { ref } from '@vue/reactivity';
 
@@ -22,11 +21,6 @@
 
     let customTitle = ref(routeJaidObject.pageTitle);
     let customContent = ref(routeJaidObject.content);
-
-    onActivated(() => {
-        customTitle.value = routeJaidObject.pageTitle;
-        customContent.value = routeJaidObject.content ?? {};
-    })
 
 </script>
 
