@@ -8,7 +8,7 @@
     import IconCart from '@/components/icons/icon-cart.vue';
     import { routeNames } from '@/router';
 
-     const $route = useRoute();
+    const $route = useRoute();
 
     const appTitle = ref('Lorem Ipsum');
 
