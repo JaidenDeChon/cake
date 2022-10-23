@@ -1,4 +1,5 @@
-import { Controller, Post, Req, Res } from '@nestjs/common';
+import { Controller, Post, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 import { IHostedImage } from '../../models';
 import { ControllerNames } from '../../constants';
@@ -18,7 +19,9 @@ export class ImagesController {
     constructor (private readonly _imagesService: ImagesService) {}
 
     @Post('upload-image')
-    async uploadImage (@Req() request, @Res() response): Promise<void> {
-        const result = await this._imagesService.uploadImageToAws(request, response);
+    @UseInterceptors(FileInterceptor('file'))
+    async uploadImage (@UploadedFile() file: Express.Multer.File): Promise<IHostedImage> {
+        const result = await this._imagesService.upload(file);
+        return result;
     }
 }

@@ -3,7 +3,9 @@
  */
 export interface IHostedImage {
     // The MongoDB ID of the file.
-    id: string;
+    _id?: string;
+    // The AWS key of the file.
+    awsKey: string;
     // The URL of the file.
     url: string;
     // The name of the file that was uploaded.
