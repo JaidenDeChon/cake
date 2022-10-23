@@ -9,7 +9,13 @@ import { IHostedImage } from '../../models';
 import { JaidModuleNames } from '../../constants';
 
 /**
- * Injects server dependency ImagesService
+ * Injects server dependency ImagesService.
+ * TODO:
+ *     - Guard against file types that aren't images
+ *     - Maybe rename this module from `images`-related stuff to just `uploaded-files`-related stuff?
+ *     - Configure AWS to be more secure by not using public ACL
+ *     - Configure AWS to be more secure by sending images to a temporary collection where new uploads are
+ *       scanned by antivirus software, and files passing will go on to their permanent destination.
  */
 @Injectable()
 export class ImagesService {
