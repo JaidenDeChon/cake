@@ -23,7 +23,7 @@
 
         .admin-config-live-component,
         .admin-config-form__label,
-        .admin-config-form button,
+        .admin-config-form button.jaid-button,
         .admin-config-hr {
             margin-bottom: var(--global-padding);
         }
