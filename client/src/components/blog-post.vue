@@ -8,7 +8,7 @@
             input.admin-config-form__input(v-model="blogPostUpdate.title")
 
         label.admin-config-form__label (Optional) Image
-            input.admin-config-form__input(v-model="blogPostUpdate.img")
+            input.admin-config-form__input(type="file" accept="image/*" @change="processImageUpload")
 
         label.admin-config-form__label Content
             quill-editor-component.admin-config-form__input(
@@ -62,7 +62,7 @@
     import { computed } from '@vue/reactivity';
 
     import type { IBlogPost } from '@models/';
-
+    import { uploadImage } from '@/api/imagesApi';
     import quillEditorComponent from './quill-editor.vue';
 
     /** Set up props. */
@@ -149,13 +149,45 @@
         currentlyEditing.value = false;
     }
 
+    /**
+     * Ends editing and resets all fields to their original values.
+     */
     function cancelChanges () {
         currentlyEditing.value = false;
         setupBlogPostUpdateVModels();
     }
 
+    /**
+     * Emits to the parent that the changes to the Blog Post should be deleted.
+     */
     function deleteBlogPost () {
         emitToParent('delete-blog-post');
+    }
+
+    /**
+     * Uploads an image to the server and uses it as the Blog Post image.
+     * @param   { Event }   event   Passed automatically by Vue - The event containing the image selected by
+     *                              the user.
+     */
+    async function processImageUpload (event: Event): Promise<void> {
+
+        // Ensure target (input element) has files selected.
+        const target = event.target as HTMLInputElement;
+        if (!target.files || !target.files[0]) return;
+
+        // Grab the first selected file.
+        const file = target.files[0];
+
+        // Ensure that file is an image.
+        if (!/^image\//.test(file.type)) alert('You may only upload images.');
+
+        // Build a FormData object using the file.
+        const formData = new FormData();
+        formData.append('file', file);
+
+        // Upload the file and use the resulting image URL for the Blog Post.
+        const result = await uploadImage(formData);
+        blogPostUpdate.value.img = result.url;
     }
 
 </script>

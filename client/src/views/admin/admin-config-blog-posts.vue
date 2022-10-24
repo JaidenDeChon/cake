@@ -5,6 +5,7 @@
 
     import type { IBlogPost } from '@models/';
     import { useBlogsStore } from '@/stores/blogs';
+    import { uploadImage } from '@/api/imagesApi';
     import BlogPostComponent from '../../components/blog-post.vue';
     import QuillEditorComponent from '../../components/quill-editor.vue';
 
@@ -90,6 +91,32 @@
         await blogPostsStore.deleteBlogPost(blogPostId ?? '');
     }
 
+    /**
+     * Uploads an image to the server and uses it as the Blog Post image.
+     * @param   { Event }   event   Passed automatically by Vue - The event containing the image selected by
+     *                              the user.
+     */
+    async function processImageUpload (event: Event): Promise<void> {
+
+        // Ensure target (input element) has files selected.
+        const target = event.target as HTMLInputElement;
+        if (!target.files || !target.files[0]) return;
+
+        // Grab the first selected file.
+        const file = target.files[0];
+
+        // Ensure that file is an image.
+        if (!/^image\//.test(file.type)) alert('You may only upload images.');
+
+        // Build a FormData object using the file.
+        const formData = new FormData();
+        formData.append('file', file);
+
+        // Upload the file and use the resulting image URL for the Blog Post.
+        const result = await uploadImage(formData);
+        newBlogPostImage.value = result.url;
+    }
+
 </script>
 
 <template lang="pug">
@@ -113,7 +140,7 @@
             input.admin-config-form__input(v-model="newBlogPostTitle")
 
         label.admin-config-form__label (Optional) Image
-            input.admin-config-form__input(v-model="newBlogPostImage")
+            input.admin-config-form__input(type="file" accept="image/*" @change="processImageUpload")
 
         label.admin-config-form__label Content
             quill-editor-component.admin-config-form__input(
