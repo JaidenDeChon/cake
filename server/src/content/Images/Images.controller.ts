@@ -18,6 +18,12 @@ export class ImagesController {
      */
     constructor (private readonly _imagesService: ImagesService) {}
 
+    /**
+     * Uploads the given file to AWS S3 for hosting, and then saves the metadata of that hosting to the
+     * 'Images' MongoDB collection.
+     * @param   { Express.Multer.File }   file   The file to be uploaded.
+     * @returns an IHostedImage object representing the upload within the MongoDB collection.
+     */
     @Post('upload-image')
     @UseInterceptors(FileInterceptor('file'))
     async uploadImage (@UploadedFile() file: Express.Multer.File): Promise<IHostedImage> {
