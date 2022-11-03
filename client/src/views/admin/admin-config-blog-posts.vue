@@ -133,7 +133,7 @@
             input.admin-config-form__input(v-model="newBlogPostTitle")
 
         label.admin-config-form__label (Optional) Image
-            input.admin-config-form__input(type="file" accept="image/*" @change="processImageUpload")
+            input.admin-config-form__input(type="file" accept="image/*" @change="upload")
 
         label.admin-config-form__label Content
             quill-editor-component.admin-config-form__input(
