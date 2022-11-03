@@ -1,13 +1,13 @@
 <script setup lang="ts">
 
-    import { onMounted, ref } from 'vue';
+    import { onMounted, ref, watch } from 'vue';
     import { computed } from '@vue/reactivity';
 
     import type { IBlogPost } from '@models/';
     import { useBlogsStore } from '@/stores/blogs';
-    import { uploadImage } from '@/api/imagesApi';
     import BlogPostComponent from '../../components/blog-post.vue';
     import QuillEditorComponent from '../../components/quill-editor.vue';
+    import { useImageUploadingService } from '@/services/useImageUploadingService';
 
     /** Lifecycle stuff. */
 
@@ -91,31 +91,24 @@
         await blogPostsStore.deleteBlogPost(blogPostId ?? '');
     }
 
+    /** Image upload-related stuff. */
+
+    const { uploadImage, imageUploadProgress } = useImageUploadingService();
+
     /**
      * Uploads an image to the server and uses it as the Blog Post image.
      * @param   { Event }   event   Passed automatically by Vue - The event containing the image selected by
      *                              the user.
      */
-    async function processImageUpload (event: Event): Promise<void> {
-
-        // Ensure target (input element) has files selected.
-        const target = event.target as HTMLInputElement;
-        if (!target.files || !target.files[0]) return;
-
-        // Grab the first selected file.
-        const file = target.files[0];
-
-        // Ensure that file is an image.
-        if (!/^image\//.test(file.type)) alert('You may only upload images.');
-
-        // Build a FormData object using the file.
-        const formData = new FormData();
-        formData.append('file', file);
-
-        // Upload the file and use the resulting image URL for the Blog Post.
-        const result = await uploadImage(formData);
+    async function upload (event: Event): Promise<void> {
+        const result = await uploadImage(event);
         newBlogPostImage.value = result.url;
     }
+
+    watch(
+        () => imageUploadProgress.value,
+        (value) => console.log(`${ value }%`)
+    );
 
 </script>
 
