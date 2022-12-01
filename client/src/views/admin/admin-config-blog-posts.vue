@@ -15,10 +15,9 @@
 
     /** Blog Posts-related stuff. */
 
-    /** Computed property for list of Blog Posts. */
-
     const blogPostsStore = useBlogsStore();
-
+    
+    /** Computed property for list of Blog Posts. */
     const blogPosts = computed(() => blogPostsStore.posts);
 
     const awaitingCreate = ref(false);

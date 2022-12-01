@@ -35,7 +35,7 @@ const editorOptions: QuillOptionsStatic = {
 };
 
 // Vue `mounted` lifecycle hook.
-onMounted(() => { buildQuill(); });
+onMounted(() => buildQuill());
 
 // Vue `activated` lifecycle hook.
 onActivated(() => setQuillContents());
