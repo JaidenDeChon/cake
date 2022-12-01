@@ -32,7 +32,7 @@ export function useImageUploadingService () {
         const formData = new FormData();
         formData.append('file', file);
 
-        return uploadImageApi(formData, _imageUploadProgress);
+        return uploadImageApi(formData);
     }
 
     // Computed property for providing the size of the image.
