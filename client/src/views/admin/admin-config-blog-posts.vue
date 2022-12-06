@@ -104,11 +104,6 @@
         newBlogPostImage.value = result.url;
     }
 
-    watch(
-        () => imageUploadProgress.value,
-        (value) => console.log(`${ value }%`)
-    );
-
 </script>
 
 <template lang="pug">

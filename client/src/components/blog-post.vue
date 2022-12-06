@@ -178,11 +178,6 @@
         blogPostUpdate.value.img = result.url;
     }
 
-    watch(
-        () => imageUploadProgress.value,
-        (value) => console.log(`${ value }%`)
-    );
-
 </script>
 
 <style lang="scss" scoped>
