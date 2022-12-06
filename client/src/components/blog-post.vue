@@ -8,7 +8,7 @@
             input.admin-config-form__input(v-model="blogPostUpdate.title")
 
         label.admin-config-form__label (Optional) Image
-            input.admin-config-form__input(v-model="blogPostUpdate.img")
+            input.admin-config-form__input(type="file" accept="image/*" @change="upload")
 
         label.admin-config-form__label Content
             quill-editor-component.admin-config-form__input(
@@ -58,12 +58,12 @@
 
 <script setup lang="ts">
 
-    import { onMounted, ref, type PropType } from 'vue';
+    import { onMounted, ref, watch, type PropType } from 'vue';
     import { computed } from '@vue/reactivity';
 
     import type { IBlogPost } from '@models/';
-
     import quillEditorComponent from './quill-editor.vue';
+    import { useImageUploadingService } from '@/services/useImageUploadingService';
 
     /** Set up props. */
 
@@ -149,13 +149,33 @@
         currentlyEditing.value = false;
     }
 
+    /**
+     * Ends editing and resets all fields to their original values.
+     */
     function cancelChanges () {
         currentlyEditing.value = false;
         setupBlogPostUpdateVModels();
     }
 
+    /**
+     * Emits to the parent that the changes to the Blog Post should be deleted.
+     */
     function deleteBlogPost () {
         emitToParent('delete-blog-post');
+    }
+
+    /** Image upload-related stuff. */
+
+    const { uploadImage, imageUploadProgress } = useImageUploadingService();
+
+    /**
+     * Uploads an image to the server and uses it as the Blog Post image.
+     * @param   { Event }   event   Passed automatically by Vue - The event containing the image selected by
+     *                              the user.
+     */
+    async function upload (event: Event): Promise<void> {
+        const result = await uploadImage(event);
+        blogPostUpdate.value.img = result.url;
     }
 
 </script>

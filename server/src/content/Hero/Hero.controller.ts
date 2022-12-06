@@ -11,7 +11,7 @@ import { HeroService } from './Hero.service';
 export class HeroController {
 
     /**
-     * 
+     * Constructor.
      * @param   { HeroService }   _heroService   The Hero service to use for interacting with the database.
      */
     constructor (private readonly _heroService: HeroService) {}

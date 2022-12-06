@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
-    import { onMounted, ref } from 'vue';
+    import { onMounted, ref, watch } from 'vue';
     import { computed } from '@vue/reactivity';
 
     import type { IBlogPost } from '@models/';
     import { useBlogsStore } from '@/stores/blogs';
     import BlogPostComponent from '../../components/blog-post.vue';
     import QuillEditorComponent from '../../components/quill-editor.vue';
+    import { useImageUploadingService } from '@/services/useImageUploadingService';
 
     /** Lifecycle stuff. */
 
@@ -14,10 +15,9 @@
 
     /** Blog Posts-related stuff. */
 
-    /** Computed property for list of Blog Posts. */
-
     const blogPostsStore = useBlogsStore();
-
+    
+    /** Computed property for list of Blog Posts. */
     const blogPosts = computed(() => blogPostsStore.posts);
 
     const awaitingCreate = ref(false);
@@ -90,6 +90,20 @@
         await blogPostsStore.deleteBlogPost(blogPostId ?? '');
     }
 
+    /** Image upload-related stuff. */
+
+    const { uploadImage, imageUploadProgress } = useImageUploadingService();
+
+    /**
+     * Uploads an image to the server and uses it as the Blog Post image.
+     * @param   { Event }   event   Passed automatically by Vue - The event containing the image selected by
+     *                              the user.
+     */
+    async function upload (event: Event): Promise<void> {
+        const result = await uploadImage(event);
+        newBlogPostImage.value = result.url;
+    }
+
 </script>
 
 <template lang="pug">
@@ -113,7 +127,7 @@
             input.admin-config-form__input(v-model="newBlogPostTitle")
 
         label.admin-config-form__label (Optional) Image
-            input.admin-config-form__input(v-model="newBlogPostImage")
+            input.admin-config-form__input(type="file" accept="image/*" @change="upload")
 
         label.admin-config-form__label Content
             quill-editor-component.admin-config-form__input(

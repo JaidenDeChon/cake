@@ -1,6 +1,6 @@
 
 import { JaidModuleNames } from './JaidModuleNames';
-import { CliMessagePreface } from './cliMessagePreface';
+import { CliMessagePreface } from './CliMessagePreface';
 import { ControllerNames } from './ControllerNames';
 
 export { JaidModuleNames };

@@ -4,5 +4,6 @@
  export enum JaidModuleNames {
     BLOG_POST = 'BlogPost',
     HERO = 'Hero',
-    ROUTES = 'Routes'
+    ROUTES = 'Routes',
+    IMAGES = 'Images'
 }

@@ -7,6 +7,7 @@ import * as dotenv from 'dotenv';
 import { BlogPostModule } from './content/BlogPosts/BlogPost.module';
 import { HeroModule } from './content/Hero/Hero.module';
 import { RoutesModule } from './content/Routes/Routes.module';
+import { ImagesModule } from './content/Images/Images.module';
 
 
 // Set up environmental variables.
@@ -42,7 +43,9 @@ const connectionString =
         // Exposes 'Hero' module to the app.
         HeroModule,
         // Exposes the 'Routes' module to the app.
-        RoutesModule
+        RoutesModule,
+        // Exposes the 'Images' module to the app.
+        ImagesModule
     ]
 })
 export class AppModule {}
