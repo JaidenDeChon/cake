@@ -8,6 +8,7 @@ import { BlogPostModule } from './content/BlogPosts/BlogPost.module';
 import { HeroModule } from './content/Hero/Hero.module';
 import { RoutesModule } from './content/Routes/Routes.module';
 import { ImagesModule } from './content/Images/Images.module';
+import { UserModule } from './users/User.module';
 
 
 // Set up environmental variables.
@@ -45,7 +46,9 @@ const connectionString =
         // Exposes the 'Routes' module to the app.
         RoutesModule,
         // Exposes the 'Images' module to the app.
-        ImagesModule
+        ImagesModule,
+        // Exposes the 'User' module to the app.
+        UserModule
     ]
 })
 export class AppModule {}

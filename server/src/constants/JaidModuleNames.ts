@@ -5,5 +5,6 @@
     BLOG_POST = 'BlogPost',
     HERO = 'Hero',
     ROUTES = 'Routes',
-    IMAGES = 'Images'
+    IMAGES = 'Images',
+    USERS = 'Users'
 }
