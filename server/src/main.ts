@@ -22,10 +22,9 @@ async function bootstrap() {
 
     // Set up Swagger.
     const swaggerConfig = new DocumentBuilder()
-        .setTitle('BlogPosts')
-        .setDescription('API calls relating to blog posts.')
+        .setTitle('JaID API')
+        .setDescription('API endpoints related to content, users, and authentication')
         .setVersion('1.0')
-        .addTag('blog-posts')
         .build();
     const document = SwaggerModule.createDocument(app, swaggerConfig);
     SwaggerModule.setup('api/swagger', app, document);
