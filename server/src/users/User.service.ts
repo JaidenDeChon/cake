@@ -13,7 +13,7 @@ export class UserService {
 
     /**
      * Constructor.
-     * @param   { Model<IUser> }   userModel   The shape of a user.
+     * @param   { Model<IUser> }   userModel   IUser model DI.
      */
     constructor(
         // Injects the User Mongoose model for use in this service.
