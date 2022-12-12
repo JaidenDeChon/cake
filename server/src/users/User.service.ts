@@ -50,7 +50,7 @@ export class UserService {
     }
 
     async login (email: string, password: string) {
-        const user: IUser = await this.userModel.find((user: IUser) => user.email === email)[0];
+        const user: IUser = await this.userModel.findOne({ email }).exec();
         if (!user) throw new BadRequestException('Invalid credentials.');
 
         const matchingPassword = await bcryptjs.compare(password, user.password);
