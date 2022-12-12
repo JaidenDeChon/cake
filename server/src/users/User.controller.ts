@@ -34,9 +34,19 @@ export class UserController {
      * Gets a single user by their ID.
      * @param   { string }   id   The ID of the user to get.
      */
-    @Get('get-user/:id')
+    @Get('get-user-by-id/:id')
     async getUser (@Param('id') id: string): Promise<IUser> {
         const user = await this._userService.getUser(id);
         return user;
     }
+
+    @Post('login')
+    async login(
+        @Body('email') email: string,
+        @Body('password') password: string
+    ) {
+        const result = await this._userService.login(email, password);
+        return result;
+    }
+
 }
