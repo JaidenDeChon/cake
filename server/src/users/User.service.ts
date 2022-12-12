@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import * as bcryptjs from 'bcryptjs';
 
 import { IUser } from '../models';
 import { JaidModuleNames } from '../constants';
@@ -30,7 +31,7 @@ export class UserService {
         const firstName = user.firstName;
         const lastName = user.lastName;
         const email = user.email;
-        const password = user.password;
+        const password = await bcryptjs.hash(user.password, 12);
 
         const newUser = new this.userModel({ firstName, lastName, email, password });
 
