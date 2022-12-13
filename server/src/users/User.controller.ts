@@ -25,9 +25,8 @@ export class UserController {
      * @returns 
      */
     @Post('create-user')
-    async createUser (@Body() newUser: IUser): Promise<{ id: string }> {
-        const id = await this._userService.insertUserToDatabase(newUser);
-        return { id };
+    async createUser (@Body() newUser: IUser): Promise<IUser> {
+        return this._userService.insertUserToDatabase(newUser);
     }
 
     /**

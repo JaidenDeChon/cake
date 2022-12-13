@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcryptjs from 'bcryptjs';
@@ -27,16 +27,14 @@ export class UserService {
      * @param   { IUser }   user   The user object to insert into the database.
      * @returns 
      */
-    async insertUserToDatabase (user: IUser): Promise<string> {
-        const firstName = user.firstName;
-        const lastName = user.lastName;
-        const email = user.email;
-        const password = await bcryptjs.hash(user.password, 12);
-
-        const newUser = new this.userModel({ firstName, lastName, email, password });
-
-        const result = await newUser.save();
-        return result.id as string;
+    async insertUserToDatabase (user: IUser): Promise<IUser> {
+        const newUser = new this.userModel(user);
+        try {
+            await newUser.save();
+            return newUser;
+        } catch (e) {
+            throw new InternalServerErrorException(e);
+        }
     }
 
     /**
