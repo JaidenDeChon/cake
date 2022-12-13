@@ -33,7 +33,7 @@ export class UserService {
     async insertUserToDatabase (userData: IUser): Promise<IUser> {
         const userDataCopy = { ...userData };
         const salt = await bcryptjs.genSalt(Number(process.env.JWT_SECRET));
-        userDataCopy.password = await bcryptjs.hash(userData.password, salt);
+        userDataCopy.password = await bcryptjs.hash(userDataCopy.password, salt);
         try {
             await new this.userModel(userDataCopy).save();
             delete userDataCopy.password;
