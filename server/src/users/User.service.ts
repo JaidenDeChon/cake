@@ -2,9 +2,12 @@ import { BadRequestException, Injectable, InternalServerErrorException, NotFound
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcryptjs from 'bcryptjs';
+import * as dotenv from 'dotenv';
 
 import { IUser } from '../models';
 import { JaidModuleNames } from '../constants';
+
+dotenv.config();
 
 /**
  * Injects server dependency UserService.
@@ -24,14 +27,16 @@ export class UserService {
 
     /**
      * Inserts a user into the database.
-     * @param   { IUser }   user   The user object to insert into the database.
+     * @param   { IUser }   userData   The user object to insert into the database.
      * @returns 
      */
-    async insertUserToDatabase (user: IUser): Promise<IUser> {
-        const newUser = new this.userModel(user);
+    async insertUserToDatabase (userData: IUser): Promise<IUser> {
+        const userDataCopy = { ...userData };
+        userDataCopy.password = await bcryptjs.hash(userData.password, process.env.JWT_SECRET);
         try {
-            await newUser.save();
-            return newUser;
+            await new this.userModel(userDataCopy).save();
+            delete userDataCopy.password;
+            return userDataCopy;
         } catch (e) {
             throw new InternalServerErrorException(e);
         }
