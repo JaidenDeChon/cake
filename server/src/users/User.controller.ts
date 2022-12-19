@@ -1,4 +1,5 @@
-import { Body, Controller, Post, Get, Param } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Res } from '@nestjs/common';
+import { Response } from 'express';
 
 import { IUser } from '../models';
 import { ControllerNames } from '../constants';
@@ -35,17 +36,25 @@ export class UserController {
      */
     @Get('get-user-by-id/:id')
     async getUser (@Param('id') id: string): Promise<IUser> {
-        const user = await this._userService.getUser(id);
+        const user = await this._userService.getUserById(id);
         return user;
     }
 
     @Post('login')
     async login(
         @Body('email') email: string,
-        @Body('password') password: string
+        @Body('password') password: string,
+        @Res() response: Response
     ) {
-        const result = await this._userService.login(email, password);
-        return result;
+        const { accessToken, refreshToken } = await this._userService.login(email, password);
+        response.cookie(
+            'refresh_token',
+            refreshToken,
+            {
+                httpOnly: true,
+                maxAge: 7 * 24 * 60 * 60 * 1000 // One week.
+            }
+        );
+        return { token: accessToken };
     }
-
 }
