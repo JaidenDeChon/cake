@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
 import { CliMessagePreface } from './constants';
@@ -14,8 +15,14 @@ async function bootstrap() {
     const portNumber = 3000;
     const app = await NestFactory.create(AppModule);
 
+    // Enable app to use cookieParser package globally.
+    app.use(cookieParser());
+
     // Enable CORS when in dev environment.
-    if (process.env.NODE_ENV === 'production') app.enableCors();
+    if (process.env.NODE_ENV === 'production') app.enableCors({
+        credentials: true,
+        origin: ['http://localhost:8080', 'https://localhost:8080']
+    });
 
     // Set up global prefix so that client is accessible from root path.
     app.setGlobalPrefix('api');

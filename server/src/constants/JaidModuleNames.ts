@@ -6,5 +6,7 @@
     HERO = 'Hero',
     ROUTES = 'Routes',
     IMAGES = 'Images',
-    USERS = 'Users'
+    USERS = 'Users',
+    TOKENS = 'Tokens',
+    RESET = 'Reset'
 }

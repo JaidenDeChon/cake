@@ -1,3 +1,5 @@
+import { IToken } from './IToken';
+
 /**
  * The shape of a User throughout the app.
  */
@@ -6,5 +8,6 @@ export interface IUser {
     firstName: string;
     lastName: string;
     email: string;
-    password: string;
+    password?: string;
+    token?: IToken;
 }

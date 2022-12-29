@@ -8,7 +8,8 @@ import { BlogPostModule } from './content/BlogPosts/BlogPost.module';
 import { HeroModule } from './content/Hero/Hero.module';
 import { RoutesModule } from './content/Routes/Routes.module';
 import { ImagesModule } from './content/Images/Images.module';
-import { UserModule } from './users/User.module';
+import { UserModule } from './authentication/users/User.module';
+import { ResetModule } from './authentication/reset/reset.module';
 
 
 // Set up environmental variables.
@@ -48,7 +49,9 @@ const connectionString =
         // Exposes the 'Images' module to the app.
         ImagesModule,
         // Exposes the 'User' module to the app.
-        UserModule
+        UserModule,
+        // Exposes the 'Reset' module to the app.
+        ResetModule
     ]
 })
 export class AppModule {}
