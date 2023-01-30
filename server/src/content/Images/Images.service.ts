@@ -7,6 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { IHostedImage } from '../../models';
 import { JaidModuleNames } from '../../constants';
+import S3 from 'aws-sdk/clients/s3';
 
 /**
  * Injects server dependency ImagesService.
@@ -29,7 +30,18 @@ export class ImagesService {
         private readonly imagesModel: Model<IHostedImage>
     ) {
         dotenv.config();
+
+        this._bucketName = process.env.AWS_S3_BUCKET_NAME;
+
+        const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+        const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+        const credentials = new aws.Credentials({ accessKeyId, secretAccessKey });
+        this._s3 = new aws.S3({ credentials });
+
     }
+
+    private _s3: S3;
+    private _bucketName: string;
 
     /**
      * Uploads the given file to AWS S3 for hosting, and then saves the metadata of that hosting to the
@@ -48,15 +60,16 @@ export class ImagesService {
      * @param   { Express.Multer.File }   file   The file that was uploaded.
      * @returns an object representing the AWS upload.
      */
-    private async uploadImage (file: Express.Multer.File): Promise<any> {
-        const s3 = new aws.S3();
-        const Bucket = process.env.AWS_S3_BUCKET_NAME;
-        const ACL = process.env.AWS_ACL;
+    private async uploadImage (file: Express.Multer.File): Promise<S3.ManagedUpload.SendData> {
         const Body = file.buffer;
         const Key = `${ randomUUID() }-${ file.originalname }`;
         const ContentType = file.mimetype;
+        const Bucket = this._bucketName;
 
-        const uploadResult = await s3.upload({ Bucket, Body, Key, ACL, ContentType }).promise();
+        const uploadResult = await this._s3
+            .upload({ Bucket, Body, Key, ContentType, ACL: 'public-read' })
+            .promise();
+
         return uploadResult;
     }
 
