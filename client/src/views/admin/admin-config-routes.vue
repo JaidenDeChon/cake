@@ -81,49 +81,64 @@
 
 </script>
 
-<template lang="pug">
+<template>
 
-.admin-config-routes
+<div class="admin-config-routes">
 
-    .admin-config-title-area
-        h2 Configure Pages
-        p On this page, you can add, remove, and modify the pages of your site.
+    <div class="admin-config-title-area">
+        <h2>Configure Pages</h2>
+        <p>On this page, you can add, remove, and modify the pages of your site.</p>
+    </div>
 
-    hr.admin-config-hr
+    <hr class="admin-config-hr" />
 
-    .admin-config-title-area
-        h3 Create a new page
+    <div class="admin-config-title-area">
+        <h3>Create a new page</h3>
+    </div>
 
-    .admin-config-form
-
-        label.admin-config-form__label Title
-            input.admin-config-form__input(v-model="newPageTitle")
-
-        label.admin-config-form__label Content
-            quill-editor-component.admin-config-form__input(
+    <div class="admin-config-form">
+        
+        <label class="admin-config-form__label">
+            Title
+            <input
+                class="admin-config-form__input"
+                v-model="newPageTitle"
+            />
+        </label>
+        
+        <label class="admin-config-form__label">
+            Content
+            <quill-editor-component
+                class="admin-config-form__input"
                 :disabled="false"
                 @click.prevent=""
                 @contents-changed="updateNewPageQuillContent"
-            )
+            ></quill-editor-component>
+        </label>
 
-        button.jaid-button(
+        <button
+            class="jaid-button"
             :disabled="awaitingAnything"
             @click="createNewPage"
-        ) {{ createRouteButtonText }}
+        >
+            {{ createRouteButtonText }}
+        </button>
+    </div>
 
-    hr.admin-config-hr
+    <hr class="admin-config-hr" />
 
-    .admin-config-title-area
-        h3 Manage existing pages
+    <div class="admin-config-title-area">
+        <h3>Manage existing pages</h3>
+    </div>
 
-    chip-with-buttons(
+    <chip-with-buttons
         v-for="page in allCurrentPages"
         :primary-text="page.pageTitle"
         :secondary-text="page._id ?? '[no id]'"
         :use-edit-button="true"
-        :use-close-button="true"
-    )
-
+        :use-close-button="true">
+    </chip-with-buttons>
+</div>
 
 </template>
 
