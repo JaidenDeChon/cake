@@ -8,6 +8,7 @@
     import type { IJaidRoute } from '@models/';
     import { useRoutesStore } from '@/stores/routes';
     import QuillEditorComponent from '../../components/quill-editor.vue';
+    import chipWithButtons from '@/components/chip-with-buttons.vue';
 
     // Vue things.
 
@@ -16,6 +17,11 @@
     // Stores.
 
     const routesStore = useRoutesStore();
+
+
+    /**
+     * Route / page Creation.
+     */
 
     // Variables / computed properties for holding the content of the new page.
 
@@ -67,6 +73,12 @@
         awaitingCreate.value = false;
     }
 
+    /**
+     * Existing routes / pages.
+     */
+
+     const allCurrentPages = computed(() => routesStore.routes);
+
 </script>
 
 <template lang="pug">
@@ -99,4 +111,24 @@
             @click="createNewPage"
         ) {{ createRouteButtonText }}
 
+    hr.admin-config-hr
+
+    .admin-config-title-area
+        h3 Manage existing pages
+
+    chip-with-buttons(
+        v-for="page in allCurrentPages"
+        :primary-text="page.pageTitle"
+        :secondary-text="page._id ?? '[no id]'"
+        :use-edit-button="true"
+        :use-close-button="true"
+    )
+
+
 </template>
+
+<style scoped>
+.chip-with-buttons {
+    margin-bottom: 3rem;
+}
+</style>
