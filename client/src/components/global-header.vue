@@ -39,7 +39,7 @@
 <template>
     <header class="header">
         <!-- Main menu button -->
-        <button class="header__main-menu-button" @click="openMainMenu">
+        <button class="icon-button" @click="openMainMenu">
             <IconMainMenu />
         </button>
 
@@ -48,7 +48,7 @@
         </router-link>
 
         <!-- Cart button -->
-        <button class="header__main-menu-button">
+        <button class="icon-button">
             <IconCart />
         </button>
 
@@ -75,26 +75,6 @@
 
         background-color: var(--color-background);
         box-shadow: rgba(100, 100, 111, 0.2) 0rem 0.4375rem 1.8125rem 0;
-
-        &__main-menu-button {
-            height: 2.2rem;
-            width: 2.2rem;
-
-            padding: 0;
-
-            outline: none;
-            border-radius: .2rem;
-            background-color: transparent;
-            border: 0.1rem solid var(--color-border);
-            cursor: pointer;
-            transition: 0.4s;
-
-            svg {
-                fill: var(--color-text);
-                margin: 0;
-                width: 1rem;
-            }
-        }
 
         &__home-link {
             color: var(--color-text);
