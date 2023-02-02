@@ -16,3 +16,34 @@ button.jaid-button:not(:disabled) {
 button.jaid-button:disabled {
     opacity: 0.5;
 }
+
+/* Is a square */
+button.icon-button {
+    height: 2.2rem;
+    width: 2.2rem;
+
+    padding: 0;
+
+    outline: none;
+    border-radius: .2rem;
+    background-color: transparent;
+    border: 0.1rem solid var(--color-border);
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+button.icon-button:hover {
+    border-color: var(--color-border-hover);
+}
+
+@media (hover: hover) {
+    button.icon-button:hover {
+        background-color: var(--color-background-mute);
+    }
+}
+
+button.icon-button svg {
+    fill: var(--color-text);
+    margin: 0;
+    width: 1rem;
+}

@@ -3,6 +3,7 @@
 /* semantic measurement variables for this project */
 :root {
   --global-padding: 2rem;
+  --global-padding--half: calc(var(--global-padding) / 2);
   --global-header-height: 5rem;
   --content-block-border-radius: 0.5rem;
   --content-block-border-radius--small: 0.25rem;
