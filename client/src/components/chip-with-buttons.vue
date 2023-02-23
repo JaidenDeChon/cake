@@ -3,33 +3,52 @@
     import IconPencil from './icons/icon-pencil.vue';
     import IconX from './icons/icon-x.vue'
 
-    const $props = defineProps({
-        primaryText: { type: String, required: false },
-        secondaryText: { type: String, required: false },
-        useEditButton: { type: Boolean, default: false },
-        useCloseButton: { type: Boolean, default: false },
+    export interface Props {
+        primaryText?: string;
+        secondaryText?: string;
+        useEditButton?: boolean;
+        useCloseButton?: boolean;
+    }
+
+    export interface Emits {
+        (e: 'edit'): void;
+        (e: 'delete'): void;
+    }
+
+    const $props = withDefaults(defineProps<Props>(), {
+        primaryText: '',
+        secondaryText: '',
+        useEditButton: false,
+        useCloseButton: false
     });
 
-    const $emit = defineEmits(['edit', 'delete']);
+    const $emit = defineEmits<Emits>();
 
 </script>
 
-<template lang="pug">
-
-.chip-with-buttons
-
-    .chip-with-buttons__title-area
-
-        span.chip-with-buttons__primary-text {{ primaryText }}
-        span.chip-with-buttons__secondary-text {{ secondaryText }}
-
-    .chip-with-buttons__action-area
-
-        button.icon-button(v-if="useEditButton")
-            icon-pencil
-        button.icon-button(v-if="useCloseButton")
-            icon-x
-
+<template>
+    <div class="chip-with-buttons">
+        <div class="chip-with-buttons__title-area">
+            <span class="chip-with-buttons__primary-text">{{ primaryText }}</span>
+            <span class="chip-with-buttons__secondary-text">{{ secondaryText }}</span>
+        </div>
+        <div class="chip-with-buttons__action-area">
+            <button
+                v-if="$props.useEditButton"
+                @click="$emit('edit')"
+                class="icon-button"
+            >
+                <icon-pencil />
+            </button>
+            <button
+                v-if="$props.useCloseButton"
+                @click="$emit('delete')"
+                class="icon-button"
+            >
+                <icon-x />
+            </button>
+        </div>
+    </div>
 </template>
 
 <style lang="scss">

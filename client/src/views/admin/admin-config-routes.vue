@@ -56,6 +56,13 @@
     }
 
     /**
+     * Deletes the route with the given ID.
+     */
+    async function deleteRoute (id: string): Promise<void> {
+        await routesStore.deleteExistingRoute(id, $router);
+    }
+
+    /**
      * Creates a new page/route using the data entered.
      */
     async function createNewPage (): Promise<void> {
@@ -136,8 +143,9 @@
         :primary-text="page.pageTitle"
         :secondary-text="page._id ?? '[no id]'"
         :use-edit-button="true"
-        :use-close-button="true">
-    </chip-with-buttons>
+        :use-close-button="true"
+        @delete="deleteRoute(page._id)"
+    />
 </div>
 
 </template>
