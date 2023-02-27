@@ -19,8 +19,6 @@
 
     const $emit = defineEmits<Emits>();
 
-    const eitherHeaderIsPresent = computed(() => !!($props.header || $props.subheader))
-
 </script>
 
 <template>
@@ -53,7 +51,7 @@
                             <p class="modal__subheader">{{ $props.subheader }}</p>
                         </div>
 
-                        <hr v-if="eitherHeaderIsPresent">
+                        <hr>
                     </template>
 
                     <!-- Container for slotted content. -->
