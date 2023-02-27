@@ -101,12 +101,12 @@
 
 <script setup lang="ts">
 
-    import { onMounted, ref, watch, type PropType } from 'vue';
+    import { onMounted, ref, type PropType } from 'vue';
     import { computed } from '@vue/reactivity';
 
     import type { IBlogPost } from '@models/';
     import quillEditorComponent from './quill-editor.vue';
-    import { useImageUploadingService } from '@/services/useImageUploadingService';
+    import { useImageUploadingService } from '@/services/imageUploadService';
 
     /** Set up props. */
 
