@@ -7,7 +7,7 @@
 
     import type { IJaidRoute } from '@models/';
     import { useRoutesStore } from '@/stores/routes';
-    import QuillEditorComponent from '../../components/quill-editor.vue';
+    import adminConfigRoutesModal from './admin-config-routes-modal.vue';
     import chipWithButtons from '@/components/chip-with-buttons.vue';
 
     // Vue things.
@@ -78,6 +78,7 @@
         }
 
         awaitingCreate.value = false;
+        closeModal();
     }
 
     /**
@@ -85,6 +86,47 @@
      */
 
      const allCurrentPages = computed(() => routesStore.routes);
+
+     /**
+      * Modal functionality.
+      */
+
+    // Controls whether the page editor modal is currently visible.
+    const displayPageEditorModal = ref(false);
+
+    // Holds the contents of the page to be edited or `undefined` if none. 
+    const selectedPage = ref(undefined as object | undefined);
+
+    /**
+     * Shows the modal. Optional param for providing modal contents.
+     * @param   { object }   data   (Optional) Allows for passing content to the modal.
+     */
+    function showModal (data?: object): void {
+        selectedPage.value = data;
+        displayPageEditorModal.value = true;
+    }
+
+    /**
+     * Closes the modal.
+     */
+    function closeModal (): void {
+        displayPageEditorModal.value = false;
+        selectedPage.value = undefined;
+    }
+
+    // Determines what the modal header text should say.
+    const modalHeaderText = computed(
+        () => selectedPage.value === undefined
+            ? 'Create new page'
+            : 'Edit page contents'
+    );
+
+    // Determines what the modal subheader text should say.
+    const modalSubheaderText = computed(
+        () => selectedPage.value === undefined
+            ? 'Use the controls below to create your page.'
+            : 'Use the controls below to modify your page contents.'
+    );
 
 </script>
 
@@ -104,29 +146,10 @@
     </div>
 
     <div class="admin-config-form">
-        
-        <label class="admin-config-form__label">
-            Title
-            <input
-                class="admin-config-form__input"
-                v-model="newPageTitle"
-            />
-        </label>
-        
-        <label class="admin-config-form__label">
-            Content
-            <quill-editor-component
-                class="admin-config-form__input"
-                :disabled="false"
-                @click.prevent=""
-                @contents-changed="updateNewPageQuillContent"
-            ></quill-editor-component>
-        </label>
-
         <button
             class="jaid-button"
             :disabled="awaitingAnything"
-            @click="createNewPage"
+            @click="showModal(undefined)"
         >
             {{ createRouteButtonText }}
         </button>
@@ -144,7 +167,20 @@
         :secondary-text="page._id ?? '[no id]'"
         :use-edit-button="true"
         :use-close-button="true"
-        @delete="deleteRoute(page._id)"
+        @delete="!!page._id ? deleteRoute(page._id) : undefined"
+        @edit="showModal(page)"
+    />
+
+    <!-- Modal which is displayed when editing or creating a page. -->
+    <admin-config-routes-modal
+        :visible="displayPageEditorModal"
+        :header="modalHeaderText"
+        :subheader="modalSubheaderText"
+        :page-content="selectedPage"
+        @close="displayPageEditorModal = false"
+        @save="createNewPage"
+        @contents-changed="updateNewPageQuillContent"
+        @update-title="newPageTitle = $event"
     />
 </div>
 
