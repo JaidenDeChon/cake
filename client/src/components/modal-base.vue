@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-    import { computed } from '@vue/reactivity';
-
     import iconX from './icons/icon-x.vue';
 
     export interface Props {
