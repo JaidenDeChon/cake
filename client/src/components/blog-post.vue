@@ -1,59 +1,102 @@
-<template lang="pug">
+<template>
+    <div
+        :class="[
+            'article',
+            { 'article--edit-mode': isModifiable && currentlyEditing }
+        ]"
+    >
+        <template v-if="currentlyEditing">
+            <label class="admin-config-form__label">
+                Title
+                <input
+                    class="admin-config-form__input"
+                    v-model="blogPostUpdate.title"
+                />
+            </label>
 
-.article(:class="{ 'article--edit-mode': isModifiable && currentlyEditing }")
+            <label class="admin-config-form__label">
+                (Optional) Image
+                <input
+                    class="admin-config-form__input"
+                    type="file"
+                    accept="image/*"
+                    @change="upload"
+                />
+            </label>
 
-    template(v-if="currentlyEditing")
+            <label class="admin-config-form__label">
+                Content
+                <quill-editor-component
+                    class="admin-config-form__input"
+                    :disabled="false"
+                    :contents="props.blogPost.content"
+                    @click.prevent=""
+                    @contents-changed="updateBlogPostQuillContent"
+                ></quill-editor-component>
+            </label>
 
-        label.admin-config-form__label Title
-            input.admin-config-form__input(v-model="blogPostUpdate.title")
+            <div class="article__edit-controls">
+                <!-- Save modifications-->
+                <button
+                    class="jaid-button"
+                    :disabled="!changesHaveBeenMade || awaitingAnything"
+                    @click="saveChanges"
+                >
+                    {{ saveButtonText }}
+                </button>
 
-        label.admin-config-form__label (Optional) Image
-            input.admin-config-form__input(type="file" accept="image/*" @change="upload")
+                <!-- Cancel modifications-->
+                <button
+                    class="jaid-button"
+                    @click="cancelChanges"
+                >
+                    {{ cancelButtonChanges }}
+                </button>
+            </div>
 
-        label.admin-config-form__label Content
-            quill-editor-component.admin-config-form__input(
-                :disabled="false"
+        </template>
+
+        <template v-else>
+
+            <img
+                v-if="props.blogPost.img"
+                class="article__img"
+                :src="props.blogPost.img"
+            />
+
+            <h2 class="article__title">{{ props.blogPost.title }}</h2>
+        
+            <p class="article__date">{{ props.blogPost.date }}</p>
+
+            <quill-editor-component
+                class="admin-config-form__input"
                 :contents="props.blogPost.content"
                 @click.prevent=""
                 @contents-changed="updateBlogPostQuillContent"
-            )
+            ></quill-editor-component>
 
-        .article__edit-controls
+            <div
+                class="article__edit-controls"
+                v-if="isModifiable && !currentlyEditing"
+            >
+                <button
+                    class="jaid-button"
+                    :disabled="awaitingAnything"
+                    @click="enableEditMode"
+                >
+                    {{ editButtonText }}
+                </button>
 
-            // Save modifications
-            button.jaid-button(
-                :disabled="!changesHaveBeenMade || awaitingAnything"
-                @click="saveChanges"
-            ) {{ saveButtonText }}
-
-            // Cancel modifications
-            button.jaid-button(
-                @click="cancelChanges"
-            ) {{ cancelButtonChanges }}
-
-    template(v-else)
-
-        img.article__img(v-if="props.blogPost.img" :src="props.blogPost.img")
-        h2.article__title {{ props.blogPost.title }}
-        p.article__date {{ props.blogPost.date }}
-        quill-editor-component.admin-config-form__input(
-            :contents="props.blogPost.content"
-            @click.prevent=""
-            @contents-changed="updateBlogPostQuillContent"
-        )
-
-        .article__edit-controls(v-if="isModifiable && !currentlyEditing")
-
-            button.jaid-button(
-                :disabled="awaitingAnything"
-                @click="enableEditMode"
-            ) {{ editButtonText }}
-
-            button.jaid-button(
-                :disabled="awaitingAnything"
-                @click="deleteBlogPost"
-            ) {{ deleteButtonText }}
-
+                <button
+                    class="jaid-button"
+                    :disabled="awaitingAnything"
+                    @click="deleteBlogPost"
+                >
+                    {{ deleteButtonText }}
+                </button>
+            </div>
+        </template>
+    </div>
 </template>
 
 <script setup lang="ts">

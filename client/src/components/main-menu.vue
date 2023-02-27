@@ -39,25 +39,39 @@
 
 </script>
 
-<template lang="pug">
+<template>
 
-nav.main-menu
+    <nav class="main-menu">
 
-    //- Close Main Menu button
-    button.main-menu__menu-item.main-menu__menu-item--align-right(
-        @click="closeMainMenu"
-    )
-        IconCloseComponent.main-menu__menu-item-icon
+        <button
+            class="main-menu__menu-item main-menu__menu-item--align-right"
+            @click="closeMainMenu"
+        >
+            <IconCloseComponent class="main-menu__menu-item-icon"></IconCloseComponent>
+        </button>
 
-    //- Main Menu links list (admin)
-    ul(v-if="onAdminRoute")
-        li(v-for="item in adminRoutes")
-            router-link.main-menu__menu-item(:to="{ path: item.pagePath }") {{ item.pageTitle }}
+        <ul v-if="onAdminRoute">
+            <li v-for="item in adminRoutes">
+                <router-link
+                    class="main-menu__menu-item"
+                    :to="{ path: item.pagePath }"
+                >
+                    {{ item.pageTitle }}
+                </router-link>
+            </li>
+        </ul>
 
-    //- Main Menu links list (non-admin)
-    ul(v-else)
-        li(v-for="item in nonAdminRoutes")
-            router-link.main-menu__menu-item(:to="{ path: item.pagePath }") {{ item.pageTitle }}
+        <ul v-else>
+            <li v-for="item in nonAdminRoutes">
+                <router-link
+                    class="main-menu__menu-item"
+                    :to="{ path: item.pagePath }"
+                >
+                    {{ item.pageTitle }}
+                </router-link>
+            </li>
+        </ul>
+    </nav>
 
 </template>
 
