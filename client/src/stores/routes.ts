@@ -68,7 +68,7 @@ export const useRoutesStore = defineStore({
          * @param   { string }   id   The ID of the custom route to get.
          */
         getOneRoute (id: string): IJaidRoute | undefined {
-            const route = this.routes.find(route => route?.id === id);
+            const route = this.routes.find(route => route?._id === id);
             return route;
         },
 
