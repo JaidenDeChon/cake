@@ -29,7 +29,7 @@
     const newPageContent = ref({});
 
     const newPageObject = computed((): IJaidRoute => ({
-        pagePath: `/${kebabCase(newPageTitle.value)}`, // START HERE
+        pagePath: `/${kebabCase(newPageTitle.value)}`,
         pageTitle: newPageTitle.value,
         content: newPageContent.value
     }));
@@ -51,8 +51,8 @@
     /**
      * Updates the newPageContent variable with the user's inputs.
      */
-    function updateNewPageQuillContent (newValue: object): void {
-        newPageContent.value = newValue;
+    function updateNewPageQuillContent (newContent: object): void {
+        newPageContent.value = newContent;
     }
 
     /**

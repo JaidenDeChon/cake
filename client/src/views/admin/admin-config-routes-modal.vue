@@ -12,7 +12,8 @@
 
     export interface Emits {
         (e: 'save'): void,
-        (e: 'update-title', newTitle: string): void
+        (e: 'update-title', newTitle: string): void,
+        (e: 'contents-changed', newContent: object): void
     }
 
     const $props = defineProps<Props>();
@@ -31,7 +32,7 @@
             <!-- Title input. -->
             <label class="admin-config-form__label">
                 Title
-                <input class="admin-config-form__input" @change="$emit('update-title', $event)"/>
+                <input class="admin-config-form__input" @input="$emit('update-title', ($event.target as any).value ?? 'New Page')" />
             </label>
 
             <!-- Editor for quill content. -->

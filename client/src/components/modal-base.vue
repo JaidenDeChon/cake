@@ -24,7 +24,7 @@
     automatically display in the proper place. -->
     <teleport to="#modal-portal">
 
-        <!-- Whole component is wrapped in a transition tag for easy animating -->
+        <!-- Whole component is wrapped in a transition tag for easy animating. -->
         <transition name="modal">
 
             <!-- Semi-transparent background. -->
