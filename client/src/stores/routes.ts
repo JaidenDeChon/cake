@@ -79,7 +79,16 @@ export const useRoutesStore = defineStore({
          *                                      apply these changes to the app routes.
          */
         updateRouter (routerObject: Router): void {
+            const routerRoutes = routerObject.getRoutes();
+            const storeRoutes = this.routes;
+
+            storeRoutes.forEach(sr => {
+                const foundName = routerRoutes.find(rr => rr.name === sr.pageTitle)?.name;
+                if (foundName) routerObject.removeRoute(foundName);
+            });
+
             this.routes.forEach(route => routerObject.addRoute({
+                name: route.pageTitle,
                 path: route.pagePath,
                 component: CustomViewComponent,
                 meta: { route }

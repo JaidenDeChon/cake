@@ -1,4 +1,16 @@
+<script setup lang="ts">
 
+    import { useRouter, onBeforeRouteLeave } from 'vue-router';
+    import { useRoutesStore } from '@/stores/routes';
+  
+    const $router = useRouter();
+    const routesStore = useRoutesStore();
+
+    onBeforeRouteLeave(async () => {
+        await routesStore.getAllRoutes($router);
+    });
+
+</script>
 
 <template>
     <div class="admin">

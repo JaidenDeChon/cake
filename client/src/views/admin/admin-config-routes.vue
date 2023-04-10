@@ -70,10 +70,8 @@
             const { id } = await routesStore.createNewRoute(pageObject.value, $router);
             if (id) {
                 alert("New page created.");
-                pageObject.value.pageTitle = '';
-                pageObject.value.content = undefined;
+                closeModal();
             }
-            closeModal();
         } catch {
             // TODO - Toast system
         } finally {
@@ -85,8 +83,8 @@
     async function modifyPage (): Promise<void> {
         awaitingSave.value = true;
         try {
-            const updatedRoute = await routesStore.updateExistingRoute(pageObject.value, $router);
-            if (updatedRoute) closeModal();
+            const { _id } = await routesStore.updateExistingRoute(pageObject.value, $router);
+            if (_id) closeModal();
         } catch {
             // TODO - Toast system
         } finally {
@@ -175,7 +173,7 @@
         :jaid-route="pageObject"
         @close="displayPageEditorModal = false"
         @save="saveButtonClicked"
-        @contents-changed="updateQuillContent"
+        @contents-changed="$event => pageObject.content = $event"
         @update-title="$event => pageObject.pageTitle = $event"
     />
 </div>
