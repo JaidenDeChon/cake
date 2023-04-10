@@ -1,11 +1,13 @@
 
-<template lang="pug">
 
-.admin
-    router-view(v-slot="{ Component }" class="admin-config")
-        Transition(name="fade" mode="out-in")
-            component(:is="Component")
-
+<template>
+    <div class="admin">
+        <router-view v-slot="{ Component }" class="admin-config">
+            <transition name="fade" mode="out-in">
+                <component :is="Component"></component>
+            </transition>
+        </router-view>
+    </div>
 </template>
 
 <style lang="scss">
