@@ -43,7 +43,7 @@ export const useRoutesStore = defineStore({
          * Updates the given route with the new data provided and then refreshes the stored list of routes.
          * @param   { Partial<IJaidRoute> }   newData        An object containing IJaidRoute properties with
          *                                                   which to update the database.
-         * @param   { updateRouter }          updateRouter   (Optional) Pass the app's Vue Router object to
+         * @param   { Router }                updateRouter   (Optional) Pass the app's Vue Router object to
          *                                                   apply these changes to the app routes.
          */
         async updateExistingRoute (newData: Partial<IJaidRoute>, updateRouter?: Router): Promise<IJaidRoute> {
