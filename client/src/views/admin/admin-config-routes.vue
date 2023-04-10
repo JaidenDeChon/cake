@@ -1,132 +1,128 @@
 <script setup lang="ts">
 
-    import { ref } from 'vue';
-    import { computed } from '@vue/reactivity';
     import { kebabCase } from 'lodash';
+    import { ref, watchEffect } from 'vue';
     import { useRouter } from 'vue-router';
+    import { computed } from '@vue/reactivity';
 
     import type { IJaidRoute } from '@models/';
     import { useRoutesStore } from '@/stores/routes';
-    import adminConfigRoutesModal from './admin-config-routes-modal.vue';
     import chipWithButtons from '@/components/chip-with-buttons.vue';
+    import adminConfigRoutesModal from './admin-config-routes-modal.vue';
 
-    // Vue things.
-
+    // Vue Router and custom routes store.
+    // (Routes are added/removed dynamically with Pinia keeping track.)
     const $router = useRouter();
-
-    // Stores.
-
     const routesStore = useRoutesStore();
+    const routesStoreRoutes = computed(() => routesStore.routes);
 
+    // Page object and watcher. Watcher updates route when title changes.
+    const pageObject = ref({} as IJaidRoute);
+    watchEffect(() => pageObject.value.pagePath = `/${kebabCase(pageObject.value.pageTitle)}`);
 
-    /**
-     * Route / page Creation.
-     */
-
-    // Variables / computed properties for holding the content of the new page.
-
-    const newPageTitle = ref('');
-    const newPageContent = ref({});
-
-    const newPageObject = computed((): IJaidRoute => ({
-        pagePath: `/${kebabCase(newPageTitle.value)}`,
-        pageTitle: newPageTitle.value,
-        content: newPageContent.value
-    }));
-
-    // Statuses for whether we're awaiting creation, deletion, or modification of a page, and related
-    // variables/computed properties.
-
+    // Trackers for whether anything is being worked on API-wise.
     const awaitingCreate = ref(false);
     const awaitingSave = ref(false);
     const awaitingDelete = ref(false);
-
     const awaitingAnything = computed(() => awaitingCreate.value || awaitingSave.value || awaitingDelete.value);
+
+    // Reactive "create" button text.
     const createRouteButtonText = computed(() =>
         awaitingCreate.value
             ? 'Creating new page...'
             : 'Create new page'
     );
 
+    /** Resets every value of the pageObject variable ref. */
+    function resetPageObject (): void {
+        pageObject.value._id = undefined;
+        pageObject.value.content = undefined;
+        pageObject.value.pagePath = '';
+        pageObject.value.pageTitle = '';
+    }
+
     /**
-     * Updates the newPageContent variable with the user's inputs.
+     * Updates the page object with the user's inputs.
+     * @param   { object }   newContent   The new content for the page object.
      */
-    function updateNewPageQuillContent (newContent: object): void {
-        newPageContent.value = newContent;
+    function updateQuillContent (newContent: object): void {
+        pageObject.value.content = newContent;
     }
 
     /**
      * Deletes the route with the given ID.
+     * @param   { string }   id   The ID of the route to be deleted.
      */
     async function deleteRoute (id: string): Promise<void> {
         await routesStore.deleteExistingRoute(id, $router);
     }
 
-    /**
-     * Creates a new page/route using the data entered.
-     */
-    async function createNewPage (): Promise<void> {
-
-        awaitingCreate.value = true;
-
-        const { id } = await routesStore.createNewRoute(newPageObject.value, $router);
-
-        if (id) {
-            alert("New page created.");
-            newPageTitle.value = '';
-            newPageContent.value = '';
-        }
-
-        awaitingCreate.value = false;
-        closeModal();
+    /** Handles what happens when the user clicks the save button. */
+    async function saveButtonClicked (): Promise<void> {
+        if (pageObject.value?._id) await modifyPage();
+        else await createNewPage();
     }
 
-    /**
-     * Existing routes / pages.
-     */
+    /** Creates a new page/route using the data entered. */
+    async function createNewPage (): Promise<void> {
+        awaitingCreate.value = true;
+        try {
+            const { id } = await routesStore.createNewRoute(pageObject.value, $router);
+            if (id) {
+                alert("New page created.");
+                pageObject.value.pageTitle = '';
+                pageObject.value.content = undefined;
+            }
+            closeModal();
+        } catch {
+            // TODO - Toast system
+        } finally {
+            awaitingCreate.value = false;
+        }
+    }
 
-     const allCurrentPages = computed(() => routesStore.routes);
-
-     /**
-      * Modal functionality.
-      */
+    /** Modifies a page/route using the data entered. */
+    async function modifyPage (): Promise<void> {
+        awaitingSave.value = true;
+        try {
+            const updatedRoute = await routesStore.updateExistingRoute(pageObject.value, $router);
+            if (updatedRoute) closeModal();
+        } catch {
+            // TODO - Toast system
+        } finally {
+            awaitingSave.value = false;
+        }
+    }
 
     // Controls whether the page editor modal is currently visible.
     const displayPageEditorModal = ref(false);
 
-    // Holds the contents of the page to be edited or `undefined` if none. 
-    const selectedPage = ref(undefined as object | undefined);
-
     /**
      * Shows the modal. Optional param for providing modal contents.
-     * @param   { object }   data   (Optional) Allows for passing content to the modal.
+     * @param   { object }   jaidRoute   (Optional) Allows for passing content to the modal.
      */
-    function showModal (data?: object): void {
-        selectedPage.value = data;
+    function showModal (jaidRoute?: IJaidRoute): void {
+        if (jaidRoute) pageObject.value = jaidRoute;
         displayPageEditorModal.value = true;
     }
 
-    /**
-     * Closes the modal.
-     */
+    /** Closes the modal. */
     function closeModal (): void {
         displayPageEditorModal.value = false;
-        selectedPage.value = undefined;
+        resetPageObject();
     }
 
     // Determines what the modal header text should say.
-    const modalHeaderText = computed(
-        () => selectedPage.value === undefined
-            ? 'Create new page'
-            : 'Edit page contents'
-    );
+    const modalHeaderText = computed(() => {
+        if (pageObject.value._id) return 'Edit page contents';
+        else return 'Create new page';
+    });
 
     // Determines what the modal subheader text should say.
-    const modalSubheaderText = computed(
-        () => selectedPage.value === undefined
-            ? 'Use the controls below to create your page.'
-            : 'Use the controls below to modify your page contents.'
-    );
+    const modalSubheaderText = computed(() => {
+        if (pageObject.value._id) return 'Use the controls below to modify your page contents.';
+        else return 'Use the controls below to create your page.';
+    });
 
 </script>
 
@@ -162,7 +158,7 @@
     </div>
 
     <chip-with-buttons
-        v-for="page in allCurrentPages"
+        v-for="page in routesStoreRoutes"
         :primary-text="page.pageTitle"
         :secondary-text="page._id ?? '[no id]'"
         :use-edit-button="true"
@@ -176,11 +172,11 @@
         :visible="displayPageEditorModal"
         :header="modalHeaderText"
         :subheader="modalSubheaderText"
-        :page-content="selectedPage"
+        :jaid-route="pageObject"
         @close="displayPageEditorModal = false"
-        @save="createNewPage"
-        @contents-changed="updateNewPageQuillContent"
-        @update-title="newPageTitle = $event"
+        @save="saveButtonClicked"
+        @contents-changed="updateQuillContent"
+        @update-title="$event => pageObject.pageTitle = $event"
     />
 </div>
 
