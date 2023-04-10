@@ -84,9 +84,13 @@
 
         margin: var(--global-padding);
 
+        max-width: calc(100vw - (var(--global-padding) * 2));
+        max-height: calc(100vh - (var(--global-padding) * 2));
+
         background-color: white;
         box-shadow: rgba(0, 0, 0, 0.3) 0rem 0.4375rem 1.8125rem 0;
         border-radius: var(--content-block-border-radius);
+        overflow-y: scroll;
     }
 
     .modal__close-button {
