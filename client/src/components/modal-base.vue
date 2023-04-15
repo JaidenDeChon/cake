@@ -2,13 +2,13 @@
 
     import iconX from './icons/icon-x.vue';
 
-    export interface Props {
+    interface Props {
         visible: boolean;
         header?: string | undefined;
         subheader?: string | undefined;
     }
 
-    export interface Emits {
+    interface Emits {
         (e: 'close'): void,
         (e: 'save'): void
     }

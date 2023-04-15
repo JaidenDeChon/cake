@@ -43,6 +43,7 @@
 
     <nav class="main-menu">
 
+        <!-- Close Main Menu button -->
         <button
             class="main-menu__menu-item main-menu__menu-item--align-right"
             @click="closeMainMenu"
@@ -50,6 +51,7 @@
             <IconCloseComponent class="main-menu__menu-item-icon"></IconCloseComponent>
         </button>
 
+        <!-- Main Menu links list (admin) -->
         <ul v-if="onAdminRoute">
             <li v-for="item in adminRoutes">
                 <router-link
@@ -61,6 +63,7 @@
             </li>
         </ul>
 
+        <!-- Main Menu links list (non-admin) -->
         <ul v-else>
             <li v-for="item in nonAdminRoutes">
                 <router-link

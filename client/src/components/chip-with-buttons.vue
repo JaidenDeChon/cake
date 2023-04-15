@@ -3,14 +3,14 @@
     import IconPencil from './icons/icon-pencil.vue';
     import IconX from './icons/icon-x.vue'
 
-    export interface Props {
+    interface Props {
         primaryText?: string;
         secondaryText?: string;
         useEditButton?: boolean;
         useCloseButton?: boolean;
     }
 
-    export interface Emits {
+    interface Emits {
         (e: 'edit'): void;
         (e: 'delete'): void;
     }

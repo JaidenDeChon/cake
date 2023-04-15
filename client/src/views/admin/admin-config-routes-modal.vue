@@ -6,14 +6,14 @@
     import QuillEditorComponent from '../../components/quill-editor.vue';
     import modalBase from '@/components/modal-base.vue';
 
-    export interface Props {
+    interface Props {
         visible: boolean;
         jaidRoute?: IJaidRoute;
         header?: string;
         subheader?: string;
     }
 
-    export interface Emits {
+    interface Emits {
         (e: 'save'): void,
         (e: 'update-title', newTitle: string): void,
         (e: 'contents-changed', newContent: object): void
