@@ -1,11 +1,25 @@
+<script setup lang="ts">
 
-<template lang="pug">
+    import { useRouter, onBeforeRouteLeave } from 'vue-router';
+    import { useRoutesStore } from '@/stores/routes';
+  
+    const $router = useRouter();
+    const routesStore = useRoutesStore();
 
-.admin
-    router-view(v-slot="{ Component }" class="admin-config")
-        Transition(name="fade" mode="out-in")
-            component(:is="Component")
+    onBeforeRouteLeave(async () => {
+        await routesStore.getAllRoutes($router);
+    });
 
+</script>
+
+<template>
+    <div class="admin">
+        <router-view v-slot="{ Component }" class="admin-config">
+            <transition name="fade" mode="out-in">
+                <component :is="Component"></component>
+            </transition>
+        </router-view>
+    </div>
 </template>
 
 <style lang="scss">

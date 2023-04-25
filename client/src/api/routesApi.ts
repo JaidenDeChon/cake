@@ -35,8 +35,8 @@ export async function getRoute (id: string): Promise<IJaidRoute> {
  *                                              update the database.
  */
 export async function updateRoute (newData: Partial<IJaidRoute>): Promise<IJaidRoute> {
-    if (!newData.id) throw new Error('Attempted to update a route without a valid ID.');
-    const result = await axios.patch(`api/routes/update-route/${ newData.id?.toString() }`, newData);
+    if (!newData._id) throw new Error('Attempted to update a route without a valid ID.');
+    const result = await axios.patch(`api/routes/update-route/${ newData._id?.toString() }`, newData);
     return result.data;
 }
 

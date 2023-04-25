@@ -43,7 +43,7 @@ export const useRoutesStore = defineStore({
          * Updates the given route with the new data provided and then refreshes the stored list of routes.
          * @param   { Partial<IJaidRoute> }   newData        An object containing IJaidRoute properties with
          *                                                   which to update the database.
-         * @param   { updateRouter }          updateRouter   (Optional) Pass the app's Vue Router object to
+         * @param   { Router }                updateRouter   (Optional) Pass the app's Vue Router object to
          *                                                   apply these changes to the app routes.
          */
         async updateExistingRoute (newData: Partial<IJaidRoute>, updateRouter?: Router): Promise<IJaidRoute> {
@@ -68,7 +68,7 @@ export const useRoutesStore = defineStore({
          * @param   { string }   id   The ID of the custom route to get.
          */
         getOneRoute (id: string): IJaidRoute | undefined {
-            const route = this.routes.find(route => route?.id === id);
+            const route = this.routes.find(route => route?._id === id);
             return route;
         },
 
@@ -79,7 +79,16 @@ export const useRoutesStore = defineStore({
          *                                      apply these changes to the app routes.
          */
         updateRouter (routerObject: Router): void {
+            const routerRoutes = routerObject.getRoutes();
+            const storeRoutes = this.routes;
+
+            storeRoutes.forEach(sr => {
+                const foundName = routerRoutes.find(rr => rr.name === sr.pageTitle)?.name;
+                if (foundName) routerObject.removeRoute(foundName);
+            });
+
             this.routes.forEach(route => routerObject.addRoute({
+                name: route.pageTitle,
                 path: route.pagePath,
                 component: CustomViewComponent,
                 meta: { route }

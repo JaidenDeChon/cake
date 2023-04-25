@@ -1,11 +1,8 @@
-<template lang="pug">
-
-.custom-view
-
-    h1 {{ customTitle }}
-
-    quill-editor-component(:contents="customContent" :disabled="true")
-
+<template>
+    <div class="custom-view">
+        <h1>{{ customTitle }}</h1>
+        <quill-editor-component :contents="customContent" :disabled="true" />
+    </div>
 </template>
 
 <script setup lang="ts">

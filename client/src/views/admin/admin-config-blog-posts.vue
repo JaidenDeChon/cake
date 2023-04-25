@@ -1,13 +1,11 @@
 <script setup lang="ts">
 
-    import { onMounted, ref, watch } from 'vue';
+    import { onMounted, ref } from 'vue';
     import { computed } from '@vue/reactivity';
 
     import type { IBlogPost } from '@models/';
     import { useBlogsStore } from '@/stores/blogs';
-    import BlogPostComponent from '../../components/blog-post.vue';
-    import QuillEditorComponent from '../../components/quill-editor.vue';
-    import { useImageUploadingService } from '@/services/useImageUploadingService';
+    import { useImageUploadingService } from '@/services/imageUploadService';
 
     /** Lifecycle stuff. */
 

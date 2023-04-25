@@ -6,7 +6,7 @@
 export interface IJaidRoute {
 
     // Database ID for this route.
-    id?: string;
+    _id?: string;
 
     // The path that will lead to this route.
     pagePath: string;

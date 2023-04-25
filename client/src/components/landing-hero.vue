@@ -38,27 +38,50 @@
 
 </script>
 
-<template lang="pug">
+<template>
 
-.landing-hero(:class="landingHeroJustifyClassname", :style="{ backgroundImage: `url(${ backgroundImage })`}")
+    <div
+        :class="['landing-hero', landingHeroJustifyClassname]"
+        :style="{ backgroundImage: `url(${ backgroundImage })`}"
+    >
+        <div class="landing-hero__content">
 
-    .landing-hero__content
+            <!-- Primary text.-->
+            <p
+                class="landing-hero__primary-text"
+                v-if="props.hero?.primaryText"
+            >
+                {{ props.hero.primaryText }}
+            </p>
 
-        // Primary text.
-        p.landing-hero__primary-text(v-if="props.hero?.primaryText") {{ props.hero.primaryText }}
+            <!-- Secondary text.-->
+            <p
+                class="landing-hero__secondary-text"
+                v-if="props.hero?.secondaryText"
+            >
+                {{ props.hero.secondaryText }}
+            </p>
 
-        // Secondary text.
-        p.landing-hero__secondary-text(v-if="props.hero?.secondaryText") {{ props.hero.secondaryText }}
+            <!-- Call-to-action buttons.-->
+            <div class="landing-hero__cta-buttons">
+                <!-- Primary call to action.-->
+                <button
+                    class="landing-hero__primary-cta"
+                    v-if="props.hero?.primaryCallToAction"
+                >
+                    {{ props.hero.primaryCallToAction }}
+                </button>
 
-        // Call-to-action buttons.
-        .landing-hero__cta-buttons
-
-            // Primary call to action.
-            button.landing-hero__primary-cta(v-if="props.hero?.primaryCallToAction") {{ props.hero.primaryCallToAction }}
-
-            // Secondary call to action.
-            button.landing-hero__secondary-cta(v-if="props.hero?.secondaryCallToAction") {{ props.hero.secondaryCallToAction }}
-
+                <!-- Secondary call to action.-->
+                <button
+                    class="landing-hero__secondary-cta"
+                    v-if="props.hero?.secondaryCallToAction"
+                >
+                    {{ props.hero.secondaryCallToAction }}
+                </button>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style lang="scss">
